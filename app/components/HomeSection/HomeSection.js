@@ -3,11 +3,9 @@ import React from 'react';
 
 // FLUX
 import AppStore from '../../stores/AppStore';
-import HomeSectionActions from './HomeSectionActions';
 import connectToStores from 'alt/utils/connectToStores';
 
 // COMPONENT
-import Aside from '../Aside/Aside';
 import PostItem from '../Post/PostItem';
 
 if (process.env.BROWSER) {
@@ -19,9 +17,28 @@ let markupFilesReq = require.context('../../../posts/2015', true, /^\.\/.*\.md$/
 let markupFilesKeys = markupFilesReq.keys();
 let articles = [];
 
+const extractMeta = function(elt) {
+  let meta = {};
+  var dateMatches = elt.match(/(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])/);
+  if (dateMatches) {
+    meta.date = dateMatches[0];
+  }
+
+  meta.permalink = elt.substring(2, elt.indexOf('.md')).toLowerCase();
+  meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md'));
+
+  return meta;
+};
+
 markupFilesKeys.forEach((elt) => {
   let html = markupFilesReq(elt);
-  let post = {title: html};
+  let metas = extractMeta(elt);
+  let post = {
+    body: html,
+    date: metas.date,
+    title: metas.title,
+    permalink: metas.permalink
+  };
   articles.push(post);
   console.log(html);
 });
@@ -46,11 +63,8 @@ let homeSection = class HomeSection extends React.Component {
 
     return (
       <div>
-        <Aside />
         <div className='wrapper'>
-          <h1>HOME PAGE</h1>
           {postItems}
-          <HomeSectionActions />
         </div>
       </div>
     );

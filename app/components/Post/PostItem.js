@@ -3,6 +3,10 @@ import React from 'react';
 
 let { PropTypes } = React;
 
+if (process.env.BROWSER) {
+  require('./_PostItem.scss');
+}
+
 export default class PostItem extends React.Component {
   constructor(props) {
     super(props);
@@ -12,10 +16,16 @@ export default class PostItem extends React.Component {
   }
 
   render() {
-    var post = this.props.post;
+    let post = this.props.post;
+    let postPermalink = 'post/' + post.permalink;
 
     return (
-      <div dangerouslySetInnerHTML={{__html: post.title}} />
+      <section className='post'>
+        <h1>
+          <a href={postPermalink}>{post.title}</a>
+        </h1>
+        <p dangerouslySetInnerHTML={{__html: post.body}}></p>
+      </section>
     );
   }
 }
