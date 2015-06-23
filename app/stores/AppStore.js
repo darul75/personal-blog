@@ -14,7 +14,39 @@ let appStore = makeHot(alt, class AppStore {
     this.bindActions(AppActions);
     this.dataByRestApi = {};
     this.data = {};
-    console.log('titi');
+    this.posts = [];
+    this.init();
+  }
+
+  init() {
+    // http://webpack.github.io/docs/context.html
+    let markupFilesReq = require.context('../../posts/2015', true, /^\.\/.*\.md$/);
+    let markupFilesKeys = markupFilesReq.keys();
+
+    const extractMeta = function(elt) {
+      let meta = {};
+      var dateMatches = elt.match(/(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])/);
+      if (dateMatches) {
+        meta.date = dateMatches[0];
+      }
+
+      meta.permalink = elt.substring(2, elt.indexOf('.md')).toLowerCase();
+      meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md'));
+
+      return meta;
+    };
+
+    markupFilesKeys.forEach((elt) => {
+      let html = markupFilesReq(elt);
+      let metas = extractMeta(elt);
+      let post = {
+        body: html,
+        date: metas.date,
+        title: metas.title,
+        permalink: metas.permalink
+      };
+      this.posts.push(post);
+    });
   }
 
   update(id, updates) {
@@ -41,19 +73,6 @@ let appStore = makeHot(alt, class AppStore {
       complete: false,
       text: text
     };
-  }
-
-  onFetch() {
-    this.dataByRestApi = {data: 'hello'};
-    fetch('https://api.github.com/users/github')
-      .then((response) => {
-        return response.json();
-      }).then((json) => {
-        this.dataByRestApi = {data: json};
-        this.emitChange();
-      }
-    );
-
   }
 
   onUpdateText(x) {

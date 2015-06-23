@@ -11,6 +11,12 @@ body {
 h1, h2, h3 {
 	margin-top: 24px;
 	margin-bottom: 12px;
+  text-transform: capitalize;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  font-family: 'freight-sans-pro', 'Helvetica', 'Avenir', 'Arial', sans-serif;
+  font-weight: inherit;
 }
 
 div.main-content {
@@ -20,14 +26,14 @@ div.main-content {
 
 /* http://cssdeck.com/labs/beautiful-flat-buttons */
 
-button {	
+button {
 	margin-left: 10px;
 	font-size: 14px;
 	color: white;
-	text-align: center;	
+	text-align: center;
 	background: #3498db;
 	border: 0;
 	border-bottom: 2px solid #BFCAD2;
 	cursor: pointer;
-	-webkit-box-shadow: inset 0 -2px #2a8bcc;	
+	-webkit-box-shadow: inset 0 -2px #2a8bcc;
 }

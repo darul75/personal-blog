@@ -26,7 +26,7 @@ export default class TodoItem extends React.Component {
   }
 
   render() {
-    var todo = this.props.todo;
+    let todo = this.props.todo;
 
     return (
       <li className={cx({

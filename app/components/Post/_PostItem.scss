@@ -1,12 +1,37 @@
-.post h1 {
+article.post h1 {
   font-size: 40px;
   line-height: 35px;
   margin-bottom: 15px;
   margin-top: 0px;
 }
 
-.post h1 a {
+article.post h1 a {
   border: 0px;
   text-decoration: none;
   color: #000;
+}
+
+article.post p {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+article h1, article h2, article h3, article h4, article h5, article h6, article p, article ol, article ul, article table, article blockquote {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #4D4D4D;
+  font-family: 'proxima-nova', 'Helvetica', 'Avenir', 'Arial', sans-serif;
+  font-weight: 400;
 }

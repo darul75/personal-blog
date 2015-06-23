@@ -5,8 +5,7 @@ class AppActions {
     this.generateActions(
       'create',
       'destroy',
-      'toggleComplete',
-      'fetch'
+      'toggleComplete'
     );
   }
 }
