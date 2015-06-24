@@ -1,11 +1,11 @@
 {
-  "name": "web-react",
-  "description": "Another Webpack/React/Flux starter kit.",
-  "version": "1.0.2",
-  "homepage": "https://github.com/darul75/web-react",
+  "name": "blog-fullstack",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "https://github.com/darul75/blog-fullstack",
   "repository": {
     "type": "git",
-    "url": "https://github.com/darul75/web-react.git"
+    "url": "https://github.com/darul75/blog-fullstack.git"
   },
   "scripts": {
     "dev": "webpack --config conf/webpack-dev.js | webpack-dev-server --port 8080 --config conf/webpack-dev.js --hot --history-api-fallback --progress --colors --inline --content-base ./build",
@@ -27,8 +27,7 @@
     "eslint-loader": "^0.11.2",
     "eslint-plugin-react": "^2.2.0",
     "extract-text-webpack-plugin": "^0.6.0",
-    "file-loader": "^0.8.1",
-    "github-markdown-css": "^2.0.9",
+    "file-loader": "^0.8.1",    
     "html-loader": "^0.3.0",
     "html-webpack-plugin": "^1.2.0",
     "jsdom": "^2.0.0",
@@ -65,7 +64,8 @@
     "webpack",
     "kit",
     "express",
-    "node"
+    "node",
+    "blog"
   ],
   "license": "MIT"
 }

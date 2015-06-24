@@ -6,10 +6,13 @@ import _ from 'lodash';
 import AppStore from '../../stores/AppStore';
 import connectToStores from 'alt/utils/connectToStores';
 
+let prism = require('../../../assets/js/prism/prism');
+
 let { PropTypes } = React;
 
 if (process.env.BROWSER) {
   require('./_PostItem.scss');
+  require('../../../assets/js/prism/prism.css');
 }
 
 let postItem = class PostItem extends React.Component {
@@ -18,6 +21,14 @@ let postItem = class PostItem extends React.Component {
     this.propsTypes = {
       post: PropTypes.object.isRequired
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      prism.highlightAll(() => {
+
+      });
+    });
   }
 
   render() {

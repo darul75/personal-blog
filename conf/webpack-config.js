@@ -33,7 +33,7 @@ let config = {
     preLoaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules|prism.js/,
         loader: 'eslint-loader'
       }
     ]
@@ -129,7 +129,7 @@ module.exports = function(options) {
           { test: /\.sass$/, loader: sassLoaders },
           { test: /\.css$/, loader: cssLoaders },
           { test: /\.scss$/, loader: scssLoaders },
-          { test: /\.md$/, loader: 'html!markdown' }
+          { test: /\.md$/, loader: 'html!markdown?langPrefix=language-' }
         ]
       },
       plugins: plugins,

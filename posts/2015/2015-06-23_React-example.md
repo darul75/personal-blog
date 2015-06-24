@@ -4,7 +4,7 @@ small application without it.
 Without React Router
 --------------------
 
-```js
+```javascript
 var About = React.createClass({/*...*/});
 var Inbox = React.createClass({/*...*/});
 var Home = React.createClass({/*...*/});
