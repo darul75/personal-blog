@@ -35,6 +35,7 @@ let postItem = class PostItem extends React.Component {
     let post = this.props.post;
     let markdownClass = 'markdown-body highlight preview';
     let moreButton = '';
+    let time = '';
     if (post) {
       moreButton = '<a class="buttonize small" href="' + 'post/' + post.permalink + '">Continue reading →</a>';
     }
@@ -48,6 +49,8 @@ let postItem = class PostItem extends React.Component {
       post = _.find(posts, function(item) {
         return item.permalink === postId;
       });
+
+      time = '<time datetime="2015-04-18" class="article_time">April 18, 2015</time>';
 
       //previewClass = '';
 
