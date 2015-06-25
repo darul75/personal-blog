@@ -35,3 +35,8 @@ p {
   font-family: 'proxima-nova', 'Helvetica', 'Avenir', 'Arial', sans-serif;
   font-weight: 400;
 }
+
+.preview {
+  overflow: hidden;
+  max-height: 500px;
+}

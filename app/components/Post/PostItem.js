@@ -33,6 +33,12 @@ let postItem = class PostItem extends React.Component {
 
   render() {
     let post = this.props.post;
+    let styleClass = 'markdown-body preview highlight';
+    let moreButton = '';
+    if (post) {
+      moreButton = '<a class="buttonize small" href="' + 'post/' + post.permalink + '">' + post.title + '</a>';
+    }
+
     if (this.props.params) {
       // from store
       let posts = PostItem.getPropsFromStores().posts;
@@ -41,6 +47,8 @@ let postItem = class PostItem extends React.Component {
       post = _.find(posts, function(item) {
         return item.permalink === postId;
       });
+
+      styleClass = 'markdown-body highlight';
 
       // if (!post) {
       //   todo redirect
@@ -55,7 +63,8 @@ let postItem = class PostItem extends React.Component {
           <h1>
             <a href={postPermalink}>{post.title}</a>
           </h1>
-          <div className='markdown-body highlight' dangerouslySetInnerHTML={{__html: post.body}}></div>
+          <div className={styleClass} dangerouslySetInnerHTML={{__html: post.body}}></div>
+          <div dangerouslySetInnerHTML={{__html: moreButton}}></div>
         </article>
       </section>
     );
