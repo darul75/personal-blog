@@ -65,6 +65,7 @@ let postItem = class PostItem extends React.Component {
     return (
       <section>
         <article className={articleContainerClass}>
+          <div className={markdownClass} dangerouslySetInnerHTML={{__html: time}}></div>
           <h1>
             <a href={postPermalink}>{post.title}</a>
           </h1>
