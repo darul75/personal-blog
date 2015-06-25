@@ -6,7 +6,7 @@ import _ from 'lodash';
 import AppStore from '../../stores/AppStore';
 import connectToStores from 'alt/utils/connectToStores';
 
-let prism = require('../../../assets/js/prism/prism');
+let prism = require('prismjs');
 
 let { PropTypes } = React;
 

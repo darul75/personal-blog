@@ -114,7 +114,7 @@ module.exports = function(options) {
       context: __dirname + path.sep + path.join('..', 'app'),
       entry: {
         app: devMainClientApp,
-        vendors: ['classnames', 'iso', 'react', 'react-router', 'react-hot-loader', 'whatwg-fetch']
+        vendors: ['classnames', 'iso', 'prismjs', 'react', 'react-router', 'react-hot-loader', 'whatwg-fetch']
       },
       output: {
           path: outputPath,
