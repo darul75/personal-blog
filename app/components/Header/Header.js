@@ -2,6 +2,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+// COMPONENT
+import HeaderMenu from './HeaderMenu';
+
 if (process.env.BROWSER) {
   require('./_Header.scss');
 }
@@ -21,6 +24,7 @@ export default class Header extends React.Component {
 
     return (
       <div className='header'>
+        <HeaderMenu />
 				<header id='user'>
           <Link to='app'>
             <figure id='user-logo' style={logoStyle}></figure>
