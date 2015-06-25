@@ -88,22 +88,3 @@ ul#user-links li {
   margin-left: 5px;
   margin-bottom: 10px;
 }
-
-ul#user-links li a {
-  display: inline-block;
-  border: 1px solid #e4e4e4;
-  padding: 4px 18px 4px 18px;
-  border-radius: 30px;
-  line-height: 20px;
-  color: #8c8c8c;
-  font-weight: 400;
-  font-size: 14px;
-  transition-property: all;
-  transition-duration: 0.2s;
-  -webkit-transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
-  -moz-transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
-  -ms-transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
-  -o-transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
-  transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
-  -webkit-font-smoothing: antialiased;
-}

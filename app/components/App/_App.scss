@@ -1,4 +1,4 @@
-$font-stack: Helvetica, sans-serif;
+$font-stack: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $primary-color: #aaa;
 
 body {
@@ -14,9 +14,17 @@ h1, h2, h3 {
   text-transform: capitalize;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-  font-family: 'freight-sans-pro', 'Helvetica', 'Avenir', 'Arial', sans-serif;
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {  
   font-weight: inherit;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #4D4D4D;  
+  font-weight: 400;
 }
 
 div.main-content {
@@ -53,12 +61,31 @@ button.buttonize.small, a.buttonize.small {
   font-weight: 400;
 }
 
+button.buttonize.tiny, a.buttonize.tiny {
+  font-size: 12px;
+  line-height: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 400;
+}
+
+button.buttonize:hover, a.buttonize:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  font-weight: 400;
+}
+
 a, a:visited {
   color: #333;
   text-decoration: none;
   outline: 0;
 }
 
+a:hover {
+  color: #DF4A7F;  
+}
+
 a:link, a:visited, a:hover, a:active {
   text-decoration: none;
   transition-property: all;
@@ -81,4 +108,24 @@ a:link, a:visited, a:hover, a:active {
   -o-transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
   transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
   -webkit-font-smoothing: antialiased;
+}
+
+ul#user-links li a:hover, a.buttonize:hover, button.buttonize:hover {
+  background-color: #DF4A7F;
+  border-color: #DF4A7F;
+}
+
+hr {
+  width: auto;
+  max-width: 100%;
+  height: 1px;
+  background-color: #f0f0f0;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: block;
+  clear: both;
+  border: 0px;
+  clear: both;  
+  border-radius: 5px;  
+  color: #f4f3f3;
 }

@@ -33,13 +33,14 @@ let postItem = class PostItem extends React.Component {
 
   render() {
     let post = this.props.post;
-    let styleClass = 'markdown-body preview highlight';
+    let markdownClass = 'markdown-body highlight preview';
     let moreButton = '';
     if (post) {
-      moreButton = '<a class="buttonize small" href="' + 'post/' + post.permalink + '">' + post.title + '</a>';
+      moreButton = '<a class="buttonize small" href="' + 'post/' + post.permalink + '">Continue reading →</a>';
     }
 
     if (this.props.params) {
+      markdownClass = 'markdown-body highlight';
       // from store
       let posts = PostItem.getPropsFromStores().posts;
       let postId = this.props.params.postId;
@@ -48,7 +49,7 @@ let postItem = class PostItem extends React.Component {
         return item.permalink === postId;
       });
 
-      styleClass = 'markdown-body highlight';
+      //previewClass = '';
 
       // if (!post) {
       //   todo redirect
@@ -56,15 +57,16 @@ let postItem = class PostItem extends React.Component {
     }
     // param
     let postPermalink = 'post/' + post.permalink;
+    let articleContainerClass = 'post ';
 
     return (
       <section>
-        <article className='post'>
+        <article className={articleContainerClass}>
           <h1>
             <a href={postPermalink}>{post.title}</a>
           </h1>
-          <div className={styleClass} dangerouslySetInnerHTML={{__html: post.body}}></div>
-          <div dangerouslySetInnerHTML={{__html: moreButton}}></div>
+          <div className={markdownClass} dangerouslySetInnerHTML={{__html: post.body}}></div>
+          <div className='buttons' dangerouslySetInnerHTML={{__html: moreButton}}></div>
         </article>
       </section>
     );

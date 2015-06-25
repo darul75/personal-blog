@@ -22,6 +22,8 @@ let homeSection = class HomeSection extends React.Component {
     let posts = HomeSection.getPropsFromStores().posts;
     let postItems = [];
     for (var key in posts) {
+      let keyHr = 'hr' + key;
+      postItems.push(<hr key={keyHr} />);
       postItems.push(<PostItem key={key} post={posts[key]} />);
     }
 

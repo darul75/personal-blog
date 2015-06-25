@@ -5,19 +5,13 @@ article.post h1 {
   margin-top: 0px;
 }
 
-article.post h1 a {
-  border: 0px;
-  text-decoration: none;
-  color: #000;
-}
-
 article.post p {
   margin-top: 20px;
   margin-bottom: 20px;
   -webkit-font-smoothing: antialiased;
 }
 
-article h1, article h2, article h3, article h4, article h5, article h6, article p, article ol, article ul, article table, article blockquote, article .markdown-body {
+article h1, article h2, article h3, article h4, article h5, article h6, article p, article ol, article ul, article table, article blockquote, article .markdown-body, .buttons {
   padding-left: 10px;
   padding-right: 10px;
   margin: 0 auto;
@@ -26,17 +20,16 @@ article h1, article h2, article h3, article h4, article h5, article h6, article 
   max-width: 600px;
 }
 
-p {
-  font-size: 18px;
-  line-height: 1.5;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  color: #4D4D4D;
-  font-family: 'proxima-nova', 'Helvetica', 'Avenir', 'Arial', sans-serif;
-  font-weight: 400;
-}
-
 .preview {
   overflow: hidden;
   max-height: 500px;
+}
+
+div.markdown-body p:first-child::first-letter {
+  float: left;
+  font-size: 3em;
+  font-weight: 700;
+  line-height: 50px;
+  margin: 5px 8px -9px 0;
+  color: #DF4A7F;
 }

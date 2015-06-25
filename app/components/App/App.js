@@ -9,7 +9,6 @@ import Footer from '../Footer/Footer';
 if (process.env.BROWSER) {
   //require('../../../node_modules/github-markdown-css/github-markdown.css');
   require('./_App.scss');
-  require('./_App.sass');
   require('file?name=favicon.ico!../../images/favicon.ico');
 }
 
