@@ -26,7 +26,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
   right: 5%;
   top: 5%;
   display: block;
-  position: relative;
+  z-index: 150;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -42,6 +42,10 @@ $button-transistion-duration: 0.3s;     // The transition duration
   border: none;
   cursor: pointer;
   transition: background $button-transistion-duration;
+}
+
+.c-hamburger.edition {  
+  border-radius: 25%;
 }
 
 .c-hamburger:focus {
@@ -85,7 +89,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
  */
 
 .c-hamburger--rot {
-  background-color: #DF4A7F;
+  background-color: #474E3C;
 }
 
 .c-hamburger--rot span {
@@ -95,7 +99,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
 /* active state, i.e. menu open */
 
 .c-hamburger--rot.is-active {
-  background-color: darken(#DF4A7F, 20%);
+  background-color: darken(#474E3C, 20%);
 }
 
 .c-hamburger--rot.is-active span {
@@ -110,7 +114,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
  */
 
 .c-hamburger--htx {
-  background-color: #DF4A7F;
+  background-color: #7DC0DE;
 }
 
 .c-hamburger--htx span {
@@ -134,7 +138,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
 /* active state, i.e. menu open */
 
 .c-hamburger--htx.is-active {
-  background-color: darken(#DF4A7F, 20%);
+  background-color: darken(#FFF, 20%);
 }
 
 .c-hamburger--htx.is-active span {
@@ -268,7 +272,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
   transform: translateX(-$bar-thickness) translateY(-$bar-thickness/2) rotate(45deg);
 }
 
-nav#overlord ul#dropdown {
+nav#overlord ul#dropdown {    
     transform: translate3d(350px, 0, 0);
     -moz-transform: translate3d(350px, 0, 0);
     -webkit-transform: translate3d(350px, 0, 0);
@@ -279,8 +283,8 @@ nav#overlord ul#dropdown {
     text-align: right;
     display: none;
     list-style-type: none;
-    background-color: #fff;
-    border-left: 1px solid #f0f0f0;
+    background-color: #001220;
+    border-left: 2px solid #EBB649;
     padding-right: 30px;
     padding-top: 70px;
     padding-left: 10px;
@@ -289,7 +293,7 @@ nav#overlord ul#dropdown {
     max-width: 300px;
     display: block;
     transition-property: all;
-    transition-duration: 0.2s;
+    transition-duration: 0.6s;
     -webkit-transition-timing-function: cubic-bezier(0.155, 0.605, 0.18, 1);
     -webkit-transition-timing-function: cubic-bezier(0.155, 0.605, 0.18, 1.055);
     -moz-transition-timing-function: cubic-bezier(0.155, 0.605, 0.18, 1.055);
@@ -301,7 +305,7 @@ nav#overlord ul#dropdown li a {
     font-size: 20px;
     line-height: 35px;
     font-weight: 300;
-    color: #777;
+    color: #F2EFEF;
     display: block;
     padding-left: 30px;
     transition-property: all;
@@ -313,23 +317,8 @@ nav#overlord ul#dropdown li a {
     transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82)
 }
 
-nav#overlord ul#dropdown li a.logoize {
-    font-size: 18px;
-    font-weight: 900;
-    text-transform: uppercase;
-    display: block;
-    margin-top: 10px;
-    font-family: 'freight-sans-pro', sans-serif;
-    color: #000
-}
-
-nav#overlord.lower ul#dropdown li a.logoize {
-    margin-top: 25px;
-    color: #000
-}
-
 nav#overlord ul#dropdown li a.logoize:hover {
-    color: #000;
+    color: #F2EFEF;
     font-weight: 900
 }
 
@@ -342,7 +331,7 @@ nav#overlord ul#dropdown li a:hover {
     font-weight: 500
 }
 
-.overlord_active nav#overlord ul#dropdown {
+nav#overlord.overlord_active ul#dropdown {
     display: block;
     margin-right: 0px;
     transform: translate3d(0px, 0, 0);
@@ -350,50 +339,11 @@ nav#overlord ul#dropdown li a:hover {
     -webkit-transform: translate3d(0px, 0, 0)
 }
 
-div#whiteout {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    background: transparent;
-    z-index: 10;
-    display: none
-}
-
-body.overlord_active div#whiteout {
-    z-index: 90;
-    display: block
-}
-
-figure#loading {
-    position: absolute;
-    top: 37px;
-    left: 37px;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    z-index: 9999;
-    display: block;
-    pointer-events: none
-}
-
-body nav#overlord.lower figure#loading {
-    top: 52px
-}
-
-body.loaded nav#overlord h2#nav_title {
-    margin-top: 30px
-}
-
-nav#overlord.lower {
-    top: 15px
-}
-
 nav#overlord ul#dropdown.onblog li a {
     font-size: 16px;
-    color: #8a8a8a;
-    font-weight: 500
+    color: #F2EFEF;
+    font-weight: 500;
+    text-transform: capitalize;
 }
 
 nav#overlord ul#dropdown.onblog li a:hover {

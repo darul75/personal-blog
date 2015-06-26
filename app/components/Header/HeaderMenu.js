@@ -1,26 +1,41 @@
 // LIBRARY
 import React from 'react';
+import { Link } from 'react-router';
+
+// FLUX
+import AppStore from '../../stores/AppStore';
+import connectToStores from 'alt/utils/connectToStores';
 
 if (process.env.BROWSER) {
   require('./_HeaderMenu.scss');
 }
 
-export default class HeaderMenu extends React.Component {
+let headerMenu = class HeaderMenu extends React.Component {
   constructor() {
     super();
     this.state = {selected: false};
   }
 
   render() {
-    //  overlord_active overlord_open
-    var className = !this.state.selected ? 'c-hamburger c-hamburger--rot' : 'c-hamburger c-hamburger--rot c-hamburger--htx is-active';
+    let menuBtnClass = !this.state.selected ? 'c-hamburger c-hamburger--rot' : 'c-hamburger c-hamburger--rot c-hamburger--htx is-active';
+    let menuClass = !this.state.selected ? '' : 'overlord_active';
+    let posts = HeaderMenu.getPropsFromStores().posts;
+    let postLinks = [];
+    for (var key in posts) {
+      let post = posts[key];
+      let postPermalink = '/post/' + post.permalink;
+      postLinks.push(<li key={key}><Link to={postPermalink}>{post.title}</Link></li>);
+    }
+
     return (
-      <nav id='overlord'>
-        <button className={className} onClick={this._onClick.bind(this)}>
+      <nav id='overlord' className={menuClass} onMouseLeave={this._onClick.bind(this)}>
+        <button className={menuBtnClass}
+          onClick={this._onClick.bind(this)}
+          onMouseEnter={this._onClick.bind(this)}>
           <span>toggle menu</span>
         </button>
-        <ul id='dropdown' class='onblog'>
-          <li><a href='https://twitter.com/dcurtis'>@dcurtis</a></li>
+        <ul id='dropdown' className='onblog'>
+          {postLinks}
         </ul>
       </nav>
     );
@@ -31,6 +46,18 @@ export default class HeaderMenu extends React.Component {
       selected: !this.state.selected
     });
   }
-}
 
-HeaderMenu.prototype.displayName = 'HeaderMenu';
+  static getStores() {
+    return [AppStore];
+  }
+
+  static getPropsFromStores() {
+    return {
+      posts: AppStore.getState().posts
+    };
+  }
+};
+
+headerMenu.prototype.displayName = 'HeaderMenu';
+
+export default connectToStores(headerMenu);

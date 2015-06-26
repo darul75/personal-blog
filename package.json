@@ -1,11 +1,11 @@
 {
-  "name": "blog-fullstack",
+  "name": "personal-blog",
   "description": "",
   "version": "0.0.1",
-  "homepage": "https://github.com/darul75/blog-fullstack",
+  "homepage": "https://github.com/darul75/personal-blog",
   "repository": {
     "type": "git",
-    "url": "https://github.com/darul75/blog-fullstack.git"
+    "url": "https://github.com/darul75/personal-blog.git"
   },
   "scripts": {
     "dev": "webpack --config conf/webpack-dev.js | webpack-dev-server --port 8080 --config conf/webpack-dev.js --hot --history-api-fallback --progress --colors --inline --content-base ./build",
@@ -31,6 +31,7 @@
     "html-loader": "^0.3.0",
     "html-webpack-plugin": "^1.2.0",
     "jsdom": "^2.0.0",
+    "json-loader": "^0.5.2",
     "jsx-loader": "^0.13.2",
     "markdown-loader": "^0.1.3",
     "mocha": "^2.1.0",

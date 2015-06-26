@@ -34,7 +34,6 @@ export default class Header extends React.Component {
 					<ul id='user-links'>
             <li><a className='buttonize tiny' href='https://twitter.com/darul75' target='_blank'>@darul75</a></li>
             <li><a className='buttonize tiny' href="mailto:darul75@gmail.com?subject=blog">say hi</a></li>
-            <li><Link className='buttonize tiny' to='contact'>Contact</Link></li>
 					</ul>
 				</header>
       </div>

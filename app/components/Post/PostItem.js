@@ -1,5 +1,6 @@
 // LIBRARY
 import React from 'react';
+import { Link } from 'react-router';
 import _ from 'lodash';
 
 // FLUX
@@ -36,8 +37,10 @@ let postItem = class PostItem extends React.Component {
     let markdownClass = 'markdown-body highlight preview';
     let moreButton = '';
     let time = '';
+    let editUrl = '';
+
     if (post) {
-      moreButton = '<a class="buttonize small" href="' + 'post/' + post.permalink + '">Continue reading →</a>';
+      moreButton = <Link className='buttonize small' to={'/post/' + post.permalink}>Continue reading →</Link>;
     }
 
     if (this.props.params) {
@@ -50,7 +53,9 @@ let postItem = class PostItem extends React.Component {
         return item.permalink === postId;
       });
 
-      time = '<time datetime="2015-04-18" class="article_time">April 18, 2015</time>';
+      time = <time datetime={post.date.toString()}>{post.date}</time>;
+      let homepage = PostItem.getPropsFromStores().packagejson.homepage;
+      editUrl = homepage + '/edit/master/posts/2015/' + post.filename;
 
       //previewClass = '';
 
@@ -59,18 +64,23 @@ let postItem = class PostItem extends React.Component {
       // }
     }
     // param
-    let postPermalink = 'post/' + post.permalink;
+    let postPermalink = '/post/' + post.permalink;
     let articleContainerClass = 'post ';
 
     return (
       <section>
         <article className={articleContainerClass}>
-          <div className={markdownClass} dangerouslySetInnerHTML={{__html: time}}></div>
+          <div className='markdown-body'>
+            {time}
+          </div>
+          <a className='c-hamburger edition' href={editUrl} target='_blank'>
+            <span>edition</span>
+          </a>
           <h1>
-            <a href={postPermalink}>{post.title}</a>
+            <Link to={postPermalink}>{post.title}</Link>
           </h1>
           <div className={markdownClass} dangerouslySetInnerHTML={{__html: post.body}}></div>
-          <div className='buttons' dangerouslySetInnerHTML={{__html: moreButton}}></div>
+          <div className='buttons'>{moreButton}</div>
         </article>
       </section>
     );
@@ -82,7 +92,8 @@ let postItem = class PostItem extends React.Component {
 
   static getPropsFromStores() {
     return {
-      posts: AppStore.getState().posts
+      posts: AppStore.getState().posts,
+      packagejson: AppStore.getState().packagejson
     };
   }
 };

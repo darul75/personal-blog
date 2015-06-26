@@ -8,10 +8,11 @@ body {
   color: $primary-color;
 }
 
-h1, h2, h3 {
+h1, h2, h3 {  
 	margin-top: 24px;
 	margin-bottom: 12px;
   text-transform: capitalize;
+  color:#0C1723;
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {  
@@ -80,10 +81,6 @@ a, a:visited {
   color: #333;
   text-decoration: none;
   outline: 0;
-}
-
-a:hover {
-  color: #DF4A7F;  
 }
 
 a:link, a:visited, a:hover, a:active {

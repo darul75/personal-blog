@@ -15,6 +15,7 @@ let appStore = makeHot(alt, class AppStore {
     this.dataByRestApi = {};
     this.data = {};
     this.posts = [];
+    this.packagejson = require('json!../../package.json');
     this.init();
   }
 
@@ -30,6 +31,7 @@ let appStore = makeHot(alt, class AppStore {
         meta.date = dateMatches[0];
       }
 
+      meta.filename = elt.substring(2, elt.length);
       meta.permalink = elt.substring(2, elt.indexOf('.md')).toLowerCase();
       meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md'));
 
@@ -42,8 +44,9 @@ let appStore = makeHot(alt, class AppStore {
       let post = {
         body: html,
         date: metas.date,
-        title: metas.title,
-        permalink: metas.permalink
+        filename: metas.filename,
+        permalink: metas.permalink,
+        title: metas.title
       };
       this.posts.push(post);
     });

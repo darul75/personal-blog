@@ -1,4 +1,5 @@
 To illustrate the problems React Router is going to solve for you, let’s build a
+small application without it. To illustrate the problems React Router is going to solve for you, let’s build a
 small application without it.
 
 Without React Router
