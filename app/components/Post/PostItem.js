@@ -33,11 +33,12 @@ let postItem = class PostItem extends React.Component {
   }
 
   render() {
-    let post = this.props.post;
-    let markdownClass = 'markdown-body highlight preview';
-    let moreButton = '';
-    let time = '';
-    let editUrl = '';
+    let post = this.props.post,
+        markdownClass = 'markdown-body highlight preview',
+        moreButton = '',
+        time = '',
+        editUrl = '',
+        editButtonMarkup = '';
 
     if (post) {
       moreButton = <Link className='buttonize small' to={'/post/' + post.permalink}>Continue reading →</Link>;
@@ -53,9 +54,14 @@ let postItem = class PostItem extends React.Component {
         return item.permalink === postId;
       });
 
-      time = <time datetime={post.date.toString()}>{post.date}</time>;
+      time = <time dateTime={post.date.toString()}>{post.date}</time>;
       let homepage = PostItem.getPropsFromStores().packagejson.homepage;
       editUrl = homepage + '/edit/master/posts/2015/' + post.filename;
+      editButtonMarkup = <a href={editUrl} target='_blank' title='edit me'>
+        <button className='c-hamburger edition' href={editUrl} target='_blank'>
+          <span>edition</span>
+        </button>
+      </a>;
 
       //previewClass = '';
 
@@ -73,9 +79,7 @@ let postItem = class PostItem extends React.Component {
           <div className='markdown-body'>
             {time}
           </div>
-          <a className='c-hamburger edition' href={editUrl} target='_blank'>
-            <span>edition</span>
-          </a>
+          {editButtonMarkup}
           <h1>
             <Link to={postPermalink}>{post.title}</Link>
           </h1>

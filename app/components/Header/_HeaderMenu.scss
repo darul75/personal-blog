@@ -44,7 +44,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
   transition: background $button-transistion-duration;
 }
 
-.c-hamburger.edition {  
+.c-hamburger.edition {
   border-radius: 25%;
 }
 
@@ -272,7 +272,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
   transform: translateX(-$bar-thickness) translateY(-$bar-thickness/2) rotate(45deg);
 }
 
-nav#overlord ul#dropdown {    
+nav#overlord ul#dropdown {
     transform: translate3d(350px, 0, 0);
     -moz-transform: translate3d(350px, 0, 0);
     -webkit-transform: translate3d(350px, 0, 0);
@@ -327,7 +327,7 @@ nav#overlord ul#dropdown li.spacer {
 }
 
 nav#overlord ul#dropdown li a:hover {
-    color: #000;
+    color: #AAA6A6;
     font-weight: 500
 }
 
@@ -347,7 +347,7 @@ nav#overlord ul#dropdown.onblog li a {
 }
 
 nav#overlord ul#dropdown.onblog li a:hover {
-    color: #000
+    color: #AAA6A6;
 }
 
 nav#overlord ul#dropdown li.dropdown_message {
