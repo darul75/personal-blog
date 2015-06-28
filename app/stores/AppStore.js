@@ -33,7 +33,7 @@ let appStore = makeHot(alt, class AppStore {
 
       meta.filename = elt.substring(2, elt.length);
       meta.permalink = elt.substring(2, elt.indexOf('.md')).toLowerCase();
-      meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md'));
+      meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md')).replace('-', ' ');
 
       return meta;
     };

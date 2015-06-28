@@ -8,15 +8,19 @@ body {
   color: $primary-color;
 }
 
-h1, h2, h3 {  
+h1, h2, h3 {
 	margin-top: 24px;
 	margin-bottom: 12px;
   text-transform: capitalize;
   color:#0C1723;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {  
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   font-weight: inherit;
+}
+
+h1 a:hover {
+  color: #DF4A7F;
 }
 
 p {
@@ -24,7 +28,7 @@ p {
   line-height: 1.5;
   margin-top: 20px;
   margin-bottom: 20px;
-  color: #4D4D4D;  
+  color: #4D4D4D;
   font-weight: 400;
 }
 
@@ -39,10 +43,10 @@ button.buttonize, a.buttonize {
   border-radius: 30px;
   font-size: 22px;
   font-weight: 300;
-  line-height: 45px;  
+  line-height: 45px;
   background-color: transparent;
   color: #767676;
-  border: 1px solid #e4e4e4;  
+  border: 1px solid #e4e4e4;
   outline: none;
   transition-property: all;
   transition-duration: 0.2s;
@@ -122,7 +126,7 @@ hr {
   display: block;
   clear: both;
   border: 0px;
-  clear: both;  
-  border-radius: 5px;  
+  clear: both;
+  border-radius: 5px;
   color: #f4f3f3;
 }
