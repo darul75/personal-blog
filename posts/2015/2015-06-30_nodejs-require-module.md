@@ -8,11 +8,9 @@ In this thread, we will take a deep look at how it is working node core dependen
 
 Module system in NodeJS is handle by [Module.js](https://github.com/joyent/node/blob/master/lib/module.js) file.
 
-Description of Module API is here, but we use it very rarely.
+Description of Module API is [here](https://nodejs.org/docs/latest/api/modules.html#modules_the_module_object), but we use it very rarely.
 
-[Module](https://nodejs.org/docs/latest/api/modules.html#modules_the_module_object)
-
-Main purpose of Module is to handle dependencies.
+Main purpose of Module is to handle your code dependencies by providing a runtime context.
 
 ## Constructor
 
