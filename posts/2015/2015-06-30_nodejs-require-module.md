@@ -170,6 +170,7 @@ Module.prototype._compile = function(content, filename) {
   // create a wrapper function as string
   var wrapper = Module.wrap(content);
   // it will gives the following anonymous function
+  // NOTE: it is a simple STRING
   //
   // "(function (exports, require, module, __filename, __dirname) { 
   //  module.exports = "It works from content.js."; 
