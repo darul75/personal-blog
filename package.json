@@ -37,6 +37,7 @@
     "mocha": "^2.1.0",
     "node-sass": "^3.1.2",
     "prismjs": "0.0.1",
+    "react-helmet": "^1.1.0",
     "react-hot-loader": "^1.2.7",
     "react-router": "^0.13.2",
     "sass-loader": "1.0.2",

@@ -26,7 +26,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
   right: 5%;
   top: 5%;
   display: block;
-  z-index: 150;
+  z-index: 50;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -90,6 +90,7 @@ $button-transistion-duration: 0.3s;     // The transition duration
 
 .c-hamburger--rot {
   background-color: #474E3C;
+  z-index: 101;
 }
 
 .c-hamburger--rot span {

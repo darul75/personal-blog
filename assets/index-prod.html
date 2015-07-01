@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="/app-{%=o.webpack.hash%}.css">
-  <title>Julien Valéry aka darul75</title>
+  <meta charset="UTF-8">
+	<link rel="stylesheet" href="/app-{%=o.webpack.hash%}.css">
+  META
+  LINK
+  <title>TITLE</title>
 </head>
-<body>  
+<body>
   <div id="app">CONTENT</div>
   {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
     <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
-  {% } %}  
+  {% } %}
 </body>
 </html>

@@ -1,0 +1,32 @@
+{
+  "helmet": {
+    "title": "Darul blog",
+    "meta":[
+      {
+        "name": "description",
+        "content": "Julien Valéry blog: fullstack stuffs, NodeJS, AngularJS, React, MongoDB... about me or what else."
+      },
+      {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1"
+      }
+    ],
+    "link": [
+      {
+        "rel": "shortcut icon",
+        "href": "/favicon.ico",
+        "type": "image/x-icon"
+      },
+      {
+        "rel": "icon",
+        "href": "/favicon.ico",
+        "type": "image/x-icon"
+      },
+		  {
+			 "href": "http://fonts.googleapis.com/css?family=Raleway",
+			 "rel": "stylesheet",
+			 "type": "text/css"
+		  }
+    ]
+  }
+}

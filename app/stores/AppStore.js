@@ -1,6 +1,3 @@
-// LIBRARY
-import merge from 'object-assign';
-
 // FLUX
 import AppActions from '../actions/AppActions';
 
@@ -12,10 +9,9 @@ import makeHot from 'alt/utils/makeHot';
 let appStore = makeHot(alt, class AppStore {
   constructor() {
     this.bindActions(AppActions);
-    this.dataByRestApi = {};
-    this.data = {};
     this.posts = [];
-    this.packagejson = require('json!../../package.json');
+    this.packagejson = require('../../package.json');
+    this.config = require('../../assets/config.json');
     this.init();
   }
 
@@ -33,7 +29,7 @@ let appStore = makeHot(alt, class AppStore {
 
       meta.filename = elt.substring(2, elt.length);
       meta.permalink = elt.substring(2, elt.indexOf('.md')).toLowerCase();
-      meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md')).replace('-', ' ');
+      meta.title = elt.substring(elt.indexOf('_') + 1, elt.indexOf('.md')).replace(/\-/g, ' ');
 
       return meta;
     };
@@ -50,73 +46,8 @@ let appStore = makeHot(alt, class AppStore {
       };
       this.posts.push(post);
     });
-  }
 
-  update(id, updates) {
-    if(this.data[id] && updates){
-      this.data[id] = merge(this.data[id], updates);
-    }
-  }
-
-  updateAll(updates) {
-    for (var id in this.data) {
-      this.update(id, updates);
-    }
-  }
-
-  onCreate(text) {
-    text = text.trim();
-    if (text === '') {
-      return false;
-    }
-    // hand waving of course.
-    var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    this.data[id] = {
-      id: id,
-      complete: false,
-      text: text
-    };
-  }
-
-  onUpdateText(x) {
-    let { id, text } = x;
-    text = text ? text.trim() : '';
-    if (text === '') {
-      return false;
-    }
-    this.update(id, { text });
-  }
-
-  onToggleComplete(id) {
-    let complete = !this.data[id].complete;
-    this.update(id, { complete });
-  }
-
-  onToggleCompleteAll() {
-    /*var complete = !todoStore.areAllComplete();
-    this.updateAll({ complete });*/
-  }
-
-  onDestroy(id) {
-    delete this.data[id];
-  }
-
-  onDestroyCompleted() {
-    for (let id in this.data) {
-      if (this.data[id].complete) {
-        this.onDestroy(id);
-      }
-    }
-  }
-
-  static areAllComplete() {
-    let { data } = this.getState();
-    for (let id in data) {
-      if (!data[id].complete) {
-        return false;
-      }
-    }
-    return true;
+    this.posts.reverse();
   }
 }, 'AppStore');
 

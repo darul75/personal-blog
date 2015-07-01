@@ -114,7 +114,7 @@ module.exports = function(options) {
       context: __dirname + path.sep + path.join('..', 'app'),
       entry: {
         app: devMainClientApp,
-        vendors: ['classnames', 'iso', 'prismjs', 'react-helmet', 'react', 'react-router', 'react-hot-loader', 'whatwg-fetch']
+        vendors: ['classnames', 'iso', 'prismjs', 'react', 'react-router', 'react-hot-loader', 'whatwg-fetch']
       },
       output: {
           path: outputPath,
@@ -129,8 +129,7 @@ module.exports = function(options) {
           { test: /\.sass$/, loader: sassLoaders },
           { test: /\.css$/, loader: cssLoaders },
           { test: /\.scss$/, loader: scssLoaders },
-          { test: /\.md$/, loader: 'html!markdown?langPrefix=line-numbers language-' },
-		  { test: /\.json$/, loader: 'json'}
+          { test: /\.md$/, loader: 'html!markdown?langPrefix=language-' }
         ]
       },
       plugins: plugins,
@@ -177,8 +176,7 @@ module.exports = function(options) {
           { test: /\.sass$/, loader: sassLoaders },
           { test: /\.css$/, loader: cssLoaders },
           { test: /\.scss$/, loader: scssLoaders },
-          { test: /\.md$/, loader: 'html!markdown' },
-          { test: /\.json$/, loader: 'json'}
+          { test: /\.md$/, loader: 'html!markdown' }
         ]
       },
       plugins: plugins

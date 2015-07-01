@@ -24,14 +24,14 @@ function Module(id, parent) {
 
 one `exports` object attribute is created by default.
 
-Note that all your dependencies export this `exports` Module object attribute.
+Note that all your dependencies only shows this `exports` Module object attribute to their parent modules. Here just an extract from Module NodeJS source code:
 
 ```javascript
 // digest your module code and then return exports attr
 return module.exports;
 ```
 
-Here some common scenarios when creating a module.
+Here some common scenarios when creating a module (note the dot .).
 
 ```javascript
 exports.myFn = function() {
@@ -42,9 +42,9 @@ exports.myFn2 = function() {
 }
 ```
 
-It enhance your module exports attribute object and that's fine `return module.exports` directive will return something like:
+This fills your module exports attribute object and `return module.exports` directive will return something like:
 
-```json
+```javascript
 {
   myFn : function() {
 
@@ -52,6 +52,7 @@ It enhance your module exports attribute object and that's fine `return module.e
   myFn2 : function() {
   
   }
+}
 ```
 
 Side effect:
@@ -60,10 +61,10 @@ Side effect:
 exports = {
   fn: function() {
 
-	},
-	fn2: function() {
-			
-	}
+  },
+  fn2: function() {
+      
+  }
 }
 ```
 
@@ -79,7 +80,7 @@ exports.fn = function() {
 };
 
 exports.fn2 = function() {
-			
+      
 };
 ```
 
@@ -156,10 +157,10 @@ module.exports = 'I love JS';
 
 ### Loader routines
 
-Module we first try to locate file containing code for our module myModule.
+Module we first try to locate file containing code for our module 'dependency'.
 
 A load function is called with 3 parameters
-* request : here 'myModule'
+* request : here 'dependency'
 * parent: null if root module
 * isMain: main root file
 

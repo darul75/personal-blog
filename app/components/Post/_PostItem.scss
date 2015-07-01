@@ -1,4 +1,5 @@
 article {
+  padding-left: 20px;
   position: relative;
 }
 
@@ -13,6 +14,7 @@ article.post p {
   margin-top: 20px;
   margin-bottom: 20px;
   -webkit-font-smoothing: antialiased;
+  text-align: justify;
 }
 
 article .markdown-body a {
@@ -23,18 +25,17 @@ article .markdown-body a:hover {
   border-color: #FF0042;
 }
 
-article h1, article h2, article h3, article h4, article h5, article h6, article p, article ol, article ul, article table, article blockquote, article .markdown-body, .buttons {
-  padding-left: 10px;
-  padding-right: 10px;
+article h1, article h2, article h3, article h4, article h5, article h6, article ol, article ul, article table, article blockquote, article .markdown-body, .buttons {  
+  padding-right: 20px;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .preview {
   overflow: hidden;
-  max-height: 500px;
+  max-height: 430px;
 }
 
 div.markdown-body p:first-child::first-letter {
@@ -44,4 +45,8 @@ div.markdown-body p:first-child::first-letter {
   line-height: 50px;
   margin: 5px 8px -9px 0;
   color: #DF4A7F;
+}
+
+code:not([class]) {
+  background-color: #FEF6BF;
 }

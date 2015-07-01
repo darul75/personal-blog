@@ -1,8 +1,7 @@
 $font-stack: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $primary-color: #aaa;
 
-body {
-	width: 750px;
+body {	
 	margin: auto;
 	font: 100% $font-stack;
   color: $primary-color;
@@ -23,6 +22,15 @@ h1 a:hover {
   color: #DF4A7F;
 }
 
+ul {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  li {    
+    color: #1677AA;
+    font-weight: bold;
+  }
+}
+  
 p {
   font-size: 18px;
   line-height: 1.5;
@@ -30,10 +38,6 @@ p {
   margin-bottom: 20px;
   color: #4D4D4D;
   font-weight: 400;
-}
-
-div.main-content {
-	-webkit-padding-start: 40px;
 }
 
 button.buttonize, a.buttonize {
@@ -130,3 +134,25 @@ hr {
   border-radius: 5px;
   color: #f4f3f3;
 }
+
+/* Small Devices, Tablets from https://scotch.io/quick-tips/default-sizes-for-twitter-bootstraps-media-queries */
+@media only screen and (min-width : 768px) {
+  body {
+    width: 750px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  body {
+    width: 750px;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  body {
+    width: 750px;
+  }
+}
+

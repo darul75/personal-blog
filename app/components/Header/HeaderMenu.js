@@ -13,12 +13,12 @@ if (process.env.BROWSER) {
 let headerMenu = class HeaderMenu extends React.Component {
   constructor() {
     super();
-    this.state = {selected: false};
+    this.state = {show: false};
   }
 
   render() {
-    let menuBtnClass = !this.state.selected ? 'c-hamburger c-hamburger--rot' : 'c-hamburger c-hamburger--rot c-hamburger--htx is-active';
-    let menuClass = !this.state.selected ? '' : 'overlord_active';
+    let menuBtnClass = !this.state.show ? 'c-hamburger c-hamburger--rot' : 'c-hamburger c-hamburger--rot c-hamburger--htx is-active';
+    let menuClass = !this.state.show ? '' : 'overlord_active';
     let posts = HeaderMenu.getPropsFromStores().posts;
     let postLinks = [];
     for (var key in posts) {
@@ -28,10 +28,8 @@ let headerMenu = class HeaderMenu extends React.Component {
     }
 
     return (
-      <nav id='overlord' className={menuClass} onMouseLeave={this._onClick.bind(this)}>
-        <button className={menuBtnClass}
-          onClick={this._onClick.bind(this)}
-          onMouseEnter={this._onClick.bind(this)}>
+      <nav id='overlord' className={menuClass} onMouseLeave={this._onMouseLeave.bind(this)}>
+        <button className={menuBtnClass} onClick={this._onClick.bind(this)}>
           <span>toggle menu</span>
         </button>
         <ul id='dropdown' className='onblog'>
@@ -42,9 +40,11 @@ let headerMenu = class HeaderMenu extends React.Component {
   }
 
   _onClick() {
-    this.setState({
-      selected: !this.state.selected
-    });
+    this.setState({show: !this.state.show});
+  }
+
+  _onMouseLeave() {
+    this.setState({show: false});
   }
 
   static getStores() {
