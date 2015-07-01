@@ -1,10 +1,10 @@
 ## Module
 
-Understand Module behaviour is quite important with NodeJS, those who tried to play with it know what I am speaking about.
+Understand module component loading system is quite important in NodeJS, those who tried to play with it may know what I am talking about.
 
 How it works, what is the difference between `export`, `module.exports`.
 
-In this thread, we will take a deep look at how it is working node core dependency management.
+In this thread, we will take a deep look at how node core dependency management works.
 
 Module system in NodeJS is handle by [Module.js](https://github.com/joyent/node/blob/master/lib/module.js) file.
 
@@ -42,7 +42,9 @@ exports.myFn2 = function() {
 }
 ```
 
-This fills your module exports attribute object and `return module.exports` directive will return something like:
+This fills your module `exports` object attribute.
+
+`return module.exports` directive will return something like:
 
 ```javascript
 {
@@ -118,7 +120,7 @@ But then, what happened when we use require ?
 
 When using require, behind the scene a module context is created and your code runs in it.
 
-`require` function is attached to node global `object`, imagine `window` object for a browser environment. So when you type `require('something')` js prototype pattern looks for it and find require function.
+`require` function is attached to node global `object`, imagine `window` object for a browser environment. So when you type `require('something')` js prototype pattern looks for it and finds require function.
 
 ```javascript
 global.require = require;
@@ -147,7 +149,7 @@ Let's take an example.
 
 ./main.js
 ```javascript
-var d = require('./dependency');
+var dep = require('./dependency');
 ```
 
 ./dependency.js
@@ -157,14 +159,14 @@ module.exports = 'I love JS';
 
 ### Loader routines
 
-Module we first try to locate file containing code for our module 'dependency'.
+Module we first try to locate the file containing your code 'dependency' module.
 
-A load function is called with 3 parameters
+Load function is called with 3 parameters
 * request : here 'dependency'
 * parent: null if root module
 * isMain: main root file
 
-A load function does all this stuff for us.
+Here my comments about it:
 
 ```javascript
 Module._load = function(request, parent, isMain) {
@@ -200,7 +202,7 @@ Module._load = function(request, parent, isMain) {
 
 ### Focus
 
-Where is my dependency, in above example `dependency`
+Method to look for `dependency` source code.
 
 ```javascript
 Module._resolveFilename = function(request, parent) {
@@ -245,8 +247,8 @@ Compiler routine
 
 ```javascript
 Module.prototype._compile = function(content, filename) {
-  // here content is a my module.js file in a string :
-  // "module.exports = "It works from content.js.";"
+  // here content is a my dependency.js file in a string :
+  // "module.exports = 'I love JS';"
   // filename
   // /mypath/myproject/dependency.js
   // ...
@@ -262,13 +264,16 @@ Module.prototype._compile = function(content, filename) {
   // NOTE: it is a simple STRING
   //
   // "(function (exports, require, module, __filename, __dirname) { 
-  //  module.exports = "It works from content.js."; 
+  //  module.exports = 'I love JS';
   // });"
+  //
+  // That is how magic happens and module exports object is fill, by a simple anonymous function wrapper
   //
   // here a call to native code with this code, imagine eval() function.
   var compiledWrapper = runInThisContext(wrapper, { filename: filename });
-  // now we have a real js function
+  // now we have a real js function, let's call it
   var args = [self.exports, require, self, filename, dirname];
+  // finishing by applying above wrapper function on current module previously compiled.
   return compiledWrapper.apply(self.exports, args);
 }
 ```
@@ -276,10 +281,10 @@ Module.prototype._compile = function(content, filename) {
 ### Conclusion
 
 - a dependency imply a module object
-- a loading processus looks for you code file
-- a compilation phase involved an anonymous function that wraps your module code with 3 main params (exports,require,module). By executing this function, `exports` Module object attribue attribute is fill.
-- loading process returns your module `exports` attribute.
-
+- a loading processus looks for you code into file
+- a require call checks first in cache, otherwise load into cache.
+- a compilation phase involved an anonymous function that wraps your module code with 3 main params (exports,require,module). By executing this function, `exports` Module object attribute is fill.
+- at the end of loading process it returns your module `exports` attribute.
 
 ### Result
 
@@ -295,7 +300,7 @@ Your compiled code looks like:
 ./dependency.js
 ```javascript
 (function (exports, require, module, __filename, __dirname) { 
-  module.exports = "It works from content.js.";
+  module.exports = 'I love JS';
 });
 ```
 
@@ -306,7 +311,9 @@ You can imagine the following
 (function (exports, require, module, __filename, __dirname) {
   ./dependency.js
   var dep = (function (exports, require, module, __filename, __dirname) { 
-    return module.exports = "It works from content.js.";
+    return module.exports = 'I love JS';
   });
 });
 ```
+
+If you want to look further, write a small test and debug it.
