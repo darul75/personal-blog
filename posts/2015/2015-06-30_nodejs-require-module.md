@@ -20,16 +20,104 @@ function Module(id, parent) {
   this.exports = {};
   this.parent = parent;
 }
-module.exports = Module;
 ```
 
-So what happened when we use require ?
+one `exports` object attribute is created by default.
+
+Note that all your dependencies export this `exports` Module object attribute.
+
+```javascript
+// digest your module code and then return exports attr
+return module.exports;
+```
+
+Here some common scenarios when creating a module.
+
+```javascript
+exports.myFn = function() {
+
+}
+exports.myFn2 = function() {
+
+}
+```
+
+It enhance your module exports attribute object and that's fine `return module.exports` directive will return something like:
+
+```json
+{
+  myFn : function() {
+
+  },
+  myFn2 : function() {
+  
+  }
+```
+
+Side effect:
+
+```javascript
+exports = {
+  fn: function() {
+
+	},
+	fn2: function() {
+			
+	}
+}
+```
+
+you expect `return module.exports` returning the same object shown before but it won't, you have just created a new object and module.exports still point to an empty obj {}
+
+If you want to be be sure, just can start your module with (note the dot .)
+
+```javascript
+var exports = module.exports = {};
+
+exports.fn = function() {
+
+};
+
+exports.fn2 = function() {
+			
+};
+```
+
+But a more convenient way to avoid this inconvenience would be
+
+```javascript
+var myStuff = 'I love Nodejs';
+
+// OR
+
+var myStuff = function doStuff() {
+
+};
+
+// OR
+
+var myStuff = {
+  doStuff: function doStuff1() {
+  
+  },
+  doStuff1: function doStuff1() {
+  
+  }
+
+};
+
+// OR ....
+
+module.exports = myStuff;
+```
+
+But then, what happened when we use require ?
 
 ## Require
 
 When using require, behind the scene a module context is created and your code runs in it.
 
-`require` function is attached to node global `object`, imagine `window` object for a browser environment. So when you type `require('something')` js prototype pattern look for it and find require function.
+`require` function is attached to node global `object`, imagine `window` object for a browser environment. So when you type `require('something')` js prototype pattern looks for it and find require function.
 
 ```javascript
 global.require = require;
@@ -37,7 +125,7 @@ global.exports = self.exports;
 ```
 [Global object](https://nodejs.org/api/globals.html#globals_global)
 
-so when you type require, js engine retrieve global object and look for a require named function and find it :)
+To recap when you type require, js engine retrieves global object and look for a require named function and find it :)
 
 ### Function
 
@@ -184,6 +272,15 @@ Module.prototype._compile = function(content, filename) {
 }
 ```
 
+### Conclusion
+
+- a dependency imply a module object
+- 
+- an anonymous function wraps your module code with 3 main params
+ - exports
+ - require
+ - module
+
 ### Result
 
 Your executed code looks like:
@@ -199,5 +296,17 @@ Your executed code looks like:
 ```javascript
 (function (exports, require, module, __filename, __dirname) { 
   module.exports = "It works from content.js.";
+});
+```
+
+You can imagine the following
+
+./main.js
+```javascript
+(function (exports, require, module, __filename, __dirname) {
+  ./dependency.js
+  var dep = (function (exports, require, module, __filename, __dirname) { 
+    module.exports = "It works from content.js.";
+  });
 });
 ```
