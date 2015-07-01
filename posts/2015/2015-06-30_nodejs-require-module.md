@@ -275,15 +275,14 @@ Module.prototype._compile = function(content, filename) {
 ### Conclusion
 
 - a dependency imply a module object
-- 
-- an anonymous function wraps your module code with 3 main params
- - exports
- - require
- - module
+- a loading processus looks for you code file
+- a compilation phase involved an anonymous function that wraps your module code with 3 main params (exports,require,module). By executing this function, `exports` Module object attribue attribute is fill.
+- loading process returns your module `exports` attribute.
+
 
 ### Result
 
-Your executed code looks like:
+Your compiled code looks like:
 
 ./main.js
 ```javascript
@@ -306,7 +305,7 @@ You can imagine the following
 (function (exports, require, module, __filename, __dirname) {
   ./dependency.js
   var dep = (function (exports, require, module, __filename, __dirname) { 
-    module.exports = "It works from content.js.";
+    return module.exports = "It works from content.js.";
   });
 });
 ```
