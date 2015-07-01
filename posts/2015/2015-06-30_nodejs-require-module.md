@@ -157,6 +157,18 @@ var dep = require('./dependency');
 module.exports = 'I love JS';
 ```
 
+### Main
+
+```javascript
+// bootstrap main module.
+Module.runMain = function() {
+  // Load the main module--the command line argument.
+  Module._load(process.argv[1], null, true);
+  // Handle any nextTicks added in the first tick of the program
+  process._tickCallback();
+};
+```
+
 ### Loader routines
 
 Module we first try to locate the file containing your code 'dependency' module.
