@@ -17,17 +17,28 @@ Main purpose of Module is to handle your code dependencies by providing a runtim
 ```javascript
 function Module(id, parent) {
   this.id = id;
-  this.exports = {};
-  this.parent = parent;
+  this.exports = {};      // what you show to others
+  this.parent = parent;   // parent module reference or null
+  if (parent && parent.children) { // glue
+    parent.children.push(this);
+  }
+
+  this.filename = null;   // absolute path source file code
+  this.loaded = false;    // has module been loaded
+  this.children = [];     // child module
 }
 ```
 
-one `exports` object attribute is created by default.
+Note that all your dependencies only shows `exports` object attribute to their parent modules.
 
-Note that all your dependencies only shows this `exports` Module object attribute to their parent modules. Here just an extract from Module NodeJS source code:
+A specific namespace is created for each module by the use of an anonymous function wrapping your own code.
+
+Main role of Module is to build your dependency tree, and return the `exports' object:
 
 ```javascript
-// digest your module code and then return exports attr
+// create a new module
+// digest your module code 
+// and then return exports attr
 return module.exports;
 ```
 
@@ -114,13 +125,17 @@ var myStuff = {
 module.exports = myStuff;
 ```
 
-But then, what happened when we use require ?
+But then, what happened when we apply a `require()` call ?
 
 ## Require
 
-When using require, behind the scene a module context is created and your code runs in it.
+By using require, behind the scene a module context is created and your code runs in it.
 
-`require` function is attached to node global `object`, imagine `window` object for a browser environment. So when you type `require('something')` js prototype pattern looks for it and finds require function.
+### Global
+
+`require` function is attached to node global `object`, imagine `window` object for a browser environment. 
+
+So when you type `require('something')` js prototype pattern looks for it and finds require function.
 
 ```javascript
 global.require = require;
@@ -128,15 +143,23 @@ global.exports = self.exports;
 ```
 [Global object](https://nodejs.org/api/globals.html#globals_global)
 
-To recap when you type require, js engine retrieves global object and look for a require named function and find it :)
+### Applied to current module
 
-### Function
+But then remember that when you call it, you are in a specific module object context (parent module), and by consequence your current Module will load its new child Module.
 
-`require` function take a non empty string as parameter, a name, a path.
+To recap when you type require, js engine retrieves global object and look for a require named function and find it :), then apply it to current module context.
+
+### Useful functions
+
+*Note* that some functions are part of Module prototype ('_' prefix), others are like global static methods.
+
+`require` function takes a non empty string as parameter, a name, a path.
 
 ```javascript
-// Loads a module at the given file path. Returns that module's
-// `exports` property.
+//
+// - Loads a module at the given file path. 
+// - Returns that module's `exports` property.
+//
 Module.prototype.require = function(path) {
   assert(path, 'missing path');
   assert(util.isString(path), 'path must be a string');
@@ -144,8 +167,11 @@ Module.prototype.require = function(path) {
 };
 ```
 
+Before seen what is going on in load process, just take a simple example.
+
 ### Example
-Let's take an example.
+
+A main file and its dependency module file.
 
 ./main.js
 ```javascript
@@ -157,18 +183,6 @@ var dep = require('./dependency');
 module.exports = 'I love JS';
 ```
 
-### Main
-
-```javascript
-// bootstrap main module.
-Module.runMain = function() {
-  // Load the main module--the command line argument.
-  Module._load(process.argv[1], null, true);
-  // Handle any nextTicks added in the first tick of the program
-  process._tickCallback();
-};
-```
-
 ### Loader routines
 
 Module we first try to locate the file containing your code 'dependency' module.
@@ -176,49 +190,64 @@ Module we first try to locate the file containing your code 'dependency' module.
 Load function is called with 3 parameters
 * request : here 'dependency'
 * parent: null if root module
-* isMain: main root file
+* isMain: main root file flag, here true when loading main.js file.
 
-Here my comments about it:
+Here my comment annotations about it:
 
 ```javascript
 Module._load = function(request, parent, isMain) {
+  //
   // 1> resolve filename and look for absolute path of file
+  //
   var filename = Module._resolveFilename(request, parent);
+  //
   // 2> check in cache by id and return it if found
+  //
   var cachedModule = Module._cache[filename];
   if (cachedModule) {
     return cachedModule.exports;
   }
+  //
   // 3> check if native module and compile it and return it if needed, example require('fs');
+  //
   if (NativeModule.exists(filename)) {
     // do some compil stuff
   }
+  //
   // 4> create new module with reference to parent Module
+  //
   var module = new Module(filename, parent);
+  //
   // 5> put it in cache
+  //
   Module._cache[filename] = module;
+  //
   // 6> the MOST interesting part, load module source code
+  //
   try {
     module.load(filename);
     hadException = false;
   } finally {
     if (hadException) {
-      delete Module._cache[filename];
+      delete Module._cache[filename]; // wrong dependency name...
     }
   }
-  
-  // 7> send exports object
+  //
+  // 7> return exports object
+  //
   return module.exports;
 }
 ```
 
 ### Focus
 
-Method to look for `dependency` source code.
+Method to look for `dependency` module.
 
 ```javascript
 Module._resolveFilename = function(request, parent) {
+ // 
  // internal stuff to compute path
+ //
  return filename; // example here /mypath/myproject/dependency.js
 }
 ```
@@ -235,10 +264,17 @@ Module.prototype.load = function(filename) {
   // "/node_modules"
 
   var extension = path.extname(filename) || '.js';
+  //
   // 1> by default only .js, .json, .node types are handled by module loader
+  //
   if (!Module._extensions[extension]) extension = '.js';
+  //
   // 2> here js extensions is used to load dependency.js
+  //
   Module._extensions[extension](this, filename);
+  //
+  // 3> set loaded flag
+  //
   this.loaded = true;
 };
 ```
@@ -248,9 +284,13 @@ Then here we go, we have filename path.
 ```javascript
 // Native extension for .js
 Module._extensions['.js'] = function(module, filename) {
+  //
   // 1> load file content of 'dependency.js'
+  //
   var content = fs.readFileSync(filename, 'utf8');
+  //
   // 2> compile it
+  //
   module._compile(stripBOM(content), filename);
 };
 ```
@@ -259,15 +299,19 @@ Compiler routine
 
 ```javascript
 Module.prototype._compile = function(content, filename) {
+  //
   // here content is a my dependency.js file in a string :
   // "module.exports = 'I love JS';"
+  //
   // filename
   // /mypath/myproject/dependency.js
   // ...
   // some stuff
   // ...
   // retrieve modules cache
+  //
   require.cache = Module._cache;
+  //
   // here come the tricky part
   // ******** IMPORTANT *********
   // create a wrapper function as string
@@ -282,6 +326,8 @@ Module.prototype._compile = function(content, filename) {
   // That is how magic happens and module exports object is fill, by a simple anonymous function wrapper
   //
   // here a call to native code with this code, imagine eval() function.
+  // https://nodejs.org/api/vm.html
+  //
   var compiledWrapper = runInThisContext(wrapper, { filename: filename });
   // now we have a real js function, let's call it
   var args = [self.exports, require, self, filename, dirname];
@@ -292,7 +338,8 @@ Module.prototype._compile = function(content, filename) {
 
 ### Conclusion
 
-- a dependency imply a module object
+- node modules handle their dependencies themselves
+- node modules structure in like a composite pattern, parent, children...
 - a loading processus looks for you code into file
 - a require call checks first in cache, otherwise load into cache.
 - a compilation phase involved an anonymous function that wraps your module code with 3 main params (exports,require,module). By executing this function, `exports` Module object attribute is fill.
@@ -328,4 +375,20 @@ You can imagine the following
 });
 ```
 
+### Main
+
+When you start a new NodeJS program the Main Root Parent module is created here and follow above process.
+
+```javascript
+// bootstrap main module.
+Module.runMain = function() {
+  // Load the main module--the command line argument.
+  Module._load(process.argv[1], null, true);
+  // Handle any nextTicks added in the first tick of the program
+  process._tickCallback();
+};
+```
+
 If you want to look further, write a small test and debug it.
+
+You can also edit this article by pressing edit button.
