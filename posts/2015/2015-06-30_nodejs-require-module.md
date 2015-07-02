@@ -208,7 +208,8 @@ Module._load = function(request, parent, isMain) {
     return cachedModule.exports;
   }
   //
-  // 3> check if native module and compile it and return it if needed, example require('fs');
+  // 3> check if native module and compile it and return it if needed, 
+  // example require('fs');
   //
   if (NativeModule.exists(filename)) {
     // do some compil stuff
@@ -323,7 +324,8 @@ Module.prototype._compile = function(content, filename) {
   //  module.exports = 'I love JS';
   // });"
   //
-  // That is how magic happens and module exports object is fill, by a simple anonymous function wrapper
+  // That is how magic happens and module exports object is fill, 
+  // by a simple anonymous function wrapper
   //
   // here a call to native code with this code, imagine eval() function.
   // https://nodejs.org/api/vm.html
