@@ -1,5 +1,3 @@
-## Module
-
 Understand module component loading system is quite important in NodeJS, those who tried to play with it may know what I am talking about.
 
 How it works, what is the difference between `export`, `module.exports`.
@@ -33,7 +31,7 @@ Note that all your dependencies only shows `exports` object attribute to their p
 
 A specific namespace is created for each module by the use of an anonymous function wrapping your own code.
 
-Main role of Module is to build your dependency tree, and return the `exports' object:
+Main role of Module is to build your dependency tree, and return the `exports` object:
 
 ```javascript
 // create a new module
@@ -342,7 +340,7 @@ Module.prototype._compile = function(content, filename) {
 
 - node modules handle their dependencies themselves
 - node modules structure in like a composite pattern, parent, children...
-- a loading processus looks for you code into file
+- a loading processus looks into your code into file
 - a require call checks first in cache, otherwise load into cache.
 - a compilation phase involved an anonymous function that wraps your module code with 3 main params (exports,require,module). By executing this function, `exports` Module object attribute is fill.
 - at the end of loading process it returns your module `exports` attribute.

@@ -1,6 +1,15 @@
 // LIBRARY
 import React from 'react';
 
+// put in store
+let brandingLogoReq = require.context('../../images/branding/', false, /^\.\/.*\.svg$/);
+let markupFilesKeys = brandingLogoReq.keys();
+let brandingsMarkup = [];
+
+markupFilesKeys.forEach((elt, idx) => {
+  brandingsMarkup.push(<img src={brandingLogoReq(elt)} key={idx} width="40" height="40"/>);
+});
+
 if (process.env.BROWSER) {
   require('./_Footer.scss');
 }
@@ -13,8 +22,7 @@ export default class Footer extends React.Component {
   render() {
     return (
       <div className='footer'>
-        <iframe src='https://ghbtns.com/github-btn.html?user=darul75&repo=web-react&type=star&count=true&v=2' frameBorder='0' scrolling='0' width='170px' height='20px'></iframe>
-        <iframe src='https://ghbtns.com/github-btn.html?user=darul75&repo=web-react&type=fork&count=true&v=2' frameBorder='0' scrolling='0' width='170px' height='20px'></iframe>
+        <div>{brandingsMarkup}</div>
       </div>
     );
   }
