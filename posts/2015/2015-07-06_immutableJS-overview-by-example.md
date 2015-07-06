@@ -10,8 +10,6 @@ Api documentation use a very generic template syntax.
 
 ### Generic constructors
 
-Constructors are in capitalized form with some optional type parameters.
-
 ```javascript
 Map<K, V>(): Map<K, V> // create a new immutable map
 Set<T>(): Set<T>
@@ -24,19 +22,22 @@ Ok, it is quite simple, T (for Type) K (for Key) V (for Value) are generic type 
 
 Following commonly notation, keep it mind the following type parameter names:
 
-- E - Element
 - K - Key
-- N - Number
-- T - Type
 - V - Value
+- T - Type
+- number - Number
 
 ### Generic methods
 
 Function signature follow this convention:
 
+```javascript
 nameCamelCase(...parameters) : newCurrentImmutableObjToReturn
+```
 
-parameters are often named for more readability
+What I just want to say is that you work on immutable data, so always use your *returned value*, otherwise...
+
+parameters in documentation are often named for more readability
 
 ```javascript
 set(key: K, value: V): Map<K, V>
@@ -66,7 +67,7 @@ Ok, but let's see an exemple on an Immutable Map.update() object method :
 ```javascript
 update(key: K, updater: (value: V) => V): Map<K, V>
 ```
-OMG, do not worry, diffibult part to read is the parameter in parenthesis.
+OMG, do not worry, difficult part to read is the parameter in parenthesis.
 
 ```javascript
 (key: K, updater: (value: V) => V): Map<K, V>
@@ -115,7 +116,7 @@ console.log(newMyMap.get('myMapKey'));
 
 Iterating over your collection of data, you might all know what Iterable and Iterator mean.
 
-All collections in immutable are extending Iterable following common (key, value) pattern above
+All collections in Immutable are extending Iterable following common (key, value) pattern.
 
 ```javascript
 Iterable<K, V>
@@ -152,13 +153,46 @@ Iterable<T>(array: Array<T>): IndexedIterable<T>
 
 in practice
 ```javascript
-var myArrayIterator = Immutable.Iterable([1,2,3]);
+var myArray = [1,2,3];
+console.log(Immutable.Iterable.isIterable(myArray)); // false
+var myArrayIterator = Immutable.Iterable(myArray);
+console.log(Immutable.Iterable.isIterable(myArrayIterator)); // true
 console.log(myArrayIterator.first()); // 1
 console.log(myArrayIterator.get(2)); // 3
 ```
 
+Behind it looks like [Seq](http://facebook.github.io/immutable-js/docs/#/Seq) is used.
 
 
-Map<K, V>(iter: Iterable<any, Array<any>>): Map<K, V>
+#### KeyPath
+
+What is it ?
+
+A keypath seach for you data according to a path represented by a sum of keys.
+
+"Returns the value found by following a path of keys or indices through nested Iterables."
+
+Signature
+```javascript
+getIn(searchKeyPath: Array<any>, notSetValue?: any): any
+```
+
+Example
+```javascript
+var value = {
+ name: 'julien',
+ aka: 'darul75',
+ address: {
+  city: 'paris',
+  country: 'france'
+ }
+};
+var myMap = Immutable.Map({});
+myMap = myMap.set('myMapKey', Immutable.fromJS(value)); // convert plain object to an Immutable Map
+console.log(myMap.getIn(['address', 'city'])); 
+// 'paris'
+```
+
+Many functions can be used as setIn(), deleteIn(), updateIn(), mergeIn()....
 
 You can also edit this article by pressing edit button.
