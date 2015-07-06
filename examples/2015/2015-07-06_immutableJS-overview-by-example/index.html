@@ -1,10 +1,87 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.4/immutable.min.js"></script>
-    <script type="text/javascript" src="js.js"></script>
   </head>
   <body>
 
+<script type="text/babel">
+
+var value = {
+ name: 'julien',
+ aka: 'darul75',
+ address: {
+    city: 'paris',
+    country: 'france'
+ }
+};
+
+var myMap = Immutable.Map({});
+myMap = myMap.set('myMapKey', value);
+
+console.log('****demo1 : we gonna update "aka" attribute');
+var newMyMap = myMap.update('myMapKey', (myMapValue) => {
+  myMapValue.aka = 'darul';
+  return myMapValue;
+});
+
+console.log(newMyMap.get('myMapKey'));
+console.log(newMyMap.toString());
+console.log(Immutable.Iterable.isIterable(newMyMap));
+
+console.log('****demo2 : Iterable<K, V>(iterable: Iterable<K, V>): Iterable<K, V>');
+
+var myArrayIterator = Immutable.Iterable(myMap);
+console.log(myArrayIterator.first());
+// Object {name: "julien", aka: "darul"}
+console.log(myArrayIterator.get('myMapKey'));
+// Object {name: "julien", aka: "darul"}
+console.log(myArrayIterator.toString());
+console.log(Immutable.Iterable({'a': 'A', 'b': 'B', 'c': 'C'}).toString());
+
+console.log('****demo3 : // Iterable<T>(array: Array<T>): IndexedIterable<T>');
+
+var myArray = [1,2,3];
+console.log(Immutable.Iterable.isIterable(myArray));
+myArrayIterator = Immutable.Iterable(myArray);
+console.log(Immutable.Iterable.isIterable(myArrayIterator));
+console.log(myArrayIterator.first()); // 1
+console.log(myArrayIterator.get(2)); // 3
+console.log(myArrayIterator.toString());
+
+console.log('****demo4 : // Iterable<V>(obj: {[key: string]: V}): KeyedIterable<string, V>');
+myArrayIterator = Immutable.Iterable([['a','A'],['b','B'],['c','C']]);
+console.log(myArrayIterator.toString());
+
+var oddSquares = Immutable.Seq.of(1,2,3,4,5,6,7,8)
+  .filter((x, key) => {
+    console.log('key');
+    console.log(key);
+    console.log('filter x');
+    console.log(x);
+    console.log('x % 2');
+    console.log(x % 2);
+    return x % 2;
+  }).map((x) => {
+    console.log('map x');
+    console.log(x);
+    console.log('x * x');
+    console.log(x * x);
+    return x * x;
+  });
+
+console.log('result '+oddSquares.get(0))
+console.log(oddSquares.get(1))
+
+console.log('****demo5 : // getIn(searchKeyPath: Array<any>, notSetValue?: any): any');
+
+var map = Immutable.fromJS(newMyMap.get('myMapKey'));
+console.log(map.getIn(['address', 'city']));
+
+
+</script>
 
   </body>
 </html>
