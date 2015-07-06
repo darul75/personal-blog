@@ -1,7 +1,7 @@
 $font-stack: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $primary-color: #aaa;
 
-body {	
+body {
 	margin: auto;
 	font: 100% $font-stack;
   color: $primary-color;
@@ -25,12 +25,12 @@ h1 a:hover {
 ul {
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
-  li {    
+  li {
     color: #1677AA;
     font-weight: bold;
   }
 }
-  
+
 p {
   font-size: 18px;
   line-height: 1.5;
@@ -60,6 +60,12 @@ button.buttonize, a.buttonize {
   -o-transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
   transition-timing-function: cubic-bezier(0.165, 0.63, 0.14, 0.82);
   -webkit-font-smoothing: antialiased;
+}
+
+article {
+  button.buttonize, a.buttonize {
+    margin-top: 30px;
+  }
 }
 
 button.buttonize.small, a.buttonize.small {
