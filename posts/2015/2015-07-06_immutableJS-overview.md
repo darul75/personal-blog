@@ -1,6 +1,6 @@
 Immutable library can be useful but documentation is quite tricky to understand.
 
-Let's view some examples together.
+I have just played a little with this library and wanted to share with you some examples.
 
 ## API
 
@@ -26,6 +26,7 @@ Following commonly notation, keep it mind the following type parameter names:
 - V - Value
 - T - Type
 - number - Number
+- ... maybe more
 
 ### Generic methods
 
@@ -112,7 +113,7 @@ console.log(newMyMap.get('myMapKey'));
 // Object {name: "julien", aka: "darul"}
 ```
 
-#### Iterable
+### Iterable
 
 Iterating over your collection of data, you might all know what Iterable and Iterator mean.
 
@@ -164,7 +165,7 @@ console.log(myArrayIterator.get(2)); // 3
 Behind it looks like [Seq](http://facebook.github.io/immutable-js/docs/#/Seq) is used.
 
 
-#### KeyPath
+### KeyPath
 
 What is it ?
 
