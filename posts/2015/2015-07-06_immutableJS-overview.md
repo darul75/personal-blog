@@ -1,6 +1,4 @@
-Immutable library can be useful but documentation is quite tricky to understand.
-
-I have just played a little with this library and wanted to share with you some examples.
+Immutable library can be useful but documentation is quite tricky to understand. I have just played a little with this library and wanted to share with you some examples.
 
 ## API
 
