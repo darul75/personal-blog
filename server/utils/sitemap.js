@@ -15,7 +15,7 @@ let handler = {
       let {title: title} = post;
 
       urls.push({
-        url: '/post/'+ title.substring(2, title.indexOf('.md')).toLowerCase(), changefreq: 'monthly', priority: 0.3
+        url: '/post/' + title.substring(2, title.indexOf('.md')).toLowerCase(), changefreq: 'monthly', priority: 0.3
       });
     });
     sitemap = sm.createSitemap({
