@@ -1,5 +1,7 @@
 Immutable library can be useful but documentation is quite tricky to understand. I have just played a little with this library and wanted to share with you some examples.
 
+Written with [TypeScript](http://www.typescriptlang.org/) I guess it is why documentation is quite difficult to read first.
+
 ## API
 
 Api documentation use a very generic template syntax.
@@ -131,7 +133,7 @@ var myMap = Immutable.Map({});
 myMap = myMap.set('myMapKey', value);
 var myArrayIterator = Immutable.Iterable(myMap);
 // not needed by default as Map implement it by debault
-console.log(myArrayIterator.first()); 
+console.log(myArrayIterator.first());
 // Object {name: "julien", aka: "darul"}
 console.log(myArrayIterator.get('myMapKey'));
 // Object {name: "julien", aka: "darul"}
@@ -141,7 +143,7 @@ console.log(myArrayIterator.get('myMapKey'));
 
 Purpose of this example is to get an Iterable obj from a native javascript array.
 
-Then play with all methods available on [it](http://facebook.github.io/immutable-js/docs/#/IndexedIterable) 
+Then play with all methods available on [it](http://facebook.github.io/immutable-js/docs/#/IndexedIterable)
 
 ```javascript
 // constructor from documentation
@@ -188,7 +190,7 @@ var value = {
 };
 var myMap = Immutable.Map({});
 myMap = myMap.set('myMapKey', Immutable.fromJS(value)); // convert plain object to an Immutable Map
-console.log(myMap.getIn(['address', 'city'])); 
+console.log(myMap.getIn(['address', 'city']));
 // 'paris'
 ```
 

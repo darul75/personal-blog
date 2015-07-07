@@ -14,7 +14,7 @@ import alt from '../../app/alt';
 
 let html = '';
 
-var renderer = {
+let renderer = {
   init: (type) => {
     html = type === 'dev' ?
       fs.readFileSync('./assets/index-dev.html', {encoding: 'utf8'})

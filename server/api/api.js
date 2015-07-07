@@ -15,7 +15,7 @@ let api = {
       */
       res.status(200).send({test: 'test'});
     } catch (err) {
-      next(err);
+      return next(err);
     }
   },
   othertodo: () => {
