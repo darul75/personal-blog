@@ -7,6 +7,10 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HtmlHeaderTags from '../Document/HtmlHeaderTags';
 
+// FLUX
+import AppStore from '../../stores/AppStore';
+import connectToStores from 'alt/utils/connectToStores';
+
 if (process.env.BROWSER) {
   //require('../../../node_modules/github-markdown-css/github-markdown.css');
   require('./_App.scss');
@@ -14,23 +18,42 @@ if (process.env.BROWSER) {
   require('../../../assets/js/google/google');
 }
 
-export default class App extends React.Component {
+let app = class App extends React.Component {
   constructor() {
     super();
   }
 
   render() {
+    let menu = App.getPropsFromStores().menu;
+    let slideForMenu = menu ? 'slide' : '';
+    slideForMenu += App.getPropsFromStores().menuHide ? 'Off' : '';
+
     return (
       <div>
-        <HtmlHeaderTags />
         <Header />
-        <div className='main-content'>
-          <RouteHandler />
+        <div className={slideForMenu}>
+          <HtmlHeaderTags />
+          <div className='main-content'>
+            <RouteHandler />
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
     );
   }
-}
 
-App.prototype.displayName = 'App';
+  static getStores() {
+    return [AppStore];
+  }
+
+  static getPropsFromStores() {
+    return {
+      menu: AppStore.getState().menu,
+      menuHide: AppStore.getState().menuHide
+    };
+  }
+};
+
+app.prototype.displayName = 'App';
+
+export default connectToStores(app);

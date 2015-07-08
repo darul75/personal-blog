@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 
 // FLUX
+import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
 import connectToStores from 'alt/utils/connectToStores';
 
@@ -170,6 +171,7 @@ let postItem = class PostItem extends React.Component {
   }
 
   _onClick(e) {
+    AppActions.showPostMenu(true);
     this.setState({
       menu: true,
       menuPageY: e.pageY,
@@ -178,6 +180,7 @@ let postItem = class PostItem extends React.Component {
   }
 
   _onMouseLeave() {
+    AppActions.hidePostMenu(true);
     this.setState({menu: false});
   }
 
@@ -244,7 +247,8 @@ let postItem = class PostItem extends React.Component {
     return {
       config: AppStore.getState().config,
       posts: AppStore.getState().posts,
-      packagejson: AppStore.getState().packagejson
+      packagejson: AppStore.getState().packagejson,
+      menu: AppStore.getState().menu
     };
   }
 };

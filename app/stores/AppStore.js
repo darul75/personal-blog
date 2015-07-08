@@ -10,6 +10,8 @@ let appStore = makeHot(alt, class AppStore {
   constructor() {
     this.bindActions(AppActions);
     this.posts = [];
+    this.menu = false;
+    this.menuHide = false;
     this.packagejson = require('../../package.json');
     this.config = require('../../assets/config.json');
     this.init();
@@ -48,6 +50,19 @@ let appStore = makeHot(alt, class AppStore {
     });
 
     this.posts.reverse();
+  }
+
+  onHidePostMenu(hide) {
+    this.setState({
+      menuHide: hide
+    });
+  }
+
+  onShowPostMenu(show) {
+    this.setState({
+      menu: show,
+      menuHide: false
+    });
   }
 }, 'AppStore');
 
