@@ -11,6 +11,7 @@ if (process.env.BROWSER) {
   //require('../../../node_modules/github-markdown-css/github-markdown.css');
   require('./_App.scss');
   require('file?name=favicon.ico!../../images/favicon.ico');
+  require('../../../assets/js/google/google');
 }
 
 export default class App extends React.Component {
