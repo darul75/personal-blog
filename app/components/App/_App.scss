@@ -144,7 +144,7 @@ hr {
 div.slide {
   transform: translate3d(-50px, 0, 0);
   -moz-transform: translate3d(350px, 0, 0) scale(0);
-  -webkit-transform: scale(0.9) rotate3d(10, 10, 10, -10deg);
+  -webkit-transform: scale(1) rotate3d(20, 20, 0, -27deg);
   -webkit-transition: 0.6s;
   transition: 0.6s;
   div#post-menu {
