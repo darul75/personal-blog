@@ -4,9 +4,7 @@ Written with [TypeScript](http://www.typescriptlang.org/) I guess it is why docu
 
 ## API
 
-Api documentation use a very generic template syntax.
-
-## Documentation syntax
+Documentation use a very generic template syntax.
 
 ### Generic constructors
 

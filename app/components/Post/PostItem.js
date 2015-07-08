@@ -23,6 +23,10 @@ let postItem = class PostItem extends React.Component {
     this.propsTypes = {
       post: PropTypes.object.isRequired
     };
+    this.state = {
+      menu: false
+    };
+    this.titles = {};
   }
 
   componentDidMount() {
@@ -31,7 +35,7 @@ let postItem = class PostItem extends React.Component {
 
       if (this.props.params) {
         /*eslint-disable */
-        let disqus_shortname = 'darul';      
+        let disqus_shortname = 'darul';
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -39,12 +43,23 @@ let postItem = class PostItem extends React.Component {
         })();
         /*eslint-enable */
       }
+
+      /*this.titles.forEach((elt) => {
+        let tinyMenuButton = <span>{elt.h2}
+          <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
+            <span>menu</span>
+          </button>
+        </span>;
+        React.render(tinyMenuButton, document.getElementById(elt.h2));
+      });*/
+      //
     });
   }
 
   componentDidUpdate() {
     setTimeout(() => {
-      prism.highlightAll(() => {});
+      prism.highlightAll(() => {
+      });
     });
   }
 
@@ -52,6 +67,7 @@ let postItem = class PostItem extends React.Component {
     let post = this.props.post,
         disqusMarkup = '',
         markdownClass = 'markdown-body highlight preview',
+        markdownMenu = '',
         moreButton = '',
         backButton = '',
         time = '',
@@ -73,15 +89,25 @@ let postItem = class PostItem extends React.Component {
       post = _.find(posts, function(item) {
         return item.permalink === postId;
       });
+      // build menu
+      let titlesInfo = {info: ''};
+      markdownMenu = PostItem.getSectionMenu(post.body, titlesInfo);
+      this.titles = titlesInfo.info;
 
       time = <time dateTime={post.date.toString()}>{post.date}</time>;
       let homepage = PostItem.getPropsFromStores().packagejson.homepage;
       editUrl = homepage + '/edit/master/posts/2015/' + post.filename;
-      editButtonMarkup = <a href={editUrl} target='_blank' title='edit me'>
-        <button className='c-hamburger edition' href={editUrl} target='_blank'>
-          <span>edition</span>
-        </button>
-      </a>;
+      /*
+        <button className='c-hamburger menu' onClick={this._onClick.bind(this)} title='see sections'>
+          <span>menu</span>
+        </button>*/
+      editButtonMarkup = <div className='post-buttons'>
+        <a href={editUrl} target='_blank' title='edit me'>
+          <button className='c-hamburger edition' href={editUrl} target='_blank'>
+            <span>edition</span>
+          </button>
+        </a>
+      </div>;
       let templateTitle = '%s | ' + post.title;
       let postTitle = title + ' | ' + post.title;
       helmetMarkup = <Helmet title={title} titleTemplate={templateTitle} meta={[
@@ -102,9 +128,16 @@ let postItem = class PostItem extends React.Component {
     let postPermalink = '/post/' + post.permalink;
     let articleContainerClass = 'post ';
 
+    //post.body = post.body.replace('</h2>', '</h2>' + markDown);
+
+    const showClass = this.state.menu ? 'show' : '';
+
     return (
       <section>
         <article className={articleContainerClass}>
+          <div id='post-menu' className={showClass} onMouseLeave={this._onMouseLeave.bind(this)}>
+            {markdownMenu}
+          </div>
           <div className='markdown-body'>
             {time}
           </div>
@@ -122,6 +155,69 @@ let postItem = class PostItem extends React.Component {
         </article>
       </section>
     );
+  }
+
+  _onClick() {
+    this.setState({menu: true});
+  }
+
+  _onMouseLeave() {
+    this.setState({menu: false});
+  }
+
+  static getSectionMenu(body, titlesInfo) {
+    const matchTitles = body.match(/<(h2|h3) (\S+)=(["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?)/g);
+    let titles = [],
+      current,
+      menu = [];
+
+    if (matchTitles) {
+      matchTitles.forEach((tag) => {
+        const h2 = tag.match(/<h2 id="(\S*)"/);
+        const h3 = tag.match(/<h3 id="(\S*)"/);
+        if (h2) {
+          current = {
+            h2: h2[1],
+            h3: []
+          };
+          titles.push(current);
+        }
+        else if (h3 && h3) {
+          current.h3.push({h3: h3[1]});
+        }
+      });
+
+      titlesInfo.info = titles;
+
+      // build html
+      titles.forEach((title, idx) => {
+        let subMenu = [];
+        if (title.h3) {
+          title.h3.forEach((title3, idx2) => {
+            const key = 'subMenu-' + idx2;
+            const subtarget = '#' + title3.h3;
+            subMenu.push(<ul key={key}>
+              <li className='title'>
+                <a href={subtarget}>
+                  {title3.h3}
+                </a>
+              </li>
+            </ul>);
+          });
+        }
+        const target = '#' + title.h2;
+        menu.push(<ul key={idx}>
+          <li className='title'>
+            <a href={target}>
+              {title.h2}
+            </a>
+            {subMenu}
+          </li>
+        </ul>);
+      });
+
+      return <div>{menu}</div>;
+    }
   }
 
   static getStores() {
