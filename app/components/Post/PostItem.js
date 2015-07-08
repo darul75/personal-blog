@@ -44,15 +44,24 @@ let postItem = class PostItem extends React.Component {
         /*eslint-enable */
       }
 
-      /*this.titles.forEach((elt) => {
+      this.titles.forEach((elt) => {
         let tinyMenuButton = <span>{elt.h2}
           <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
             <span>menu</span>
           </button>
         </span>;
         React.render(tinyMenuButton, document.getElementById(elt.h2));
-      });*/
-      //
+        if (elt.h3) {
+          elt.h3.forEach((elt1) => {
+            let tinyMenuButton2 = <span>{elt1.h3}
+              <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
+                <span>menu</span>
+              </button>
+            </span>;
+            React.render(tinyMenuButton2, document.getElementById(elt1.h3));
+          });
+        }
+      });
     });
   }
 
@@ -97,11 +106,10 @@ let postItem = class PostItem extends React.Component {
       time = <time dateTime={post.date.toString()}>{post.date}</time>;
       let homepage = PostItem.getPropsFromStores().packagejson.homepage;
       editUrl = homepage + '/edit/master/posts/2015/' + post.filename;
-      /*
+      editButtonMarkup = <div className='post-buttons'>
         <button className='c-hamburger menu' onClick={this._onClick.bind(this)} title='see sections'>
           <span>menu</span>
-        </button>*/
-      editButtonMarkup = <div className='post-buttons'>
+        </button>
         <a href={editUrl} target='_blank' title='edit me'>
           <button className='c-hamburger edition' href={editUrl} target='_blank'>
             <span>edition</span>
@@ -131,11 +139,15 @@ let postItem = class PostItem extends React.Component {
     //post.body = post.body.replace('</h2>', '</h2>' + markDown);
 
     const showClass = this.state.menu ? 'show' : '';
+    let menuPositionStyle = {};
+    if (this.state.menu) {
+      menuPositionStyle.top = this.state.menuPageY - this.state.menuH - 400;
+    }
 
     return (
       <section>
         <article className={articleContainerClass}>
-          <div id='post-menu' className={showClass} onMouseLeave={this._onMouseLeave.bind(this)}>
+          <div id='post-menu' ref='postmenu' style={menuPositionStyle} className={showClass} onMouseLeave={this._onMouseLeave.bind(this)}>
             {markdownMenu}
           </div>
           <div className='markdown-body'>
@@ -157,8 +169,12 @@ let postItem = class PostItem extends React.Component {
     );
   }
 
-  _onClick() {
-    this.setState({menu: true});
+  _onClick(e) {
+    this.setState({
+      menu: true,
+      menuPageY: e.pageY,
+      menuH: this.refs.postmenu.getDOMNode().offsetHeight
+    });
   }
 
   _onMouseLeave() {
