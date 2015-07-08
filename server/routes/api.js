@@ -12,7 +12,7 @@ router.use('/api/*', (req, res, next) => {
 });
 
 router.use('/sitemap.xml', (req, res, next) => {
-  sitemap.create(req, res, next);
+  sitemap.handle(req, res, next);
 });
 
 export default router;
@@ -21,7 +21,7 @@ export default router;
 // check if HMR is enabled
 // --------------------
 if(module.hot) {
-  module.hot.accept(['../api/api'], () => {
+  module.hot.accept(['../api/api', '../utils/sitemap'], () => {
     api = require('../api/api');
     sitemap = require('../utils/sitemap');
   });

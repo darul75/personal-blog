@@ -1,0 +1,9 @@
+User-agent: *
+Crawl-delay: 120
+
+Allow: /
+Disallow: *.css$
+Disallow: *data:*$
+Disallow: *base64*$
+
+Sitemap: http://www.darul.io/sitemap.xml

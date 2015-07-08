@@ -40,6 +40,9 @@ http.createServer(app).listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+// Robots.txt
+require('file?name=robots.txt!./../robots.txt');
+
 //
 // check if HMR is enabled
 // --------------------

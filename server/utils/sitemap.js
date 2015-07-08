@@ -5,22 +5,24 @@ let sm = require('sitemap');
 let sitemap;
 
 let handler = {
-  create: (req, res, next) => {
+  handle: (req, res, next) => {
     // TODO cache
     const posts = AppStore.getState().posts;
 
-    let urls = [];
+    let urls = [{url: '/', changefreq: 'monthly', priority: 1.0}];
 
     posts.forEach(post => {
-      let {title: title} = post;
+      let {title, permalink} = post;
+
+      console.log(permalink);
 
       urls.push({
-        url: '/post/' + title.substring(2, title.indexOf('.md')).toLowerCase(), changefreq: 'monthly', priority: 0.3
+        url: '/post/' + permalink, changefreq: 'monthly', priority: 0.5
       });
     });
     sitemap = sm.createSitemap({
-      hostname: 'http://example.com',
-      cacheTime: 600000,        // 600 sec - cache purge period
+      hostname: 'http://www.darul.io',
+      cacheTime: 600000,
       urls: urls
     });
 
@@ -36,19 +38,4 @@ let handler = {
   }
 };
 
-//
-// check if HMR is enabled
-// --------------------
-if(module.hot) {
-  module.hot.accept(['../utils/sitemap'], () => {
-    console.log('toto');
-    sitemap = undefined;
-  });
-}
-
 export default handler;
-
-/*
-var sitemap = sm.createSitemap({ options }); //Creates a sitemap object given the input configuration with URLs
-sitemap.toXML( function(xml){ console.log(xml) });) //Generates XML with a callback function
-var xml = sitemap.toString(); //Gives you a string containing the XML data*/
