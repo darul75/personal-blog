@@ -96,8 +96,10 @@ var value = {
 
 // create a new map
 var myMap = Immutable.Map({});
-// add a value, note we play with immutable object, so keep in mind return and erase old one
-myMap = myMap.set('myMapKey', value);
+// add a value, note we play with immutable object, so keep in mind
+// to always return and erase old one
+// Example:
+// myMap = myMap.set('myMapKey', value);
 
 // we gonna update 'aka' attribute value from 'darul75' to 'darul'
 var newMyMap = myMap.update('myMapKey', (myMapValue) => {

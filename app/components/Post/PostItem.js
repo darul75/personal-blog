@@ -27,7 +27,7 @@ let postItem = class PostItem extends React.Component {
     this.state = {
       menu: false
     };
-    this.titles = {};
+    this.titles = undefined;
   }
 
   componentDidMount() {
@@ -45,24 +45,26 @@ let postItem = class PostItem extends React.Component {
         /*eslint-enable */
       }
 
-      this.titles.forEach((elt) => {
-        let tinyMenuButton = <span>{elt.h2}
-          <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
-            <span>menu</span>
-          </button>
-        </span>;
-        React.render(tinyMenuButton, document.getElementById(elt.h2));
-        if (elt.h3) {
-          elt.h3.forEach((elt1) => {
-            let tinyMenuButton2 = <span>{elt1.h3}
-              <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
-                <span>menu</span>
-              </button>
-            </span>;
-            React.render(tinyMenuButton2, document.getElementById(elt1.h3));
-          });
-        }
-      });
+      if (this.titles !== undefined) {
+        this.titles.forEach((elt) => {
+          let tinyMenuButton = <span>{elt.h2.replace(/\-/g, ' ')}
+            <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
+              <span>menu</span>
+            </button>
+          </span>;
+          React.render(tinyMenuButton, document.getElementById(elt.h2));
+          if (elt.h3) {
+            elt.h3.forEach((elt1) => {
+              let tinyMenuButton2 = <span>{elt1.h3.replace(/\-/g, ' ')}
+                <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
+                  <span>menu</span>
+                </button>
+              </span>;
+              React.render(tinyMenuButton2, document.getElementById(elt1.h3));
+            });
+          }
+        });
+      }
     });
   }
 

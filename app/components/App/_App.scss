@@ -142,30 +142,20 @@ hr {
 }
 
 div.slide {
-  transform: translate3d(-50px, 0, 0);
-  -moz-transform: translate3d(350px, 0, 0) scale(0);
-  -webkit-transform: scale(1) rotate3d(20, 20, 0, -27deg);
-  -webkit-transition: 0.6s;
-  transition: 0.6s;
   div#post-menu {
+    transition: all 0.7s ease-out;
     -webkit-transition: 0.6s;
-    transition: 0.6s;
-    transform: translate3d(0, 0, 0) scale(1.5) rotate3d(10, 10, 10, 10deg);
-    -webkit-transform: scale(1) rotate3d(10, 10, 10, 10deg);
+    transform: scale(1.2) rotate3d(0, 0, 1, -5deg);
+    -webkit-transform: scale(1) rotate3d(0, 0, 1, 0deg);
   }
 }
 
 div.slideOff {
-  transform: translate3d(-50px, 0, 0);
-  -moz-transform: translate3d(350px, 0, 0) scale(0);
-  -webkit-transform: translate3d(0,0,0) scale(1) rotate3d(0, 0, 0, 0deg);
-  -webkit-transition: 0.6s;
-  transition: 0.6s;
   div#post-menu {
+    transition: all 0.7s ease-out;
     -webkit-transition: 0.6s;
-    transition: 0.6s;
-    transform: translate3d(0, 0, 0) scale(1.5) rotate3d(10, 10, 10, 10deg);
-    -webkit-transform: translate3d(0, 0, 0) scale(1.5) rotate3d(10, 10, 10, 10deg);
+    transform: scale(1) rotate3d(0, 0, 1, 0deg);
+    -webkit-transform: scale(1) rotate3d(0, 0, 1, 0deg);
   }
 }
 

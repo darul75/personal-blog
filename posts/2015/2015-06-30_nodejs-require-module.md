@@ -1,12 +1,8 @@
-Understand module component loading system is quite important in NodeJS, those who tried to play with it may know what I am talking about.
+Understand module component loading system is quite important in NodeJS, those who tried to play with it may know what I am talking about. How it works, what is the difference between `export`, `module.exports`.
 
-How it works, what is the difference between `export`, `module.exports`.
+In this article, we will focus at how node core dependency management works.
 
-In this thread, we will take a deep look at how node core dependency management works.
-
-Module system in NodeJS is handle by [Module.js](https://github.com/joyent/node/blob/master/lib/module.js) file.
-
-Description of Module API is [here](https://nodejs.org/docs/latest/api/modules.html#modules_the_module_object), but we use it very rarely.
+Module system in NodeJS is handle by [Module.js](https://github.com/joyent/node/blob/master/lib/module.js) file and description of Module API is [here](https://nodejs.org/docs/latest/api/modules.html#modules_the_module_object), but we use it very rarely.
 
 Main purpose of Module is to handle your code dependencies by providing a runtime context.
 
@@ -31,16 +27,16 @@ Note that all your dependencies only shows `exports` object attribute to their p
 
 A specific namespace is created for each module by the use of an anonymous function wrapping your own code.
 
-Main role of Module is to build your dependency tree, and return the `exports` object:
+Main role of Module is to build your dependency tree, and to return the `exports` object:
 
 ```javascript
 // create a new module
-// digest your module code 
+// digest your module code
 // and then return exports attr
 return module.exports;
 ```
 
-Here some common scenarios when creating a module (note the dot .).
+Here some common scenarios when you start to write your own module (note the dot .).
 
 ```javascript
 exports.myFn = function() {
@@ -61,7 +57,7 @@ This fills your module `exports` object attribute.
 
   },
   myFn2 : function() {
-  
+
   }
 }
 ```
@@ -74,7 +70,7 @@ exports = {
 
   },
   fn2: function() {
-      
+
   }
 }
 ```
@@ -91,7 +87,7 @@ exports.fn = function() {
 };
 
 exports.fn2 = function() {
-      
+
 };
 ```
 
@@ -110,10 +106,10 @@ var myStuff = function doStuff() {
 
 var myStuff = {
   doStuff: function doStuff1() {
-  
+
   },
   doStuff1: function doStuff1() {
-  
+
   }
 
 };
@@ -131,7 +127,7 @@ By using require, behind the scene a module context is created and your code run
 
 ### Global
 
-`require` function is attached to node global `object`, imagine `window` object for a browser environment. 
+`require` function is attached to node global `object`, imagine `window` object for a browser environment.
 
 So when you type `require('something')` js prototype pattern looks for it and finds require function.
 
@@ -155,7 +151,7 @@ To recap when you type require, js engine retrieves global object and look for a
 
 ```javascript
 //
-// - Loads a module at the given file path. 
+// - Loads a module at the given file path.
 // - Returns that module's `exports` property.
 //
 Module.prototype.require = function(path) {
@@ -190,7 +186,7 @@ Load function is called with 3 parameters
 * parent: null if root module
 * isMain: main root file flag, here true when loading main.js file.
 
-Here my comment annotations about it:
+Here my annotations about it:
 
 ```javascript
 Module._load = function(request, parent, isMain) {
@@ -206,7 +202,7 @@ Module._load = function(request, parent, isMain) {
     return cachedModule.exports;
   }
   //
-  // 3> check if native module and compile it and return it if needed, 
+  // 3> check if native module and compile it and return it if needed,
   // example require('fs');
   //
   if (NativeModule.exists(filename)) {
@@ -244,7 +240,7 @@ Method to look for `dependency` module.
 
 ```javascript
 Module._resolveFilename = function(request, parent) {
- // 
+ //
  // internal stuff to compute path
  //
  return filename; // example here /mypath/myproject/dependency.js
@@ -318,11 +314,11 @@ Module.prototype._compile = function(content, filename) {
   // it will gives the following anonymous function
   // NOTE: it is a simple STRING
   //
-  // "(function (exports, require, module, __filename, __dirname) { 
+  // "(function (exports, require, module, __filename, __dirname) {
   //  module.exports = 'I love JS';
   // });"
   //
-  // That is how magic happens and module exports object is fill, 
+  // That is how magic happens and module exports object is fill,
   // by a simple anonymous function wrapper
   //
   // here a call to native code with this code, imagine eval() function.
@@ -336,7 +332,7 @@ Module.prototype._compile = function(content, filename) {
 }
 ```
 
-### Conclusion
+## Conclusion
 
 - node modules handle their dependencies themselves
 - node modules structure in like a composite pattern, parent, children...
@@ -345,7 +341,7 @@ Module.prototype._compile = function(content, filename) {
 - a compilation phase involved an anonymous function that wraps your module code with 3 main params (exports,require,module). By executing this function, `exports` Module object attribute is fill.
 - at the end of loading process it returns your module `exports` attribute.
 
-### Result
+## Result
 
 Your compiled code looks like:
 
@@ -358,7 +354,7 @@ Your compiled code looks like:
 
 ./dependency.js
 ```javascript
-(function (exports, require, module, __filename, __dirname) { 
+(function (exports, require, module, __filename, __dirname) {
   module.exports = 'I love JS';
 });
 ```
@@ -369,13 +365,13 @@ You can imagine the following
 ```javascript
 (function (exports, require, module, __filename, __dirname) {
   ./dependency.js
-  var dep = (function (exports, require, module, __filename, __dirname) { 
+  var dep = (function (exports, require, module, __filename, __dirname) {
     return module.exports = 'I love JS';
   });
 });
 ```
 
-### Main
+## Main
 
 When you start a new NodeJS program the Main Root Parent module is created here and follow above process.
 
