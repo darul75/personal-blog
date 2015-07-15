@@ -1,1 +1,1 @@
-module.exports = 'require 2';
+module.exports = 'requiddddddddddzzzdddre 2';

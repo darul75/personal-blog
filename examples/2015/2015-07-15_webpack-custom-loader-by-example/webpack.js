@@ -1,35 +1,34 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var entry = ["./entry.js"];
+var out = path.resolve(__dirname);
+console.log(out);
+var root_dir = path.resolve(__dirname);
 
-//entry.push('webpack/hot/poll?1000');
+var entry = ['webpack/hot/poll?1000','./entry.js'];
 
 var cfg = {
+  context: root_dir,
   resolve: {
     extensions: ['', '.js']
   },
   entry: entry,
   output: {
-    path: __dirname,
-    filename: "bundle.js",
+    path: out,
+    filename: 'server.js',
     libraryTarget: 'commonjs2',
-    publicPath: './'
+    publicPath: '/'
   },
   recordsPath: path.resolve(__dirname, 'webpack.records.json'),
   module: {
-    /*preLoaders: [
-      {
-        test: /\.js$/,
-        loader: "source-map-loader"
-      }
-    ],*/
-    devtool: 'source-map',
-    loaders: [
-      {test: /\.js$/, loader: "./test-loader"}
+    // devtool: 'source-map',
+    preLoaders: [
+      {test: /\.js$/, loader: "./test-loader", exclude: /node_module/}
     ]
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.DedupePlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
@@ -45,5 +44,7 @@ var cfg = {
       }
 };
 
+module.exports = cfg;
+
 // http://webpack.github.io/docs/node.js-api.html
-webpack(cfg, function() {});
+//webpack(cfg, function() {});

@@ -22,6 +22,9 @@ module.exports = function(source) {
   }
 
   var resourcePath = this.resourcePath;
+
+  console.log('--------resource --------')
+  console.log(resourcePath);
   if (/node_modules/.test(resourcePath)) {
     return this.callback(null, source, map);
   }
@@ -43,7 +46,6 @@ module.exports = function(source) {
       continue;
     }
     var reg = "(" + data.name + "\\.[(\"\'\\w\,\\s)]+)";
-    console.log("reg " + reg);
     var nameFunction = new RegExp(reg, 'g');
     while (fns = nameFunction.exec(src), fns != null) {
       data.fns.push(fns[0]);
@@ -77,6 +79,8 @@ module.exports = function(source) {
    prependText = [
     '/* TEST */',
     'if (module.hot) {\n',
+      // accept itself
+      // 'module.hot.accept(function(e){console.log(e);});',
       'module.hot.accept('+ depsString +', function() {\n',
         hotCall,
       '});',

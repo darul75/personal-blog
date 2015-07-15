@@ -10,10 +10,18 @@ var router = express.Router();
 app.set('port', process.env.PORT || 3000);
 //app.use(express.static(publicPath));
 
-router.use('*', function(req, res, next) {
+// router.use('/', function(req, res, next) {
+//   require1.do("someStuffddd");
+//   res.status(200).send({test: 'test'});
+// });
+
+app.use(function (req, res, next) {
+  console.log('Timddde: %d', Date.now());
   require1.do("someStuffddd");
-  res.status(200).send({test: 'test'});
-});
+  next();
+})
+
+require1.do("dddd");
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));

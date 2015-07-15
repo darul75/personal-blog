@@ -1,37 +1,43 @@
 {
-  "nextFreeModuleId": 7,
+  "nextFreeModuleId": 9,
   "modules": {
     "byIdentifier": {
-      "multi main": 0,
-      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": 1,
-      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": 2,
-      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": 3,
-      "external \"path\"": 4,
+      "test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require1.js": 1,
+      "test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require2.js": 2,
+      "test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/entry.js": 3,
+      "external \"express\"": 4,
       "external \"http\"": 5,
-      "external \"express\"": 6
+      "external \"path\"": 6,
+      "multi main": 0,
+      "multi app": 0,
+      "../../../node_modules/webpack/hot/log-apply-result.js": 7,
+      "../../../node_modules/webpack/hot/poll.js?1000": 8
     }
   },
-  "nextFreeChunkId": 1,
+  "nextFreeChunkId": 2,
   "chunks": {
     "byName": {
-      "main": 0
+      "main": 0,
+      "app": 1
     },
     "byBlocks": {}
   },
-  "prepreHash": "3578ff64452aff57e6dd",
-  "preHash": "80442e7192a129c7e628",
-  "hash": "7e8a833e34058c6a02fb",
+  "prepreHash": "c0cddb9d5000a823ea5e",
+  "preHash": "62042096e5e6d82cccd3",
+  "hash": "16cdb17f698a185ca3e4",
   "moduleHashs": {
-    "multi main": "74ba43b1cde007490fe02d8d57f1750b",
-    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": "9f4b70be9c6f44a605eaea794ddb0af8",
-    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": "2b4bed352d1ea018acf859bfbf049768",
-    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": "32ad7afb3a6aaabb6ac34c00ddf2cf9e",
-    "external \"path\"": "a87ff679a2f3e71d9181a67b7542122c",
+    "multi main": "50f5d998cf90e7a949daf3b4bd7bb9c4",
+    "/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require1.js": "7daedde01e177a803e7a1c003ee87e68",
+    "/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require2.js": "1d55516564aa76820e391dd3996f1405",
+    "/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/entry.js": "4dc8265300f84fa97f5391bea0e7dda7",
+    "external \"express\"": "a87ff679a2f3e71d9181a67b7542122c",
     "external \"http\"": "e4da3b7fbbce2345d7772b0674a318d5",
-    "external \"express\"": "1679091c5a880faf6fb5e6087eb1b2dc"
+    "external \"path\"": "1679091c5a880faf6fb5e6087eb1b2dc",
+    "/Users/julienvalery/Documents/Dev/Git/personal-blog/node_modules/webpack/hot/log-apply-result.js": "62e458b865803a4e4ac7636052f9374c",
+    "/Users/julienvalery/Documents/Dev/Git/personal-blog/node_modules/webpack/hot/poll.js?1000": "cc8e4c4686b46a52b3c22dbb3f5c64a7"
   },
   "chunkHashs": {
-    "0": "b17cb8d57e3128731c0676a3c4ed3882"
+    "0": "8d4002d9f3f0b80a41e7c8a1d480184a"
   },
   "chunkModuleIds": {
     "0": [
@@ -41,7 +47,9 @@
       3,
       4,
       5,
-      6
+      6,
+      7,
+      8
     ]
   }
 }
