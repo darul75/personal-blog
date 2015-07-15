@@ -17,7 +17,7 @@ module.exports =
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7e016c91877968ce21f7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7e8a833e34058c6a02fb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -555,7 +555,7 @@ module.exports =
 	  }); }
 
 	module.exports = {
-		do: function(dddsss) {
+		do: function(toto) {
 
 		}
 

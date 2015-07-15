@@ -1,8 +1,14 @@
 var webpack = require('webpack');
+var path = require('path');
 
 var entry = ["./entry.js"];
 
+//entry.push('webpack/hot/poll?1000');
+
 var cfg = {
+  resolve: {
+    extensions: ['', '.js']
+  },
   entry: entry,
   output: {
     path: __dirname,
@@ -10,6 +16,7 @@ var cfg = {
     libraryTarget: 'commonjs2',
     publicPath: './'
   },
+  recordsPath: path.resolve(__dirname, 'webpack.records.json'),
   module: {
     /*preLoaders: [
       {

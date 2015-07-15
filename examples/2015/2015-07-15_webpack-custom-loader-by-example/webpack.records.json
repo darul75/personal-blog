@@ -1,0 +1,47 @@
+{
+  "nextFreeModuleId": 7,
+  "modules": {
+    "byIdentifier": {
+      "multi main": 0,
+      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": 1,
+      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": 2,
+      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": 3,
+      "external \"path\"": 4,
+      "external \"http\"": 5,
+      "external \"express\"": 6
+    }
+  },
+  "nextFreeChunkId": 1,
+  "chunks": {
+    "byName": {
+      "main": 0
+    },
+    "byBlocks": {}
+  },
+  "prepreHash": "3578ff64452aff57e6dd",
+  "preHash": "80442e7192a129c7e628",
+  "hash": "7e8a833e34058c6a02fb",
+  "moduleHashs": {
+    "multi main": "74ba43b1cde007490fe02d8d57f1750b",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": "9f4b70be9c6f44a605eaea794ddb0af8",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": "2b4bed352d1ea018acf859bfbf049768",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": "32ad7afb3a6aaabb6ac34c00ddf2cf9e",
+    "external \"path\"": "a87ff679a2f3e71d9181a67b7542122c",
+    "external \"http\"": "e4da3b7fbbce2345d7772b0674a318d5",
+    "external \"express\"": "1679091c5a880faf6fb5e6087eb1b2dc"
+  },
+  "chunkHashs": {
+    "0": "b17cb8d57e3128731c0676a3c4ed3882"
+  },
+  "chunkModuleIds": {
+    "0": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  }
+}
