@@ -1,0 +1,20 @@
+{
+  "name": "example",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "https://github.com/darul75/personal-blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darul75/personal-blog.git"
+  },
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "keywords": [
+  ],
+  "license": "MIT"
+}
