@@ -80,10 +80,15 @@ module.exports = function(source) {
     '/* TEST */',
     'if (module.hot) {\n',
       // accept itself
-      // 'module.hot.accept(function(e){console.log(e);});',
-      'module.hot.accept('+ depsString +', function() {\n',
+      'if (module.parent == null) {\n',
+        '\tmodule.hot.accept(function(e){',
+        '});',
         hotCall,
-      '});',
+      '} else {\n',
+        'module.hot.accept('+ depsString +', function() {\n',
+          hotCall,
+        '});',
+      '}',
     '}'
   ].join(' ');
 

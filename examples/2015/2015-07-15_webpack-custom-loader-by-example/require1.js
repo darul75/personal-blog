@@ -1,17 +1,17 @@
 module.exports = {
 	do: function(tododddzzzzdddeeeeddddddd) {
-    console.log("zorro");
+    console.log("doddd");
     this.doAgainAgain();
     this.doNotAgainAgain();
 	},
   doAgain: function() {
-    console.log("dodddAgdddain");
+    console.log("do it");
   },
   doAgainAgain: function() {
     console.log("titi");
   },
   doNotAgainAgain: function() {
-    console.log("tutu");
+    console.log("tudddtu");
   }
 
 };

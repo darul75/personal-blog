@@ -18,7 +18,7 @@ module.exports =
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "16cdb17f698a185ca3e4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "18b56383b581bd16fd5d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -509,56 +509,69 @@ module.exports =
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* TEST */ if (true) {
+	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
+	 if (module.parent == null) {
+	 	module.hot.accept(function(e){ });  } else {
 	 module.hot.accept([], function() {
-	  }); }
+	  }); } }
 
 	module.exports = {
 		do: function(tododddzzzzdddeeeeddddddd) {
-	    console.log("zorro");
+	    console.log("doddd");
 	    this.doAgainAgain();
 	    this.doNotAgainAgain();
 		},
 	  doAgain: function() {
-	    console.log("dodddAgdddain");
+	    console.log("do it");
 	  },
 	  doAgainAgain: function() {
 	    console.log("titi");
 	  },
 	  doNotAgainAgain: function() {
-	    console.log("tutu");
+	    console.log("tudddtu");
 	  }
 
 	};
 
 
 	/* TEST */
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* TEST */ if (true) {
+	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
+	 if (module.parent == null) {
+	 	module.hot.accept(function(e){ });  } else {
 	 module.hot.accept([], function() {
-	  }); }
+	  }); } }
 
 	module.exports = 'requiddddddddddzzzdddre 2';
 
 
 	/* TEST */
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* TEST */ if (true) {
+	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
+	 if (module.parent == null) {
+	 	module.hot.accept(function(e){ }); require1 = __webpack_require__(1);
+	require1.do("someStuffddd");
+	require1.do("someStuffddd");
+	require1.do("dddd");
+	require2 = __webpack_require__(2);
+	 } else {
 	 module.hot.accept([1,2], function() {
 	 require1 = __webpack_require__(1);
 	require1.do("someStuffddd");
 	require1.do("someStuffddd");
 	require1.do("dddd");
 	require2 = __webpack_require__(2);
-	 }); }
+	 }); } }
 
 	var path = __webpack_require__(6);
 	var http = __webpack_require__(5);
@@ -593,6 +606,7 @@ module.exports =
 
 
 	/* TEST */
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
 
 /***/ },
 /* 4 */
@@ -682,6 +696,22 @@ module.exports =
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
 
 /***/ }
 /******/ ]);
