@@ -96,7 +96,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-	color: #690;
+	color: #F0C449;
 }
 
 .token.operator,
@@ -114,7 +114,7 @@ pre[class*="language-"] {
 }
 
 .token.function {
-	color: #DD4A68;
+	color: #4ADD61;
 }
 
 .token.regex,

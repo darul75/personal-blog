@@ -13,7 +13,7 @@ I learn React step by step (sometimes 2 steps), component lyfecycle, virtual dom
 
 React facilitates isomorphism which is mainly a good approach for SEO when coding essentially in Javascript.
 
-Then a very common task developer dislikes as it is very time consuming, consist in handling deployment, build etc... Grunt, Gulp help us, Browserify is very nice but Webpack is a monster.
+Then a very common task developer dislikes, as it is very time consuming, consist in handling deployment, build etc... Grunt, Gulp help us, Browserify is very nice but Webpack is a monster.
 
 I wrote this article after having played with webpack HMR module and its API.
 
@@ -21,9 +21,9 @@ If you do not know webpack, do not worry, you still have time to play with it, a
 
 ## Live coding in React
 
-You may all know that man @gaearon who put a big stone with [react-hot-loader](https://github.com/gaearon/react-hot-loader)
+You may all know [@gaearon](https://github.com/gaearon/) who put a big stone with [react-hot-loader](https://github.com/gaearon/react-hot-loader)
 
-Purpose of this webpack's loader ( we will see later what is a 'loader') is to reload (re inject)in live your react components with your live code updates.
+Purpose of this webpack's loader ( we will see later what is a 'loader') is to reload (re inject) in live your react components with your live code updates. To resume, you code with your favorite editor and webpack rebundle everything for you in live and re render page with updates.
 
 Entry code is here, I will give my explanations about it then:
 
@@ -44,7 +44,7 @@ Availables [loaders](http://webpack.github.io/docs/list-of-loaders.html)
 
 ## Write a loader
 
-Why ? because you have perhaps specific needs and that is what makes webpack insanely modular.
+Why ? because you may have specific needs, webpack is your swiss knife.
 
 [documentation](http://webpack.github.io/docs/how-to-write-a-loader.html)
 
@@ -99,8 +99,8 @@ main.js
 var dep = require('./dep');
 var dep2 = require('./dep2');
 
-dep.doSomething("darul"); // do darul
-dep2.doSomething("darul"); // do DARUL
+dep.doSomething("darul"); // "do darul"
+dep2.doSomething("darul"); // "do DARUL"
 ```
 
 dep.js
@@ -136,6 +136,7 @@ dep.js
 ```javascript
 module.exports = {
 	doSomething: function(name) {
+    // console.log('do ' + name);
 		console.log('do something ' + name);
 	}
 }
@@ -158,7 +159,7 @@ if(module.hot) {
    // accept update of dependency
    module.hot.accept(["./dep.js", "./dep2.js"], function() {
    	// most of the time just reaffect require instance
-   	// new fresh dependency
+   	// with new fresh dependency module 
    	dep = require('./dep');
    	dep2 = require('./dep2');
    	// and maybe recall fn call again
@@ -231,3 +232,5 @@ if (true) {
 ```
 
 It is not perfect and all common nodejs modules or external library should be escaped...but that was a try.
+
+My react swiss kit it here [web-react](https://github.com/darul75)

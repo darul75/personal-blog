@@ -12,7 +12,7 @@ let handler = {
     let urls = [{url: '/', changefreq: 'monthly', priority: 1.0}];
 
     posts.forEach(post => {
-      let {title, permalink} = post;
+      let {permalink} = post;
 
       console.log(permalink);
 

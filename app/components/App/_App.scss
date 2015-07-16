@@ -10,8 +10,11 @@ body {
 h1, h2, h3 {
 	margin-top: 24px;
 	margin-bottom: 12px;
-  text-transform: capitalize;
   color:#0C1723;
+}
+
+h1:first-letter, h2:first-letter, h3:first-letter {
+  text-transform: capitalize;
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -26,7 +29,7 @@ ul {
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
   li {
-    color: #1677AA;
+    color: #041B25;
     font-weight: bold;
   }
 }

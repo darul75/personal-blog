@@ -9,6 +9,9 @@ import AppActions from '../../actions/AppActions';
 import AppStore from '../../stores/AppStore';
 import connectToStores from 'alt/utils/connectToStores';
 
+// DEPENDENCY
+import PostItemSectionMenu from './PostItemSectionMenu';
+
 let prism = require('prismjs');
 
 let { PropTypes } = React;
@@ -43,27 +46,56 @@ let postItem = class PostItem extends React.Component {
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
         /*eslint-enable */
-      }
 
-      if (this.titles !== undefined) {
-        this.titles.forEach((elt) => {
-          let tinyMenuButton = <span>{elt.h2.replace(/\-/g, ' ')}
-            <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
-              <span>menu</span>
-            </button>
-          </span>;
-          React.render(tinyMenuButton, document.getElementById(elt.h2));
-          if (elt.h3) {
-            elt.h3.forEach((elt1) => {
-              let tinyMenuButton2 = <span>{elt1.h3.replace(/\-/g, ' ')}
+        let postId = this.props.params.postId;
+        let posts = PostItem.getPropsFromStores().posts;
+        // find by permalink
+        let post = _.find(posts, function(item) {
+          return item.permalink === postId;
+        });
+
+        const matchTitles = post.body.match(/<(h2|h3) (\S+)=(["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?)/g);
+        let titles = [],
+        current;
+
+        if (matchTitles) {
+          matchTitles.forEach((tag) => {
+            const h2 = tag.match(/<h2 id="(\S*)"/);
+            const h3 = tag.match(/<h3 id="(\S*)"/);
+            if (h2) {
+              current = {
+                h2: h2[1],
+                h3: []
+              };
+              titles.push(current);
+            }
+            else if (h3 && h3) {
+              current.h3.push({h3: h3[1]});
+            }
+          });
+        }
+
+        if (titles !== undefined && titles.length) {
+          titles.forEach((elt) => {
+            let tinyMenuButton =
+              <span>{elt.h2.replace(/\-/g, ' ')}
                 <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
                   <span>menu</span>
                 </button>
               </span>;
-              React.render(tinyMenuButton2, document.getElementById(elt1.h3));
-            });
-          }
-        });
+            React.render(tinyMenuButton, document.getElementById(elt.h2));
+            if (elt.h3) {
+              elt.h3.forEach((elt1) => {
+                let tinyMenuButton2 = <span>{elt1.h3.replace(/\-/g, ' ')}
+                  <button className='c-hamburger tiny menu' onClick={this._onClick.bind(this)} title='see sections'>
+                    <span>menu</span>
+                  </button>
+                </span>;
+                React.render(tinyMenuButton2, document.getElementById(elt1.h3));
+              });
+            }
+          });
+        }
       }
     });
   }
@@ -102,9 +134,7 @@ let postItem = class PostItem extends React.Component {
         return item.permalink === postId;
       });
       // build menu
-      let titlesInfo = {info: ''};
-      markdownMenu = PostItem.getSectionMenu(post.body, titlesInfo);
-      this.titles = titlesInfo.info;
+      markdownMenu = <PostItemSectionMenu body={post.body} />;
 
       time = <time dateTime={post.date.toString()}>{post.date}</time>;
       let homepage = PostItem.getPropsFromStores().packagejson.homepage;
@@ -198,13 +228,13 @@ let postItem = class PostItem extends React.Component {
         const h3 = tag.match(/<h3 id="(\S*)"/);
         if (h2) {
           current = {
-            h2: h2[1],
+            h2: h2[1].replace(/\-/g, ' '),
             h3: []
           };
           titles.push(current);
         }
         else if (h3 && h3) {
-          current.h3.push({h3: h3[1]});
+          current.h3.push({h3: h3[1].replace(/\-/g, ' ')});
         }
       });
 
