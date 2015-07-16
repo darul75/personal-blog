@@ -1,6 +1,6 @@
 module.exports = {
 	do: function(tododddzzzzdddeeeeddddddd) {
-    console.log("doddd");
+    console.log("do dddddd");
     this.doAgainAgain();
     this.doNotAgainAgain();
 	},
@@ -11,7 +11,7 @@ module.exports = {
     console.log("titi");
   },
   doNotAgainAgain: function() {
-    console.log("tudddtu");
+    console.log("tudddddtdddu");
   }
 
 };

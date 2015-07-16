@@ -1,24 +1,23 @@
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	function hotDownloadUpdateChunk(chunkId) {
-/******/ 				var chunk = require("./" + "" + chunkId + "." + hotCurrentHash + ".hot-update.js");
-/******/ 				hotAddUpdateChunk(chunk.id, chunk.modules);
-/******/ 			}
+/******/ 	function hotDownloadUpdateChunk(chunkId) { // eslint-disable-line no-unused-vars
+/******/ 		var chunk = require("./" + "" + chunkId + "." + hotCurrentHash + ".hot-update.js");
+/******/ 		hotAddUpdateChunk(chunk.id, chunk.modules);
+/******/ 	}
 /******/ 	
-/******/ 			function hotDownloadManifest(callback) {
-/******/ 				try {
-/******/ 					var update = require("./" + "" + hotCurrentHash + ".hot-update.json");
-/******/ 				} catch(e) {
-/******/ 					return callback();
-/******/ 				}
-/******/ 				callback(null, update);
-/******/ 			}
-/******/ 		
+/******/ 	function hotDownloadManifest(callback) { // eslint-disable-line no-unused-vars
+/******/ 		try {
+/******/ 			var update = require("./" + "" + hotCurrentHash + ".hot-update.json");
+/******/ 		} catch(e) {
+/******/ 			return callback();
+/******/ 		}
+/******/ 		callback(null, update);
+/******/ 	}
 
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "18b56383b581bd16fd5d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ca7bbb74779732a52ebf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -86,11 +85,10 @@ module.exports =
 /******/ 					hot._selfAccepted = true;
 /******/ 				else if(typeof dep === "function")
 /******/ 					hot._selfAccepted = dep;
-/******/ 				else if(typeof dep === "object")
-/******/ 				for(var i = 0; i < dep.length; i++)
-/******/ 					hot._acceptedDependencies[dep[i]] = callback;
-/******/ 				else
+/******/ 				else if(typeof dep === "number")
 /******/ 					hot._acceptedDependencies[dep] = callback;
+/******/ 				else for(var i = 0; i < dep.length; i++)
+/******/ 					hot._acceptedDependencies[dep[i]] = callback;
 /******/ 			},
 /******/ 			decline: function(dep) {
 /******/ 				if(typeof dep === "undefined")
@@ -151,10 +149,6 @@ module.exports =
 /******/ 	
 /******/ 	// The update info
 /******/ 	var hotUpdate, hotUpdateNewHash;
-/******/ 	
-/******/ 	function toModuleId(id) {
-/******/ 		return (+id) + "" === id ? +id : id;
-/******/ 	}
 /******/ 	
 /******/ 	function hotCheck(apply, callback) {
 /******/ 		if(hotStatus !== "idle") throw new Error("check() is only allowed in idle status");
@@ -229,7 +223,7 @@ module.exports =
 /******/ 			var outdatedModules = [];
 /******/ 			for(var id in hotUpdate) {
 /******/ 				if(Object.prototype.hasOwnProperty.call(hotUpdate, id)) {
-/******/ 					outdatedModules.push(toModuleId(id));
+/******/ 					outdatedModules.push(+id);
 /******/ 				}
 /******/ 			}
 /******/ 			callback(null, outdatedModules);
@@ -300,7 +294,7 @@ module.exports =
 /******/ 		var appliedUpdate = {};
 /******/ 		for(var id in hotUpdate) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(hotUpdate, id)) {
-/******/ 				var moduleId = toModuleId(id);
+/******/ 				var moduleId = +id;
 /******/ 				var result = getAffectedStuff(moduleId);
 /******/ 				if(!result) {
 /******/ 					if(options.ignoreUnaccepted)
@@ -501,23 +495,116 @@ module.exports =
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(8);
-	module.exports = __webpack_require__(3);
+	__webpack_require__(2);
+	module.exports = __webpack_require__(1);
 
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
-	 if (module.parent == null) {
-	 	module.hot.accept(function(e){ });  } else {
-	 module.hot.accept([], function() {
-	  }); } }
+	/* TEST */ if (true) {
+		 	module.hot.dispose(function(data){
+		 data.msg = "hot hot";
+		 });
+		 module.hot.accept([3,4], function() {
+		 console.log(module.hot.data);
+		 require1 = __webpack_require__(3);
+	require1.do("someStuffddd");
+	require1.do("test");
+	require2 = __webpack_require__(4);
+	 });
+	 }
+
+	var path = __webpack_require__(8);
+	var http = __webpack_require__(7);
+	var express = __webpack_require__(6);
+	var require1 = __webpack_require__(3);
+	var require2 = __webpack_require__(4);
+
+	var app = express();
+
+	var app2 = express();
+
+	console.log(app == app2);
+
+	var router = express.Router();
+
+	app.set('port', process.env.PORT || 3000);
+
+	app.use(function (req, res, next) {
+	  console.log('Timddde: %d', Date.now());
+	  require1.do("someStuffddd");
+	  next();
+	})
+
+	require1.do("test");
+
+	http.createServer(app).listen(app.get('port'), function() {
+	  console.log('Express server listening on port ' + app.get('port'));
+	});
+
+	console.log('main module');
+
+
+	/* TEST */
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	/*globals __resourceQuery */
+	if(true) {
+		var hotPollInterval = +(__resourceQuery.substr(1)) || (10 * 60 * 1000);
+		function checkForUpdate(fromUpdate) {
+			if(module.hot.status() === "idle") {
+				module.hot.check(true, function(err, updatedModules) {
+					if(err) {
+						if(module.hot.status() in {abort: 1, fail: 1}) {
+							console.warn("[HMR] Cannot apply update.");
+							console.warn("[HMR] " + err.stack || err.message);
+							console.warn("[HMR] You need to restart the application!");
+						} else {
+							console.warn("[HMR] Update failed: " + err.stack || err.message);
+						}
+						return;
+					}
+					if(!updatedModules) {
+						if(fromUpdate) console.log("[HMR] Update applied.");
+						return;
+					}
+					__webpack_require__(5)(updatedModules, updatedModules);
+					checkForUpdate(true);
+				});
+			}
+		}
+		setInterval(checkForUpdate, hotPollInterval);
+	} else {
+		throw new Error("[HMR] Hot Module Replacement is disabled.");
+	}
+
+	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* TEST */ if (true) {
+		 	module.hot.dispose(function(data){
+		 data.msg = "hot hot";
+		 });
+		 module.hot.accept([], function() {
+		 console.log(module.hot.data);
+		  });
+	 }
 
 	module.exports = {
 		do: function(tododddzzzzdddeeeeddddddd) {
-	    console.log("doddd");
+	    console.log("do dddddd");
 	    this.doAgainAgain();
 	    this.doNotAgainAgain();
 		},
@@ -528,107 +615,35 @@ module.exports =
 	    console.log("titi");
 	  },
 	  doNotAgainAgain: function() {
-	    console.log("tudddtu");
+	    console.log("tudddddtdddu");
 	  }
 
 	};
 
 
 	/* TEST */
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
-	 if (module.parent == null) {
-	 	module.hot.accept(function(e){ });  } else {
-	 module.hot.accept([], function() {
-	  }); } }
-
-	module.exports = 'requiddddddddddzzzdddre 2';
-
-
-	/* TEST */
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
-	 if (module.parent == null) {
-	 	module.hot.accept(function(e){ }); require1 = __webpack_require__(1);
-	require1.do("someStuffddd");
-	require1.do("someStuffddd");
-	require1.do("dddd");
-	require2 = __webpack_require__(2);
-	 } else {
-	 module.hot.accept([1,2], function() {
-	 require1 = __webpack_require__(1);
-	require1.do("someStuffddd");
-	require1.do("someStuffddd");
-	require1.do("dddd");
-	require2 = __webpack_require__(2);
-	 }); } }
-
-	var path = __webpack_require__(6);
-	var http = __webpack_require__(5);
-	var express = __webpack_require__(4);
-	var require1 = __webpack_require__(1);
-	var require2 = __webpack_require__(2);
-
-	var app = express();
-	var router = express.Router();
-
-	app.set('port', process.env.PORT || 3000);
-	//app.use(express.static(publicPath));
-
-	// router.use('/', function(req, res, next) {
-	//   require1.do("someStuffddd");
-	//   res.status(200).send({test: 'test'});
-	// });
-
-	app.use(function (req, res, next) {
-	  console.log('Timddde: %d', Date.now());
-	  require1.do("someStuffddd");
-	  next();
-	})
-
-	require1.do("dddd");
-
-	http.createServer(app).listen(app.get('port'), function() {
-	  console.log('Express server listening on port ' + app.get('port'));
-	});
-
-	console.log('main module');
-
-
-	/* TEST */
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
 
 /***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("express");
+	/* TEST */ if (true) {
+		 	module.hot.dispose(function(data){
+		 data.msg = "hot hot";
+		 });
+		 module.hot.accept([], function() {
+		 console.log(module.hot.data);
+		  });
+	 }
+
+	module.exports = 'requiddddddddddzzzdddre 2';
+
+
+	/* TEST */
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = require("http");
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = require("path");
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
@@ -658,60 +673,22 @@ module.exports =
 
 
 /***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/* 6 */
+/***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	/*globals __resourceQuery */
-	if(true) {
-		var hotPollInterval = +(__resourceQuery.substr(1)) || (10 * 60 * 1000);
-		function checkForUpdate(fromUpdate) {
-			if(module.hot.status() === "idle") {
-				module.hot.check(true, function(err, updatedModules) {
-					if(err) {
-						if(module.hot.status() in {abort: 1, fail: 1}) {
-							console.warn("[HMR] Cannot apply update.");
-							console.warn("[HMR] " + err.stack || err.message);
-							console.warn("[HMR] You need to restart the application!");
-						} else {
-							console.warn("[HMR] Update failed: " + err.stack || err.message);
-						}
-						return;
-					}
-					if(!updatedModules) {
-						if(fromUpdate) console.log("[HMR] Update applied.");
-						return;
-					}
-					__webpack_require__(7)(updatedModules, updatedModules);
-					checkForUpdate(true);
-				});
-			}
-		}
-		setInterval(checkForUpdate, hotPollInterval);
-	} else {
-		throw new Error("[HMR] Hot Module Replacement is disabled.");
-	}
-
-	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
+	module.exports = require("express");
 
 /***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/* 7 */
+/***/ function(module, exports) {
 
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
+	module.exports = require("http");
 
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = require("path");
 
 /***/ }
 /******/ ]);

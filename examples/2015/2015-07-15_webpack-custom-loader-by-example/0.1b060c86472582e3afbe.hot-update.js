@@ -1,18 +1,21 @@
 exports.id = 0;
-exports.modules = [
-/* 0 */,
-/* 1 */
+exports.modules = {
+
+/***/ 3:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {/* TEST */ if (true) {
-	 if (module.parent == null) {
-	 	module.hot.accept(function(e){  }); } else {
-	 module.hot.accept([], function() {
-	  }); } }
+	/* TEST */ if (true) {
+		 	module.hot.dispose(function(data){
+		 data.msg = "hot hot";
+		 });
+		 module.hot.accept([], function() {
+		 console.log(module.hot.data);
+		  });
+	 }
 
 	module.exports = {
 		do: function(tododddzzzzdddeeeeddddddd) {
-	    console.log("do");
+	    console.log("do ddd");
 	    this.doAgainAgain();
 	    this.doNotAgainAgain();
 		},
@@ -23,14 +26,14 @@ exports.modules = [
 	    console.log("titi");
 	  },
 	  doNotAgainAgain: function() {
-	    console.log("tudddtu");
+	    console.log("tudddddtdddu");
 	  }
 
 	};
 
 
 	/* TEST */
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module)))
 
 /***/ }
-];
+
+};

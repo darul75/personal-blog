@@ -1,45 +1,41 @@
 {
-  "nextFreeModuleId": 10,
+  "nextFreeModuleId": 9,
   "modules": {
     "byIdentifier": {
-      "test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require1.js": 1,
-      "test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require2.js": 2,
-      "test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/entry.js": 3,
-      "external \"express\"": 4,
-      "external \"http\"": 5,
-      "external \"path\"": 6,
+      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": 1,
+      "..\\..\\..\\node_modules\\webpack\\hot\\poll.js?1000": 2,
       "multi main": 0,
-      "multi app": 0,
-      "../../../node_modules/webpack/hot/log-apply-result.js": 7,
-      "../../../node_modules/webpack/hot/poll.js?1000": 8,
-      "../../../../../../../../../usr/local/lib/node_modules/webpack/buildin/module.js": 9
+      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": 3,
+      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": 4,
+      "..\\..\\..\\node_modules\\webpack\\hot\\log-apply-result.js": 5,
+      "external \"express\"": 6,
+      "external \"http\"": 7,
+      "external \"path\"": 8
     }
   },
-  "nextFreeChunkId": 2,
+  "nextFreeChunkId": 1,
   "chunks": {
     "byName": {
-      "main": 0,
-      "app": 1
+      "main": 0
     },
     "byBlocks": {}
   },
-  "prepreHash": "7c16ac72f3c6d6644d3e",
-  "preHash": "8b029595ed558550f872",
-  "hash": "18b56383b581bd16fd5d",
+  "prepreHash": "307269c27c1bd514fe15",
+  "preHash": "2bb7428f6b04aba5d68c",
+  "hash": "ca7bbb74779732a52ebf",
   "moduleHashs": {
-    "multi main": "50f5d998cf90e7a949daf3b4bd7bb9c4",
-    "/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require1.js": "43c3b0283a083026eab13095aeb28f01",
-    "/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/require2.js": "ad5678692a4b830585a12699843f54bc",
-    "/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/test-loader.js!/Users/julienvalery/Documents/Dev/Git/personal-blog/examples/2015/2015-07-15_webpack-custom-loader-by-example/entry.js": "7c76c59a602b9f42c0134fed61f3b1cb",
-    "external \"express\"": "a87ff679a2f3e71d9181a67b7542122c",
-    "external \"http\"": "e4da3b7fbbce2345d7772b0674a318d5",
-    "external \"path\"": "1679091c5a880faf6fb5e6087eb1b2dc",
-    "/Users/julienvalery/Documents/Dev/Git/personal-blog/node_modules/webpack/hot/log-apply-result.js": "62e458b865803a4e4ac7636052f9374c",
-    "/Users/julienvalery/Documents/Dev/Git/personal-blog/node_modules/webpack/hot/poll.js?1000": "cc8e4c4686b46a52b3c22dbb3f5c64a7",
-    "/usr/local/lib/node_modules/webpack/buildin/module.js": "1aecca7a11a6f73c8af297ba28014e00"
+    "multi main": "4aafc1424b298b212d2bd4bb06efe427",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": "fc03382a76547c284035cbfdfc77d571",
+    "C:\\JUL\\DEV\\github\\personal-blog\\node_modules\\webpack\\hot\\poll.js?1000": "c3d2c36e76be68df9b5bb67b8fbeaa9f",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": "55073d0089f263cae8d1c8a15c8e8d4f",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": "f74fcdbdd18e7f6b1c0f102bf29c4fa8",
+    "C:\\JUL\\DEV\\github\\personal-blog\\node_modules\\webpack\\hot\\log-apply-result.js": "2cb43b9cd18319f13535765bb65629fe",
+    "external \"express\"": "1679091c5a880faf6fb5e6087eb1b2dc",
+    "external \"http\"": "8f14e45fceea167a5a36dedd4bea2543",
+    "external \"path\"": "c9f0f895fb98ab9159f51fd0297e236d"
   },
   "chunkHashs": {
-    "0": "3ef271c10a02f2192ed9c2a4d44508a2"
+    "0": "7714718c3a040349b561afde87e623d5"
   },
   "chunkModuleIds": {
     "0": [
@@ -51,8 +47,7 @@
       5,
       6,
       7,
-      8,
-      9
+      8
     ]
   }
 }

@@ -78,17 +78,21 @@ module.exports = function(source) {
 
    prependText = [
     '/* TEST */',
-    'if (module.hot) {\n',
+    'if (module.hot) {\n\t',
+      '\tmodule.hot.dispose(function(data){\n\t',
+          'data.msg = "hot hot";\n\t',
+      '});\n\t',
       // accept itself
-      'if (module.parent == null) {\n',
-        '\tmodule.hot.accept(function(e){',
-        '});',
-        hotCall,
-      '} else {\n',
-        'module.hot.accept('+ depsString +', function() {\n',
+      /*'if (module.parent == null) {\n\t',
+        '\tmodule.hot.accept(function(e){\n\t',
           hotCall,
-        '});',
-      '}',
+        '});\n\t',
+      '} else {\n\t',*/
+        'module.hot.accept('+ depsString +', function() {\n\t',
+          'console.log(module.hot.data);\n\t',
+          hotCall,
+        '});\n',
+      /*'}\n',*/
     '}'
   ].join(' ');
 

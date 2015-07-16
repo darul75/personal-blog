@@ -44,7 +44,21 @@ var cfg = {
       }
 };
 
-module.exports = cfg;
+//module.exports = cfg;
 
 // http://webpack.github.io/docs/node.js-api.html
-//webpack(cfg, function() {});
+var compiler = webpack(cfg);
+
+compiler.run(function(err, stats) {
+    // ...
+});
+
+compiler.watch({ // watch options:
+    aggregateTimeout: 300, // wait so long for more changes
+    poll: true // use polling instead of native watchers
+    // pass a number to set the polling interval
+}, function(err, stats) {
+    // ...
+});
+
+
