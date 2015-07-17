@@ -87,6 +87,7 @@ accept(dependencies: string[], callback: (updatedDependencies))
 accept([errHandler])
 
 dispose(callback: (data: object))
+// called when update is triggered, data object may contain your logic, cache...
 // see webpack website for explanations :)
 ```
 
@@ -156,6 +157,11 @@ dep2.doSomething("darul"); // fn call
 
 // check if HMR is enabled
 if(module.hot) {
+   // example for putting something from current component
+   // module.hot.data = {
+   //		key: value
+   // };
+
    // accept update of dependency
    module.hot.accept(["./dep.js", "./dep2.js"], function() {
    	// most of the time just reaffect require instance
