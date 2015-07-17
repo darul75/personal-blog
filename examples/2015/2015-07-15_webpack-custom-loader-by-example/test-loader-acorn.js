@@ -46,6 +46,7 @@ module.exports = function(source) {
   var requiresData = [];
   var requires;
   var fns;
+  var containsServer = source.indexOf('createServer(') >= 0;
 
   while (requires = requirePattern.exec(src), requires != null) {
     var data = dataBuilder(requires);
@@ -83,6 +84,8 @@ module.exports = function(source) {
     });
   });
 
+  hotCall = containsServer ? '' : hotCall;
+
    prependText = [
     'var __moduleBindings = ' + JSON.stringify(names) + ';\n',
     '/* TEST */',
@@ -101,6 +104,7 @@ module.exports = function(source) {
           'console.log(module.hot.data);\n\t',
           hotCall,
         '});\n',
+        'module.hot.decline("./require1.js");',
       /*'}\n',*/
     '}'
   ].join(' ');

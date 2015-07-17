@@ -1,6 +1,6 @@
 module.exports = {
 	do: function(hello) {
-    console.log("ddd");
+    console.log("ddddddd");
     this.doAgainAgain();
     this.doNotAgainAgain();
 	},
