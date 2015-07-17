@@ -46,7 +46,12 @@ module.exports = function(source) {
   var requiresData = [];
   var requires;
   var fns;
+
+  // resolve dependency by name and look into file...
+  // require.resolve()
   var containsServer = source.indexOf('createServer(') >= 0;
+
+  //var patcherCode = fs.readFileSync(path.join(__dirname, 'patcher.js'), 'utf8');
 
   while (requires = requirePattern.exec(src), requires != null) {
     var data = dataBuilder(requires);
