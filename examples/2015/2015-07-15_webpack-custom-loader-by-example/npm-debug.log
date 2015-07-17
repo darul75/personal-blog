@@ -1,0 +1,27 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   'C:\\JUL\\DEV\\node_modules\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'build' ]
+2 info using npm@2.13.0
+3 info using node@v0.12.2
+4 verbose stack Error: missing script: build
+4 verbose stack     at run (C:\JUL\DEV\node_modules\node_modules\npm\lib\run-script.js:142:19)
+4 verbose stack     at C:\JUL\DEV\node_modules\node_modules\npm\lib\run-script.js:58:5
+4 verbose stack     at C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\read-json.js:345:5
+4 verbose stack     at checkBinReferences_ (C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\read-json.js:309:45)
+4 verbose stack     at final (C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\read-json.js:343:3)
+4 verbose stack     at then (C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\read-json.js:113:5)
+4 verbose stack     at C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\read-json.js:284:20
+4 verbose stack     at evalmachine.<anonymous>:263:20
+4 verbose stack     at OpenReq.Req.done (C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\node_modules\graceful-fs\graceful-fs.js:141:5)
+4 verbose stack     at OpenReq.done (C:\JUL\DEV\node_modules\node_modules\npm\node_modules\read-package-json\node_modules\graceful-fs\graceful-fs.js:61:22)
+5 verbose cwd C:\JUL\DEV\github\personal-blog\examples\2015\2015-07-15_webpack-custom-loader-by-example
+6 error Windows_NT 6.3.9600
+7 error argv "node" "C:\\JUL\\DEV\\node_modules\\node_modules\\npm\\bin\\npm-cli.js" "run" "build"
+8 error node v0.12.2
+9 error npm  v2.13.0
+10 error missing script: build
+11 error If you need help, you may report this error at:
+11 error     <https://github.com/npm/npm/issues>
+12 verbose exit [ 1, true ]

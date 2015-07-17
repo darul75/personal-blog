@@ -31,7 +31,7 @@ Entry code is here, I will give my explanations about it then:
 
 ## What is a webpack loader
 
-As describe in [documentation](http://webpack.github.io/docs/using-loaders.html), loader are transformations that can be applied on a resource file. A specific loader is executed during webpack compilation process if current compiled file extension (ex: .jpeg, .js, ...) matches loader's configuration.
+As described in [documentation](http://webpack.github.io/docs/using-loaders.html), loader are transformations that can be applied on a resource file. A specific loader is executed during webpack compilation process if current compiled file extension (ex: .jpeg, .js, ...) matches loader's configuration.
 
 By instance, imagine an image file and a loader generating thumbnails from it in different sizes.
 
@@ -159,7 +159,7 @@ if(module.hot) {
    // accept update of dependency
    module.hot.accept(["./dep.js", "./dep2.js"], function() {
    	// most of the time just reaffect require instance
-   	// with new fresh dependency module 
+   	// with new fresh dependency module
    	dep = require('./dep');
    	dep2 = require('./dep2');
    	// and maybe recall fn call again

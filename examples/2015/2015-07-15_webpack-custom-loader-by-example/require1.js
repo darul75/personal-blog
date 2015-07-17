@@ -1,11 +1,11 @@
 module.exports = {
-	do: function(tododddzzzzdddeeeeddddddd) {
-    console.log("do dddddd");
+	do: function(hello) {
+    console.log("ddd");
     this.doAgainAgain();
     this.doNotAgainAgain();
 	},
   doAgain: function() {
-    console.log("do it");
+    console.log("none it");
   },
   doAgainAgain: function() {
     console.log("titi");

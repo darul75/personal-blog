@@ -2,11 +2,11 @@
   "nextFreeModuleId": 9,
   "modules": {
     "byIdentifier": {
-      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": 1,
+      "test-loader-acorn.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": 1,
       "..\\..\\..\\node_modules\\webpack\\hot\\poll.js?1000": 2,
       "multi main": 0,
-      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": 3,
-      "test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": 4,
+      "test-loader-acorn.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": 3,
+      "test-loader-acorn.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": 4,
       "..\\..\\..\\node_modules\\webpack\\hot\\log-apply-result.js": 5,
       "external \"express\"": 6,
       "external \"http\"": 7,
@@ -20,22 +20,22 @@
     },
     "byBlocks": {}
   },
-  "prepreHash": "307269c27c1bd514fe15",
-  "preHash": "2bb7428f6b04aba5d68c",
-  "hash": "ca7bbb74779732a52ebf",
+  "prepreHash": "b04a0235b62fcbf771fd",
+  "preHash": "b1ca1f3d6cda50076385",
+  "hash": "9c3d8a7eecfca7cb2f03",
   "moduleHashs": {
     "multi main": "4aafc1424b298b212d2bd4bb06efe427",
-    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": "fc03382a76547c284035cbfdfc77d571",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader-acorn.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\entry.js": "2a625eabcc833eb97b1c5f61fd45f8a1",
     "C:\\JUL\\DEV\\github\\personal-blog\\node_modules\\webpack\\hot\\poll.js?1000": "c3d2c36e76be68df9b5bb67b8fbeaa9f",
-    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": "55073d0089f263cae8d1c8a15c8e8d4f",
-    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": "f74fcdbdd18e7f6b1c0f102bf29c4fa8",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader-acorn.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require1.js": "5a006357abc5f92e992cc2ef43cc05e6",
+    "C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\test-loader-acorn.js!C:\\JUL\\DEV\\github\\personal-blog\\examples\\2015\\2015-07-15_webpack-custom-loader-by-example\\require2.js": "92cb05aecc3c3060f8966fc00858fad6",
     "C:\\JUL\\DEV\\github\\personal-blog\\node_modules\\webpack\\hot\\log-apply-result.js": "2cb43b9cd18319f13535765bb65629fe",
     "external \"express\"": "1679091c5a880faf6fb5e6087eb1b2dc",
     "external \"http\"": "8f14e45fceea167a5a36dedd4bea2543",
     "external \"path\"": "c9f0f895fb98ab9159f51fd0297e236d"
   },
   "chunkHashs": {
-    "0": "7714718c3a040349b561afde87e623d5"
+    "0": "9239542815a4a6e0f958b756902619cd"
   },
   "chunkModuleIds": {
     "0": [

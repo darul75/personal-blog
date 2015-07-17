@@ -1,1 +1,1 @@
-module.exports = 'requiddddddddddzzzdddre 2';
+module.exports = 'dd 2sss';

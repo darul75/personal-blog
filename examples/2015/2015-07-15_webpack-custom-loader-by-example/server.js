@@ -17,7 +17,7 @@ module.exports =
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ca7bbb74779732a52ebf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9c3d8a7eecfca7cb2f03"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -503,15 +503,17 @@ module.exports =
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* TEST */ if (true) {
-		 	module.hot.dispose(function(data){
+	var __moduleBindings = ["test"];
+	 /* TEST */ if (true) {
+		 module.hot.data = {hotCall: "require1 = require(\"./require1\");\nrequire1.do(\"someStuffddd\");\nrequire1.do(\"tdddddest\");\nrequire2 = require(\"./require2\");\n"};
+	 module.hot.dispose(function(data){
 		 data.msg = "hot hot";
 		 });
 		 module.hot.accept([3,4], function() {
 		 console.log(module.hot.data);
 		 require1 = __webpack_require__(3);
 	require1.do("someStuffddd");
-	require1.do("test");
+	require1.do("tdddddest");
 	require2 = __webpack_require__(4);
 	 });
 	 }
@@ -521,6 +523,9 @@ module.exports =
 	var express = __webpack_require__(6);
 	var require1 = __webpack_require__(3);
 	var require2 = __webpack_require__(4);
+
+	// https://github.com/expressjs/generator/blob/master/templates/js/app.js
+	// http://stackoverflow.com/questions/10378690/remove-route-mappings-in-nodejs-express/28369539#28369539
 
 	var app = express();
 
@@ -538,7 +543,11 @@ module.exports =
 	  next();
 	})
 
-	require1.do("test");
+	function test() {
+
+	}
+
+	require1.do("tdddddest");
 
 	http.createServer(app).listen(app.get('port'), function() {
 	  console.log('Express server listening on port ' + app.get('port'));
@@ -593,8 +602,10 @@ module.exports =
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* TEST */ if (true) {
-		 	module.hot.dispose(function(data){
+	var __moduleBindings = [];
+	 /* TEST */ if (true) {
+		 module.hot.data = {hotCall: ""};
+	 module.hot.dispose(function(data){
 		 data.msg = "hot hot";
 		 });
 		 module.hot.accept([], function() {
@@ -603,13 +614,13 @@ module.exports =
 	 }
 
 	module.exports = {
-		do: function(tododddzzzzdddeeeeddddddd) {
-	    console.log("do dddddd");
+		do: function(hello) {
+	    console.log("ddd");
 	    this.doAgainAgain();
 	    this.doNotAgainAgain();
 		},
 	  doAgain: function() {
-	    console.log("do it");
+	    console.log("none it");
 	  },
 	  doAgainAgain: function() {
 	    console.log("titi");
@@ -627,8 +638,10 @@ module.exports =
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* TEST */ if (true) {
-		 	module.hot.dispose(function(data){
+	var __moduleBindings = [];
+	 /* TEST */ if (true) {
+		 module.hot.data = {hotCall: ""};
+	 module.hot.dispose(function(data){
 		 data.msg = "hot hot";
 		 });
 		 module.hot.accept([], function() {
@@ -636,7 +649,7 @@ module.exports =
 		  });
 	 }
 
-	module.exports = 'requiddddddddddzzzdddre 2';
+	module.exports = 'dd 2sss';
 
 
 	/* TEST */

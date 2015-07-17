@@ -1,3 +1,5 @@
+// webpack --progress --watch --config webpack.js
+
 var webpack = require('webpack');
 var path = require('path');
 
@@ -23,7 +25,8 @@ var cfg = {
   module: {
     // devtool: 'source-map',
     preLoaders: [
-      {test: /\.js$/, loader: "./test-loader", exclude: /node_module/}
+      /*{test: /\.js$/, loader: "./test-loader", exclude: /node_module/},*/
+      {test: /\.js$/, loader: "./test-loader-acorn", exclude: /node_module/}
     ]
   },
   plugins: [
