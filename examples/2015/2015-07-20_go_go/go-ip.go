@@ -1,48 +1,30 @@
 package main
 
 import (
-	"bufio"
     "fmt"
-    "io"
     "net"
     "os"
 )
 
 // http://stackoverflow.com/questions/2270670/trouble-reading-from-a-socket-in-go
 
-func handle(conn *net.TCPConn) {
+func handle(conn *net.IPConn) {
     fmt.Printf("Connection from %s\n", conn.RemoteAddr());
     message := make([]byte, 1024);
     // TODO: loop the read, we can have >1024 bytes
-    // n1, error := conn.Read(message);
-
-    buf := bufio.NewReader(conn);
-
-    for {
-    	n1, err := buf.Read(message);
-    	n2, error := conn.Write(message[0:n1]);
-	    if error != nil || n2 != n1 {
-	        fmt.Printf("Cannot write: %s\n", error);
-	        os.Exit(1);
-	    }
-
-    	if err == io.EOF {
-    		//
-    	}
-    }
-
-    /*if error != nil {
+    n1, error := conn.Read(message);
+    if error != nil {
         fmt.Printf("Cannot read: %s\n", error);
         os.Exit(1);
-    }*/
+    }
 
-    //fmt.Printf("Echoed %d bytes\n", message[0:n1]);
-    /*n2, error := conn.Write(message[0:n1]);
+    fmt.Printf("Echoed %d bytes\n", message[0:n1]);
+    n2, error := conn.Write(message[0:n1]);
     if error != nil || n2 != n1 {
         fmt.Printf("Cannot write: %s\n", error);
         os.Exit(1);
     }
-    fmt.Printf("Echoed %d bytes\n", n2);*/
+    fmt.Printf("Echoed %d bytes\n", n2);
 
     conn.Close();   // TODO: wait to see if more data? It would be better with telnet...
 }
@@ -93,22 +75,18 @@ func main() {
 	checkConnection(conn, err)*/
 
 	listen := ":7";
-    addr, error := net.ResolveTCPAddr("tcp", "127.0.0.1:8082");
+    addr, error := net.ResolveIPAddr("ip4", "127.0.0.1");
     if error != nil {
         fmt.Printf("Cannot parse \"%s\": %s\n", listen, error);
         os.Exit(1);
     }
-    listener, error := net.ListenTCP("tcp", addr);
+    conn, error := net.ListenIP("ip", addr);
     if error != nil {
         fmt.Printf("Cannot listen: %s\n", error);
         os.Exit(1);
     }
     for {   // ever...
-        conn, error := listener.AcceptTCP();
-        if error != nil {
-            fmt.Printf("Cannot accept: %s\n", error);
-            os.Exit(1);
-        }
+
         go handle(conn);
     }
 
