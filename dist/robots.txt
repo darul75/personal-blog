@@ -1,0 +1,8 @@
+User-agent: *
+
+Allow: /
+Disallow: *.css$
+Disallow: *data:*$
+Disallow: *base64*$
+
+Sitemap: http://www.darul.io/sitemap.xml

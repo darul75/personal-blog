@@ -72,6 +72,7 @@ let postItemSectionMenu = class PostItemSectionMenu extends React.Component {
         </div>
       );
     }
+    return (<div></div>);
   }
 };
 
