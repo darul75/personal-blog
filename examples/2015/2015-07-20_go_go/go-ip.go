@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"html/template"
+	// "html/template"
 	"io/ioutil"
 	"net/http"
 )
@@ -30,11 +30,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(response)
 	defer response.Body.Close()
 	body, err := ioutil.ReadAll(response.Body)
-	tmpl, err := template.New("name").Parse(string(body))
+	// tmpl, err := template.New("name").Parse(string(body))
 
-	fmt.Fprintf(w, "%s", tmpl)
+	// fmt.Fprintf(w, "%s", tmpl)
 
-	//fmt.Fprintf(w, "%s", body)
+	fmt.Fprintf(w, "%s", body)
 }
 
 func main() {
