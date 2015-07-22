@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"net/http/httputil"
@@ -19,15 +20,31 @@ func (p *Prox) New(target string) {
 
 func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-GoProxy", "GoProxy")
-	fmt.Println(r.Header)
 	p.proxy.ServeHTTP(w, r)
 }
 
 func main() {
+	const (
+		defaultPort = ":80"
+		defaultPortUsage = "default server port, ':80', ':8080'..."
+		defaultTarget = "http://127.0.0.1:8080"
+		defaultTargetUsage = "default redirect url, 'http://127.0.0.1:8080'"
+	)
+
+	// flags
+	port := flag.String("port", defaultPort, defaultPortUsage)
+	url := flag.String("url", defaultTarget, defaultTargetUsage)
+
+	flag.Parse()
+
+	fmt.Println("server will run on : %s", *port)
+	fmt.Println("redirecting to :%s", *url)
+
+	// proxy
 	proxy := &Prox{}
-	proxy.New("http://127.0.0.1:8081")
+	proxy.New(*url)
 
+	// server
 	http.HandleFunc("/", proxy.handle)
-
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(*port, nil)
 }
