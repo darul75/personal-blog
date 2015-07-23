@@ -1,50 +1,74 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	"net/http"
-	"net/http/httputil"
-	"net/url"
+  "flag"
+  "fmt"
+  "net/http"
+  "net/http/httputil"
+  "net/url"
+  "regexp"
 )
 
 type Prox struct {
-	target *url.URL
-	proxy  *httputil.ReverseProxy
+  target *url.URL
+  proxy  *httputil.ReverseProxy
+  routePatterns []*regexp.Regexp
 }
 
 func (p *Prox) New(target string) {
-	url, _ := url.Parse(target)
-	p.proxy = httputil.NewSingleHostReverseProxy(url)
+  url, _ := url.Parse(target)
+  p.proxy = httputil.NewSingleHostReverseProxy(url)
 }
 
 func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("X-GoProxy", "GoProxy")
-	p.proxy.ServeHTTP(w, r)
+  w.Header().Set("X-GoProxy", "GoProxy")
+
+  if p.routePatterns == nil || p.parseWhiteList(r) {
+    p.proxy.ServeHTTP(w, r)
+  }
+}
+
+func (p *Prox) parseWhiteList(r *http.Request) bool {
+  for _, regexp := range p.routePatterns {
+    if regexp.MatchString(r.URL.Path) {
+        return true
+    }
+  }
+  fmt.Println("Not accepted routes %x", r.URL.Path)
+  return false
 }
 
 func main() {
-	const (
-		defaultPort = ":80"
-		defaultPortUsage = "default server port, ':80', ':8080'..."
-		defaultTarget = "http://127.0.0.1:8080"
-		defaultTargetUsage = "default redirect url, 'http://127.0.0.1:8080'"
-	)
+  const (
+    defaultPort = ":80"
+    defaultPortUsage = "default server port, ':80', ':8080'..."
+    defaultTarget = "http://127.0.0.1:8080"
+    defaultTargetUsage = "default redirect url, 'http://127.0.0.1:8080'"
+    defaultWhiteRoutes = "/plugins/.*|/fnca/.*"
+    defaultWhiteRoutesUsage = "list of white route as regexp, '/path1*,/path2*...."
+  )
 
-	// flags
-	port := flag.String("port", defaultPort, defaultPortUsage)
-	url := flag.String("url", defaultTarget, defaultTargetUsage)
+  // flags
+  port := flag.String("port", defaultPort, defaultPortUsage)
+  url := flag.String("url", defaultTarget, defaultTargetUsage)
+  routesRegexp := flag.String("routes", defaultWhiteRoutes, defaultWhiteRoutesUsage)
 
-	flag.Parse()
+  flag.Parse()
 
-	fmt.Println("server will run on : %s", *port)
-	fmt.Println("redirecting to :%s", *url)
+  fmt.Println("server will run on : %s", *port)
+  fmt.Println("redirecting to :%s", *url)
+  fmt.Println("accepted routes :%s", *routesRegexp)
 
-	// proxy
-	proxy := &Prox{}
-	proxy.New(*url)
+  //
+  reg, _ := regexp.Compile(*routesRegexp)
+  routes := []*regexp.Regexp{reg}
 
-	// server
-	http.HandleFunc("/", proxy.handle)
-	http.ListenAndServe(*port, nil)
+  // proxy
+  proxy := &Prox{}
+  proxy.New(*url)
+  proxy.routePatterns = routes
+
+  // server
+  http.HandleFunc("/", proxy.handle)
+  http.ListenAndServe(*port, nil)
 }
