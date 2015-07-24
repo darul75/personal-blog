@@ -1,12 +1,10 @@
-Few months ago, I coded on [https://www.hackerrank.com](https://www.hackerrank.com) by learning Go language.
+Few months ago, I coded on [hackerrank](https://www.hackerrank.com) by learning Go language. Today, I will show your a more concrete example with a reverse proxy implementation.
 
-Today, I will just show your a more concrete example with a reverse proxy implementation.
+Main role of this pattern is to filter network request by inspecting (modifying...) and route it (or not) somewhere else.
 
-Main role of this pattern is to filter network request by inspecting and forward (or not) it somewhere else.
+For that case, we will play with *http* protocol but Go packages provide everything you may need to play with network other layers, TCP, UDP, IP...
 
-For that case, we will play with *http* protocol but notice Go packages provide everything you may need to play with network other layers, TCP, UDP, IP...
-
-## Learn Go
+## Learn Go lang
 
 Simply start with the tour of Go [here](http://tour.golang.org) and [examples](https://gobyexample.com/)
 
@@ -14,19 +12,15 @@ This language is very intuitive, not so far from C language with some object ori
 
 ## Packages
 
-Go provides all the necessary kit to build you own application.
-
-[http://golang.org/pkg/](http://golang.org/pkg/)
+Go provides all the necessary [packages](http://golang.org/pkg/) to build you own application.
 
 ## Http
 
-[https://golang.org/pkg/net/http/](net/http)'s pasckage exposes what we deeply look for in our everyday life on the web, client, server, request, response..
+[net/http](https://golang.org/pkg/net/http/)'s package exposes what we do in most part of our daily life on the web: play with client, server, request, response..
 
-But let's look at this sub package function
+If you deep look at Go documentation which is not really readable according to me, you will meet this sub httputil package and NewSingleHostReverseProxy [function](https://golang.org/pkg/net/http/httputil/#ReverseProxy)
 
-[https://golang.org/pkg/net/http/httputil/#ReverseProxy](https://golang.org/pkg/net/http/httputil/#ReverseProxy)
-
-```go
+```clike
 func NewSingleHostReverseProxy(target *url.URL) *ReverseProxy
 ```
 
@@ -34,7 +28,7 @@ You provide a target URL and it returns a ReverseProxy instance which will do th
 
 Then a simple call to
 
-```go
+```clike
 func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request)
 ```
 
@@ -46,7 +40,7 @@ When you start, do not worry about making things simple, with no struct, here I 
 
 Here are some examples of [struct](https://tour.golang.org/moretypes/4) usage and pointers method receivers with Go [receivers](https://tour.golang.org/methods/1)
 
-```go
+```clike
 package main
 
 import (
@@ -63,7 +57,7 @@ type Prox struct {
 	proxy  *httputil.ReverseProxy
 }
 
-// will create a new 
+// will create a new
 func (p *Prox) New(target string) {
 	url, _ := url.Parse(target)
 	p.proxy = httputil.NewSingleHostReverseProxy(url)

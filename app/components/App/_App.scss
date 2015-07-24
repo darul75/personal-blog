@@ -7,10 +7,24 @@ body {
   color: $primary-color;
 }
 
+@mixin word-wrap() {
+  word-break:     break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens:    auto;
+  hyphens:         auto;
+}
+
+@mixin ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 h1, h2, h3 {
 	margin-top: 24px;
 	margin-bottom: 12px;
   color:#0C1723;
+  @include word-wrap()
 }
 
 h1:first-letter, h2:first-letter, h3:first-letter {
@@ -182,4 +196,3 @@ div.slideOff {
     width: 750px;
   }
 }
-
