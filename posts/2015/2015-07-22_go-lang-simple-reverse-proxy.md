@@ -44,25 +44,29 @@ Resume
 - our program will start a webserver running on 80
 - all request made to this server will be transparently forward to targeted webserver and response sent to first server.
 
-### Code
+## Forward trafic
 
 When you start, do not worry about making things simple, with no struct, here I have just created a simple struct called Prox which is responsible to make business logic of reverse proxy.
 
 Here are some examples of [struct](https://tour.golang.org/moretypes/4) usage and pointers method receivers with Go [receivers](https://tour.golang.org/methods/1)
 
+### Proxy code
+
 ```clike
 
-// Our RerverseProxy object
+// our RerverseProxy object
 type Prox struct {
-	target *url.URL // target url
-	proxy  *httputil.ReverseProxy // instance of Go ReverseProxy will do the job for us
+  // target url of reverse proxy
+	target *url.URL
+  // instance of Go ReverseProxy thatwill do the job for us
+	proxy  *httputil.ReverseProxy
 }
 
-// Small factory
+// small factory
 func New(target string) *Prox {
   url, _ := url.Parse(target)
-  // you must check error but I do not here
-  return &Prox{proxy: httputil.NewSingleHostReverseProxy(url)}
+  // you should handle error on parsing
+  return &Prox{target: url,proxy: httputil.NewSingleHostReverseProxy(url)}
 }
 
 func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
@@ -107,7 +111,13 @@ func main() {
 }
 ```
 
-### Business logic
+To compile it
+
+```clike
+go run build yourfile.go
+```
+
+## Forward trafic with logic inside
 
 Our first example had no logic but you can easily add you own.
 
@@ -126,7 +136,7 @@ type Prox struct {
 func New(target string) *Prox {
   url, _ := url.Parse(target)
 
-  return &Prox{proxy: httputil.NewSingleHostReverseProxy(url)}
+  return &Prox{target: url,proxy: httputil.NewSingleHostReverseProxy(url)}
 }
 
 func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
@@ -140,7 +150,7 @@ func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
 func (p *Prox) parseWhiteList(r *http.Request) bool {
   for _, regexp := range p.routePatterns {
     fmt.Println(r.URL.Path)
-    if regexp.MatchString(r.URL.Path) {     
+    if regexp.MatchString(r.URL.Path) {
       return true
     }
   }
@@ -149,5 +159,9 @@ func (p *Prox) parseWhiteList(r *http.Request) bool {
 }
 ```
 
-## Conclusion
+### Conclusion
+
+It was just a POC but you can easily change it here to start.
+
+
 

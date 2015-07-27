@@ -131,7 +131,7 @@ if(module.hot) {
 }
 ```
 
-Now image we update code from dep.js
+Then we update code from dep.js
 
 dep.js
 ```javascript
