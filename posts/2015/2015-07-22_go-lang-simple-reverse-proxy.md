@@ -78,9 +78,7 @@ func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
 
 ### Main
 
-Go provides mecanism to create an executable at the end, to do so and to test here is how your main could look.
-
-Flag Go package is very nice to put some command line options.
+Flag Go Flag package is very nice to put some command line options.
 
 ```clike
 func main() {
@@ -111,7 +109,7 @@ func main() {
 }
 ```
 
-To compile it
+Go tools can compile your code to get a binary executable program.
 
 ```clike
 go run build yourfile.go
@@ -123,8 +121,10 @@ Our first example had no logic but you can easily add you own.
 
 - add security tests
 - check number of requests done..
-- filter query path, what we will do here
+- filter query path, what we will do here.
 - ...
+
+We will register on regular expression which applied to all requests made will allow forwarding base on request path matching.
 
 ```clike
 type Prox struct {
@@ -151,6 +151,7 @@ func (p *Prox) parseWhiteList(r *http.Request) bool {
   for _, regexp := range p.routePatterns {
     fmt.Println(r.URL.Path)
     if regexp.MatchString(r.URL.Path) {
+      // let's forward it
       return true
     }
   }
@@ -159,9 +160,47 @@ func (p *Prox) parseWhiteList(r *http.Request) bool {
 }
 ```
 
+### Main
+
+```clike
+func main() {
+  const (
+    defaultPort             = ":80"
+    defaultPortUsage        = "default server port, ':80', ':8080'..."
+    defaultTarget           = "http://127.0.0.1:8080"
+    defaultTargetUsage      = "default redirect url, 'http://127.0.0.1:8080'"
+    defaultWhiteRoutes      = `^\/$|[\w|/]*.js|/path|/path2`
+    defaultWhiteRoutesUsage = "list of white route as regexp, '/path1*,/path2*...."
+  )
+
+  // flags
+  port := flag.String("port", defaultPort, defaultPortUsage)
+  url := flag.String("url", defaultTarget, defaultTargetUsage)
+  routesRegexp := flag.String("routes", defaultWhiteRoutes, defaultWhiteRoutesUsage)
+
+  flag.Parse()
+
+  fmt.Println("server will run on : %s", *port)
+  fmt.Println("redirecting to :%s", *url)
+  fmt.Println("accepted routes :%s", *routesRegexp)
+
+  //
+  reg, _ := regexp.Compile(*routesRegexp)
+  routes := []*regexp.Regexp{reg}
+
+  // proxy
+  proxy := New(*url)
+  proxy.routePatterns = routes
+
+  // server
+  http.HandleFunc("/", proxy.handle)
+  http.ListenAndServe(*port, nil)
+}
+```
+
 ### Conclusion
 
-It was just a POC but you can easily change it here to start.
+It was just a POC but you can easily change it [here](https://github.com/darul75/personal-blog/blob/master/examples/2015/2015-07-22_go-lang-simple-reverse-proxy/go-reverse.go) to start.
 
 
 
