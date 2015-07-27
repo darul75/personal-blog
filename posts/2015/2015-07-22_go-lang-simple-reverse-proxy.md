@@ -36,7 +36,7 @@ Will forward the request, it sounds very good, let's try it.
 
 ## Scenario
 
-You have a backend service somewhere with a webserver interface but you do not want to expose directly to the front webserver or want to put some custom rules to access it, authentication, or some business logic.
+You have a backend service somewhere accesible with an http interface. And you do not want it to be exposed directly or you want to put some custom rules to access it, as authentication, or with some arbitrary logic. Thus why not place a reverse proxy in front of your backend services.
 
 In this example, we will demonstrate role of our reverse proxy by forwarding all web request from server one (running on arbitrary 80 port) to another server somewhere, let's say http://127.0.0.1:8080
 
