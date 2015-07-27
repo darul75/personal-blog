@@ -1,4 +1,4 @@
-Few months ago, I coded on [hackerrank](https://www.hackerrank.com) by learning Go language. Tests there are sometimes very tricky but you should take a look at them and practice sometimes. Today, I will show your a more concrete example with a reverse proxy implementation.
+Few months ago, I coded on [hackerrank](https://www.hackerrank.com) by learning Go language. Tests there can be very tricky but you should take a look at them and practice sometimes. Today, I will show your a more concrete example with a reverse proxy implementation.
 
 Main role of this pattern is to filter network request by inspecting (modifying...) and route it (or not) somewhere else.
 
