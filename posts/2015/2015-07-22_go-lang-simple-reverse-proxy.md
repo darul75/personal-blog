@@ -201,8 +201,3 @@ func main() {
 ### Conclusion
 
 It was just a POC but you can easily change it [here](https://github.com/darul75/personal-blog/blob/master/examples/2015/2015-07-22_go-lang-simple-reverse-proxy/go-reverse.go) to start.
-
-Todo : add go routine.
-
-
-
