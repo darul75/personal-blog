@@ -124,7 +124,7 @@ Our first example had no logic but you can easily add you own.
 - filter query path, what we will do here.
 - ...
 
-We will register on regular expression which applied to all requests made will allow forwarding base on request path matching.
+Let's register one regular expression which applied to all requests path allows or disallows forwarding to our target url.
 
 ```clike
 type Prox struct {
@@ -201,6 +201,8 @@ func main() {
 ### Conclusion
 
 It was just a POC but you can easily change it [here](https://github.com/darul75/personal-blog/blob/master/examples/2015/2015-07-22_go-lang-simple-reverse-proxy/go-reverse.go) to start.
+
+Todo : add go routine.
 
 
 
