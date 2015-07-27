@@ -200,7 +200,7 @@ func main() {
 }
 ```
 
-### Note
+## Note
 
 By looking into [go server](http://golang.org/src/net/http/server.go) code, you can see that a go [routine](https://golang.org/doc/effective_go.html#goroutines) "A goroutine is a lightweight thread of execution." is started on every request.
 
@@ -215,6 +215,6 @@ func (h *timeoutHandler) ServeHTTP(w ResponseWriter, r *Request) {
 }
 ```
 
-### Conclusion
+## Conclusion
 
 It was just a POC but you can easily change it [here](https://github.com/darul75/personal-blog/blob/master/examples/2015/2015-07-22_go-lang-simple-reverse-proxy/go-reverse.go) to start.
