@@ -126,6 +126,8 @@ Our first example had no logic but you can easily add you own.
 
 Let's register one regular expression which applied to all requests path allows or disallows forwarding to our target url.
 
+### Proxy code
+
 ```clike
 type Prox struct {
   target        *url.URL
