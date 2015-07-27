@@ -36,7 +36,7 @@ Will forward the request, it sounds very good, let's try it.
 
 ## Scenario
 
-You have a backend service somewhere accesible with an http interface. And you do not want it to be exposed directly or you want to put some custom rules to access it, as authentication, or with some arbitrary logic. Thus why not place a reverse proxy in front of your backend services.
+You have a backend service somewhere accessible with an http interface. And you do not want it to be exposed directly or you want to put some custom rules to access it, as authentication, or with some arbitrary logic. Thus why not place a reverse proxy in front of your backend services.
 
 In this example, we will demonstrate role of our reverse proxy by forwarding all web request from server one (running on arbitrary 80 port) to another server somewhere, let's say http://127.0.0.1:8080
 
@@ -197,6 +197,21 @@ func main() {
   // server
   http.HandleFunc("/", proxy.handle)
   http.ListenAndServe(*port, nil)
+}
+```
+
+### Note
+
+By looking into [go server](http://golang.org/src/net/http/server.go) code, you can see that a go [routine](https://golang.org/doc/effective_go.html#goroutines) "A goroutine is a lightweight thread of execution." is started on every request.
+
+```clike
+func (h *timeoutHandler) ServeHTTP(w ResponseWriter, r *Request) {
+  done := make(chan bool, 1)
+  tw := &timeoutWriter{w: w}
+  go func() {
+    h.handler.ServeHTTP(tw, r)
+    done <- true
+  }()
 }
 ```
 
