@@ -20,7 +20,7 @@ let schema = class Schema extends React.Component {
         + '"sameAs" : ['
         + '"https://github.com/darul75",'
         + '"https://fr.linkedin.com/pub/julien-valery/70/624/b54",'
-        + '"https://twitter.com/darul75",'
+        + '"https://twitter.com/darul75"'
         + ']'
         + '}'
       + '</script>'};
