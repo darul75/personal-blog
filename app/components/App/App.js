@@ -6,6 +6,7 @@ import { RouteHandler } from 'react-router';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HtmlHeaderTags from '../Document/HtmlHeaderTags';
+import Schema from './Schema';
 
 // FLUX
 import AppStore from '../../stores/AppStore';
@@ -38,6 +39,7 @@ let app = class App extends React.Component {
           </div>
           <Footer />
         </div>
+        <Schema />
       </div>
     );
   }
