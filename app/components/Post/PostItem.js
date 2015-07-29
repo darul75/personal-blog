@@ -190,7 +190,7 @@ let postItem = class PostItem extends React.Component {
             {time}
           </div>
           {editButtonMarkup}
-          <h1>
+          <h1 itemProp='headline'>
             <Link to={postPermalink}>{post.title}</Link>
           </h1>
           <div className={markdownClass} dangerouslySetInnerHTML={{__html: post.body}} itemProp='articleBody'></div>
@@ -200,6 +200,7 @@ let postItem = class PostItem extends React.Component {
           </div>
           {helmetMarkup}
           {disqusMarkup}
+          <meta itemProp='datePublished' content={new Date(post.date).toISOString()}/>
         </article>
       </section>
     );
