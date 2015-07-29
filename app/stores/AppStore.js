@@ -24,7 +24,7 @@ let appStore = makeHot(alt, class AppStore {
 
     const extractMeta = function(elt) {
       let meta = {};
-      var dateMatches = elt.match(/(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])/);
+      let dateMatches = elt.match(/(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])/);
       if (dateMatches) {
         meta.date = dateMatches[0];
       }
@@ -38,9 +38,16 @@ let appStore = makeHot(alt, class AppStore {
 
     markupFilesKeys.forEach((elt) => {
       let html = markupFilesReq(elt);
+      // fetch image
+      let imageMatches = html.match(/(\/.+\w+.(png|jpg))/);
+      let img = '';
+      if (imageMatches) {
+        img = this.packagejson.author.url + imageMatches[0];
+      }
       let metas = extractMeta(elt);
       let post = {
         body: html,
+        bodyImage: img,
         date: metas.date,
         filename: metas.filename,
         permalink: metas.permalink,

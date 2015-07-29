@@ -201,6 +201,7 @@ let postItem = class PostItem extends React.Component {
           {helmetMarkup}
           {disqusMarkup}
           <meta itemProp='datePublished' content={new Date(post.date).toISOString()}/>
+          <meta itemProp='image' content={post.bodyImage}/>
         </article>
       </section>
     );

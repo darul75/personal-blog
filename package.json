@@ -2,6 +2,11 @@
   "name": "personal-blog",
   "description": "",
   "version": "0.0.1",
+  "author": {
+    "name": "Julien Valéry",
+    "email": "darul75@gmail.com",
+    "url": "http://www.darul.io"
+  },
   "homepage": "https://github.com/darul75/personal-blog",
   "repository": {
     "type": "git",
