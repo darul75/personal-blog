@@ -197,3 +197,5 @@ console.log(myMap.getIn(['address', 'city']));
 Many functions can be used as setIn(), deleteIn(), updateIn(), mergeIn()....
 
 You can also edit this article by pressing edit button.
+
+![Just for fun](/images/posts/building-bricks-wall-gutter.jpg)

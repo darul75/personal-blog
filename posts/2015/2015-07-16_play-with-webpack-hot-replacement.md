@@ -240,3 +240,5 @@ if (true) {
 It is not perfect and all common nodejs modules or external library should be escaped...but that was a try.
 
 My react swiss kit it here [web-react](https://github.com/darul75)
+
+![Just for fun](/images/posts/startup-photos.jpg)

@@ -2,6 +2,17 @@ article {
   padding-left: 20px;
   position: relative;
   &.post {
+
+    img {
+      margin: 0;
+      display: none;
+    }
+
+    &.full img {
+      display: block;
+      width: 100%;
+    }
+
     h1 {
       font-size: 40px;
       line-height: 35px;

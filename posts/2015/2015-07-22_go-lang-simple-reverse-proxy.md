@@ -50,7 +50,7 @@ When you start, do not worry about making things simple, with no struct, here I 
 
 Here are some examples of [struct](https://tour.golang.org/moretypes/4) usage and pointers method receivers with Go [receivers](https://tour.golang.org/methods/1)
 
-### Proxy code
+### Simple proxy
 
 ```clike
 
@@ -76,7 +76,7 @@ func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-### Main
+### Main example
 
 Flag Go Flag package is very nice to put some command line options.
 
@@ -126,7 +126,7 @@ Our first example had no logic but you can easily add you own.
 
 Let's register one regular expression which applied to all requests path allows or disallows forwarding to our target url.
 
-### Proxy code
+### Advanced proxy
 
 ```clike
 type Prox struct {
@@ -162,7 +162,7 @@ func (p *Prox) parseWhiteList(r *http.Request) bool {
 }
 ```
 
-### Main
+### Full main
 
 ```clike
 func main() {
@@ -218,3 +218,5 @@ func (h *timeoutHandler) ServeHTTP(w ResponseWriter, r *Request) {
 ## Conclusion
 
 It was just a POC but you can easily change it [here](https://github.com/darul75/personal-blog/blob/master/examples/2015/2015-07-22_go-lang-simple-reverse-proxy/go-reverse.go) to start.
+
+![Just for fun](/images/posts/stairs-man-person-walking.jpg)

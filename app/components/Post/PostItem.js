@@ -123,6 +123,8 @@ let postItem = class PostItem extends React.Component {
       moreButton = <Link className='buttonize small' to={'/post/' + post.permalink}>Continue reading →</Link>;
     }
 
+    const fullDisplayClass = this.props.params ? 'full' : '';
+
     if (this.props.params) {
       markdownClass = 'markdown-body highlight';
       // from store
@@ -133,6 +135,7 @@ let postItem = class PostItem extends React.Component {
       post = _.find(posts, function(item) {
         return item.permalink === postId;
       });
+
       // build menu
       markdownMenu = <PostItemSectionMenu body={post.body} />;
 
@@ -167,7 +170,7 @@ let postItem = class PostItem extends React.Component {
     }
     // param
     let postPermalink = '/post/' + post.permalink;
-    let articleContainerClass = 'post ';
+    let articleContainerClass = 'post ' + fullDisplayClass;
 
     //post.body = post.body.replace('</h2>', '</h2>' + markDown);
 
@@ -179,7 +182,7 @@ let postItem = class PostItem extends React.Component {
 
     return (
       <section>
-        <article className={articleContainerClass}>
+        <article className={articleContainerClass} itemScope itemType='http://schema.org/BlogPosting'>
           <div id='post-menu' ref='postmenu' style={menuPositionStyle} className={showClass} onMouseLeave={this._onMouseLeave.bind(this)}>
             {markdownMenu}
           </div>
@@ -190,7 +193,7 @@ let postItem = class PostItem extends React.Component {
           <h1>
             <Link to={postPermalink}>{post.title}</Link>
           </h1>
-          <div className={markdownClass} dangerouslySetInnerHTML={{__html: post.body}}></div>
+          <div className={markdownClass} dangerouslySetInnerHTML={{__html: post.body}} itemProp='articleBody'></div>
           <div className='buttons'>
             {moreButton}
             {backButton}

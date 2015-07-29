@@ -17,6 +17,7 @@ if (process.env.BROWSER) {
   require('./_App.scss');
   require('file?name=favicon.ico!../../images/favicon.ico');
   require('../../../assets/js/google/google');
+  require.context('../../images/posts', true, /\.jpg$/);
 }
 
 let app = class App extends React.Component {
@@ -28,6 +29,17 @@ let app = class App extends React.Component {
     let menu = App.getPropsFromStores().menu;
     let slideForMenu = menu ? 'slide' : '';
     slideForMenu += App.getPropsFromStores().menuHide ? 'Off' : '';
+    const schemaObj = {
+      '@context': 'http://schema.org',
+      '@type': 'Person',
+      'name': 'Julien Valéry',
+      'url': 'http://www.darul.io',
+      'sameAs': [
+        'https://github.com/darul75',
+        'https://fr.linkedin.com/pub/julien-valery/70/624/b54',
+        'https://twitter.com/darul75'
+      ]
+    };
 
     return (
       <div>
@@ -39,7 +51,7 @@ let app = class App extends React.Component {
           </div>
           <Footer />
         </div>
-        <Schema />
+        <Schema schema={schemaObj} />
       </div>
     );
   }
