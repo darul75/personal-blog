@@ -87,7 +87,7 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-	color: #905;
+	color: #CE5925;
 }
 
 .token.selector,

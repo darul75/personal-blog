@@ -246,6 +246,43 @@ var o = {
   }
 };
 
+function Arbre(nom) {
+   this.nom = nom;
+}
+
+var monArbre = new Arbre("Sequoia");
+
 b = cloneObject(a);
 var clone = cloneObject(o, true);
+var clone2 = cloneObject(o);
+var clone3 = cloneObject(monArbre);
 console.log(clone);
+
+function countStrings(arr) {
+  return arr.reduce(function(prev, curr) {
+    prev[curr] = ++prev[curr] || 1
+    return prev
+  }, {})
+};
+
+countStrings(['a', 'b']);
+
+var Thing = function(name) {
+  this.name = name;
+}
+
+Thing.prototype.do = function() {
+  console.log("ee");
+}
+
+var Human = function(name, age) {
+  Thing.call(this, name);
+
+  this.age = age;
+}
+
+Human.prototype = new Thing();
+
+var jul = new Human("titi", 22);
+
+console.log('tt');
