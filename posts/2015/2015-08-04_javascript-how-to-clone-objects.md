@@ -1,7 +1,7 @@
 
-In an ideal world, to copy an object we should simply call a method named copy() and go drink a coffee, but no, we can't. In order to undertand common manners to copy() object in javascript, we will need to review some basics, a recap is always welcome, isn't it ?
+In an ideal world, to clone an object we should simply invoke a native method named clone() and go drink a coffee, but no, we can't. In order to undertand common manners to clone() object in javascript, we will need to review some basics, a recap is always welcome, isn't it ?
 
-I will try to explain what is going on when you deal with javascript value, object, references...and all that in one article, OMG.
+I will explain you what is going on when dealing with javascript value, object, references...and all that in one article, OMG.
 
 ## Primitives are immutable
 
@@ -22,35 +22,35 @@ s1[0] = 'z';
 console.log(s1); // still 'abc'
 
 var number = 42;
-var copy = number;
+var clone = number;
 
-copy = 22;
+clone = 22;
 console.log(number); // still '42'
 
 function doInc(num) {
 	num += 1;
-	// num === 43 yes but 'num' here is just a copy..
+	// num === 43 yes but 'num' here is just a copy by value..
 }
 
 doInc(number);
 console.log(number); // still '42'
 ```
 
-Well, so if you want to copy a primitive does it work like a charm ?
+Well, so if you want to clone a primitive does it work like a charm ?
 
 ```javascript
 var original = 'base';
-var copy = original;
+var clone = original;
 // keep it mind here you haven't made a copy but just
 // created a reference to the same data.
 
-console.log(original === copy); // true
+console.log(clone === copy); // true
 
-copy = 'another';
+clone = 'another';
 // here you change the reference but original still
 // reference same string immutable data 'base'.
 
-console.log(original === copy); // false
+console.log(original === clone); // false
 
 ```
 Ok then you have already seen many examples like that.. let's see further.
@@ -66,14 +66,14 @@ var original = {
 	attr1: 1,
 	attr2: 2
 };
-var copy = original; // :)
+var clone = original; // :)
 
-// we have a very nice copy now, let's play
+// we have a very nice clone now, let's play
 // with it because we are confident.
 
-copy.attr1 = 'it is really simple';
+clone.attr1 = 'it is really simple';
 
-console.log(copy.attr1); // ok fine
+console.log(clone.attr1); // ok fine
 console.log(original.attr1); // oh no !
 ```
 
@@ -111,9 +111,9 @@ var obj = {
     attr: 42
 };
 
-var copy = _.clone(obj);
+var clone = _.clone(obj);
 
-copy.attr = '21';
+clone.attr = '21';
 
 obj.attr === 42; // still true
 ```
@@ -130,9 +130,9 @@ var obj = {
 	}
 };
 
-var copy = _.clone(obj);
+var clone = _.clone(obj);
 
-copy.attr2.value = '21';
+clone.attr2.value = '21';
 
 obj.attr2.value === 42; // not true anymore
 ```
