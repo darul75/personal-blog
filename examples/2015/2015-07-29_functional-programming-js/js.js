@@ -238,13 +238,34 @@ function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
   return result;
 }
 
+var obj = {
+    prop: 42
+};
+
+var clone = _.clone(obj);
+
+clone.prop = 21;
+
+clone.prop === 21; // TRUE sure
+// and
+obj.prop === 42; // STILL true
+
 var a = 1;
+
+var circular = {};
+
 var o = {
   id:'o',
   sub: {
     name: 'darul75'
-  }
+  },
+  circular: circular
 };
+
+circular.name = "name";
+circular.value = o;
+
+var circular;
 
 function Arbre(nom) {
    this.nom = nom;

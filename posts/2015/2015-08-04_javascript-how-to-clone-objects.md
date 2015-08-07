@@ -63,31 +63,79 @@ Take this example where we will try to copy a simple object with some primitive 
 
 ```javascript
 var original = {
-	attr1: 1,
-	attr2: 2
+	prop: 'myProp'
 };
+
+// let's clone it, sorry for this...
 var clone = original; // :)
 
 // we have a very nice clone now, let's play
 // with it because we are confident.
+clone.prop = 'it is so simple to clone object';
 
-clone.attr1 = 'it is really simple';
-
-console.log(clone.attr1); // ok fine
-console.log(original.attr1); // oh no !
+console.log(clone.prop); // ok fine
+console.log(original.prop); // oh no !
 ```
 
 Ok that was simple and stupid but I am quite sure we all made it one time.
 
 You have just created a reference to original object, sorry I repeat myself.
 
+## Shallow vs Deep copy
+
+Here just a piece of code with side effect you should be aware of from a shallow copy.
+
+**Only primitives**
+
+```javascript
+var _ = require('lodash');
+
+var obj = {
+    prop: 42
+};
+
+var clone = _.clone(obj);
+// assign new property value
+clone.prop = 21;
+
+// some checks
+clone.prop === 21; // TRUE sure
+// and
+obj.prop === 42; // STILL true
+```
+
+**Object**
+
+```javascript
+var _ = require('lodash');
+
+var obj = {
+    prop: {
+      number: 42
+  }
+};
+
+var clone = _.clone(obj);
+// assign new value on 'number' property
+clone.prop.number = 21;
+
+// check on original cloned object
+obj.prop.number !== 42; // yes indeed
+obj.prop.number === 21; // yes indeed
+
+// 'prop' property in 'clone object' is just a reference
+// to prop object from 'original object'
+```
+
 ## How to clone Object
 
-Many libraries like UnderscoreJS, JQuery, and now Lodash do that very well and to avoid reinvent the wheel *simply use it*.
+Many libraries like UnderscoreJS, JQuery, and now **Lodash** do that very well therefore to **avoid reinvent the wheel** simply use it.
 
-Here I will just decorticate lodash clone method to see how it works from inside.
+Here I propose we decorticate **Lodash** clone() method to see how it works.
 
 ### Lodash clone function
+
+The signature that may first look little bit weird, many parameters...
 
 ```javascript
 function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
@@ -95,47 +143,14 @@ function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
 }
 ```
 
-Now just focus on 2 first params, value and deep.
+Focus on 2 first params, value and deep.
 
-- value is your value to be cloned first, but this method can be called recursively on each of your nested object/array attributes.
-- deep will invoke a more robust copy traversing all your attributes and so one for each nexted object/array/function.
+- value is your value to be cloned first, but this method can/will be called recursively on each of your nested object/array attributes.
+- deep option will invoke a more robust copy traversing all your attributes and so one for each nested object/array/function.
 
-By default, with no depth parameter (we often read about 'shallow' copy), only your primitive values on first level will be well copied, all your other objects or array nested inside it with just become references to original.
+By default, with no depth parameter ('shallow' copy), only your primitive values on first level will be well cloned, all your other objects or array nested inside it with just become references to original.
 
 ### Lodash clone with no deep
-
-```javascript
-var _ = require('lodash');
-
-var obj = {
-    attr: 42
-};
-
-var clone = _.clone(obj);
-
-clone.attr = '21';
-
-obj.attr === 42; // still true
-```
-
-but
-
-```javascript
-var _ = require('lodash');
-
-var obj = {
-    attr: 42
-    attr2: {
-    	value: 42
-	}
-};
-
-var clone = _.clone(obj);
-
-clone.attr2.value = '21';
-
-obj.attr2.value === 42; // not true anymore
-```
 
 Symplified by me, I have escaped the case of arrays, here is an extract of lodash code.
 
@@ -149,7 +164,7 @@ function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
     return value;
   }
 
-  if (/* NOT A PRIMITIVE */) {
+  if (/* NOT A PRIMITIVE => OBJECT */) {
 	  result = initCloneObject(value);
 	}
 
@@ -163,7 +178,10 @@ function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
 }
 ```
 
-Let see both methods initCloneObject() which creates new instances and baseAssign().
+Let see both methods
+
+- initCloneObject() creates new instances
+- baseAssign() copy each object properties.
 
 ```javascript
 function initCloneObject(object) {
@@ -173,7 +191,7 @@ function initCloneObject(object) {
   if (!(typeof Ctor == 'function' && Ctor instanceof Ctor)) {
     Ctor = Object;
   }
-  return new Ctor;
+  return new Ctor; // create instance
 }
 ```
 
@@ -192,7 +210,7 @@ function baseAssign(object, source) {
 
   while (++index < length) {
     var key = props[index];
-    object[key] = source[key];
+    object[key] = source[key]; // assign it to new object
   }
   return object;
 }
@@ -200,11 +218,89 @@ function baseAssign(object, source) {
 
 ### Lodash clone with deep
 
-TODO : finish later :) tired now
+Ok, now let's go deeper and see how lodash handles the case you do not want only a shadow copy but a deep one, by traversing all your nested object properties.
+
+```javascript
+function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
+  var result;
+  var isDeep = deep; // true in this case
+
+  // case value is just a primitive, return it
+  if (!isObject(value)) {
+    return value;
+  }
+
+  if (/* NOT A PRIMITIVE => OBJECT */) {
+    result = initCloneObject(value);
+  }
+
+  // condition not verified
+  if (!isDeep) {
+    return baseAssign(result, value);
+  }
+
+  // GO ON IN DEPTH !!
+  // HERE WE ARE
+
+  // - 1> this method iterate over current object properties
+  // - 2> use a callback to call current cloneObject method recursevely
+  var fn = createBaseFor();
+
+  fn(value, function(subValue, key) {
+    // start recursion for each properties of current object
+    // and go on until no more in hierarchy
+    // - 3> assign result to current object property
+    result[key] = cloneObject(subValue, isDeep, customizer, key, value, stackA, stackB);
+  });
+
+  return result;
+}
+```
+
+Here is the content of createBaseFor() method.
+
+Note the use of an anonymous function, just to cache fromRight optional param.
+
+'iteratee' param is the callback we see before:
+
+```javascript
+function(subValue, key) {
+  // we create a new property on result object named 'key'
+  // we calculate his clone and assign it
+  result[key] = cloneObject(subValue, isDeep, customizer, key, value, stackA, stackB);
+}
+```
+
+Here this useful method:
+
+```javascript
+function createBaseFor(fromRight) {
+  return function(object, iteratee, keysFunc) {
+    var iterable = toObject(object),
+        props = Object.keys(object), // iterate over our object properties
+        length = props.length,
+        index = fromRight ? length : -1;
+
+    while ((fromRight ? index-- : ++index < length)) {
+      var key = props[index];
+      if (iteratee(iterable[key], key, iterable) === false) {
+        break;
+      }
+    }
+    return object;
+  };
+}
+```
 
 ## Conclusion
 
-TODO
+I hope it gives you idea at how clone method has to work.
+
+Array, Function properties are not illustrated but process is the same.
+
+Lodash handle circular dependency as well during clone process.
+
+Based on that, you can imagine the same solution for equal() method.
 
 You can also edit this article by pressing edit button.
 
