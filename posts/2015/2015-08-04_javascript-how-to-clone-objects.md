@@ -1,7 +1,7 @@
 
-In an ideal world, to clone an object we should simply invoke a native method named clone() and go drink a coffee, but no, we can't. In order to undertand common manners to clone() object in javascript, we will need to review some basics, a recap is always welcome, isn't it ?
+In an ideal world, to clone an object we should invoke a native method named clone() and go drink a coffee, but no, we can't. In order to understand common manners to clone() an object in javascript, we will need to review some basics, a recap is always welcome, isn't it ?
 
-I will explain you what is going on when dealing with javascript value, object, references...and all that in one article, OMG.
+I will explain you what is going on when we deal with primitives, objects, references...and all that in one article, OMG.
 
 ## Primitives are immutable
 
@@ -59,7 +59,7 @@ Ok then you have already seen many examples like that.. let's see further.
 
 "In computer science, an object is a value in memory which is possibly referenced by an identifier." Mozilla.
 
-Take this example where we will try to copy a simple object with some primitive attributes.
+Take this example where we clone a simple object with some primitive properties.
 
 ```javascript
 var original = {
@@ -81,11 +81,17 @@ Ok that was simple and stupid but I am quite sure we all made it one time.
 
 You have just created a reference to original object, sorry I repeat myself.
 
-## Shallow vs Deep copy
+## How to clone in one word
 
-Here just a piece of code with side effect you should be aware of from a shallow copy.
+Many libraries like UnderscoreJS, JQuery, and now **Lodash** do that very well therefore to **avoid reinvent the wheel** simply use it.
 
-**Only primitives**
+## Shallow copy
+
+What is it ?
+
+Look at this piece of code with a side effect that you should know when using a shallow copy.
+
+**Primitives only**
 
 ```javascript
 var _ = require('lodash');
@@ -104,7 +110,7 @@ clone.prop === 21; // TRUE sure
 obj.prop === 42; // STILL true
 ```
 
-**Object**
+**With object**
 
 ```javascript
 var _ = require('lodash');
@@ -127,20 +133,16 @@ obj.prop.number === 21; // yes indeed
 // to prop object from 'original object'
 ```
 
-## How to clone Object
+The same is not true if you use lodash deep parameter, but we will see it later.
 
-Many libraries like UnderscoreJS, JQuery, and now **Lodash** do that very well therefore to **avoid reinvent the wheel** simply use it.
+## Lodash clone function
 
 Here I propose we decorticate **Lodash** clone() method to see how it works.
 
-### Lodash clone function
-
-The signature that may first look little bit weird, many parameters...
+Signature may first look little bit complicated, many parameters... but that is fine ;)
 
 ```javascript
-function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
-
-}
+function cloneObject(value, deep, customizer, key, object, stackA, stackB)
 ```
 
 Focus on 2 first params, value and deep.
@@ -195,7 +197,7 @@ function initCloneObject(object) {
 }
 ```
 
-It returns a new instance and to finish the job, we need to copy original object attributes.
+It returns a new instance and to finish the job, we need to copy original object properties.
 
 ```javascript
 function baseAssign(object, source) {
@@ -203,7 +205,7 @@ function baseAssign(object, source) {
     return object;
   }
   object || (object = {});
-  var props = Object.keys(source); // enumerable attributes
+  var props = Object.keys(source); // enumerable props
 
   var index = -1,
       length = props.length;
@@ -243,7 +245,7 @@ function cloneObject(value, deep, customizer, key, object, stackA, stackB) {
   // HERE WE ARE
 
   // - 1> this method iterate over current object properties
-  // - 2> use a callback to call current cloneObject method recursevely
+  // - 2> use a callback to apply current cloneObject method recursively
   var fn = createBaseFor();
 
   fn(value, function(subValue, key) {
@@ -261,7 +263,7 @@ Here is the content of createBaseFor() method.
 
 Note the use of an anonymous function, just to cache fromRight optional param.
 
-'iteratee' param is the callback we see before:
+'iteratee' param is the callback we have seen before:
 
 ```javascript
 function(subValue, key) {
