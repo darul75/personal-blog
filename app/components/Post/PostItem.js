@@ -182,6 +182,12 @@ let postItem = class PostItem extends React.Component {
 
     const body = this.props.params ? post.body : post.bodyNoImg;
 
+    let contentMarkup = <div className={markdownClass} dangerouslySetInnerHTML={{__html: body}} itemProp='articleBody'></div>;
+
+    if (!this.props.params) {
+      contentMarkup = <div className={markdownClass}><summery dangerouslySetInnerHTML={{__html: body}} itemProp='articleBody'></summery></div>;
+    }
+
     return (
       <section>
         <article className={articleContainerClass} itemScope itemType='http://schema.org/BlogPosting'>
@@ -195,7 +201,7 @@ let postItem = class PostItem extends React.Component {
           <h1 itemProp='headline'>
             <Link to={postPermalink}>{post.title}</Link>
           </h1>
-          <div className={markdownClass} dangerouslySetInnerHTML={{__html: body}} itemProp='articleBody'></div>
+          {contentMarkup}
           <div className='buttons'>
             {moreButton}
             {backButton}
