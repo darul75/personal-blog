@@ -148,7 +148,7 @@ Focus on 2 first params, value and deep.
 - value is your value to be cloned first, but this method can/will be called recursively on each of your nested object/array attributes.
 - deep option will invoke a more robust copy traversing all your attributes and so one for each nested object/array/function.
 
-By default, with no depth parameter ('shallow' copy), only your primitive values on first level will be well cloned, all your other objects or array nested inside it with just become references to original.
+By default, with no depth parameter ('shallow' copy), only your primitive values on first level will be well cloned, all other objects/array nested inside it will become references to original.
 
 ### Lodash clone with no deep
 
@@ -294,13 +294,13 @@ function createBaseFor(fromRight) {
 
 ## Conclusion
 
-I hope it gives you idea at how clone method has to work.
+I hope it gives you idea at how clone() method has to work.
 
-Array, Function properties are not illustrated but process is the same.
+Array, Function properties are not illustrated but process is similar.
 
-Lodash handle circular dependency as well during clone process.
+Note that Lodash handles circular dependency as well during clone process.
 
-Based on that, you can imagine the same solution for equal() method.
+Based on that, you can guess how equal() Lodash method works.
 
 You can also edit this article by pressing edit button.
 

@@ -22,6 +22,9 @@ let appStore = makeHot(alt, class AppStore {
     let markupFilesReq = require.context('../../posts/2015', true, /^\.\/.*\.md$/);
     let markupFilesKeys = markupFilesReq.keys();
 
+    const imgRegExp = /(\/.+\w+.(png|jpg))/;
+    const imgTagRegExp = /<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/;
+
     const extractMeta = function(elt) {
       let meta = {};
       let dateMatches = elt.match(/(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])/);
@@ -37,16 +40,23 @@ let appStore = makeHot(alt, class AppStore {
     };
 
     markupFilesKeys.forEach((elt) => {
+      let img = '',
+          bodyCleaned = '';
       let html = markupFilesReq(elt);
+      // fetch first paragraph
+      let paraMatches = html.match(imgTagRegExp);
+      if (paraMatches) {
+        bodyCleaned = html.replace(paraMatches[0], '');
+      }
       // fetch image
-      let imageMatches = html.match(/(\/.+\w+.(png|jpg))/);
-      let img = '';
+      let imageMatches = html.match(imgRegExp);
       if (imageMatches) {
         img = this.packagejson.author.url + imageMatches[0];
       }
       let metas = extractMeta(elt);
       let post = {
         body: html,
+        bodyNoImg: bodyCleaned,
         bodyImage: img,
         date: metas.date,
         filename: metas.filename,

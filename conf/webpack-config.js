@@ -126,11 +126,12 @@ module.exports = function(options) {
       module: {
         loaders: [
           { test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: [/node_modules/, /__tests__/] },
-          { test: /\.(jpe?g|png|gif|svg|woff|eot|ttf)$/, loader: multi(
+          { test: /\.(jpe?g|png|gif|woff|eot|ttf)$/, loader: multi(
               'url?limit=10000&name=[sha512:hash:base64:7].[ext]',
               'file?name=[path][name].[ext]'
               )
           },
+          { test: /\.(svg)$/, loader: 'url?limit=10000&name=[sha512:hash:base64:7].[ext]'},
           { test: /\.sass$/, loader: sassLoaders },
           { test: /\.css$/, loader: cssLoaders },
           { test: /\.scss$/, loader: scssLoaders },

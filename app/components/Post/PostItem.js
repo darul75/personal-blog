@@ -180,6 +180,8 @@ let postItem = class PostItem extends React.Component {
       menuPositionStyle.top = this.state.menuPageY - this.state.menuH - 400;
     }
 
+    const body = this.props.params ? post.body : post.bodyNoImg;
+
     return (
       <section>
         <article className={articleContainerClass} itemScope itemType='http://schema.org/BlogPosting'>
@@ -193,7 +195,7 @@ let postItem = class PostItem extends React.Component {
           <h1 itemProp='headline'>
             <Link to={postPermalink}>{post.title}</Link>
           </h1>
-          <div className={markdownClass} dangerouslySetInnerHTML={{__html: post.body}} itemProp='articleBody'></div>
+          <div className={markdownClass} dangerouslySetInnerHTML={{__html: body}} itemProp='articleBody'></div>
           <div className='buttons'>
             {moreButton}
             {backButton}
