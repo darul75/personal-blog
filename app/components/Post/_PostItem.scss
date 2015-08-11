@@ -3,6 +3,10 @@ article {
   position: relative;
 }
 
+h2.table {
+  font-size: 2em;
+}
+
 .post {
 
   img {
@@ -65,11 +69,11 @@ article {
 
 }
 
-article .markdown-body a {
+.markdown-body a {
   border-bottom: 2px solid #e1e1e1;
 }
 
-article .markdown-body a:hover {
+.markdown-body a:hover {
   border-color: #FF0042;
 }
 

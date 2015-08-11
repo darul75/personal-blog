@@ -27,11 +27,11 @@ let homeSection = class HomeSection extends React.Component {
       postItems.push(<PostItem key={key} post={posts[key]} />);
     }
 
+    let title = !this.props.params ? '' : <h1 className='section'>Blog</h1>;
     return (
-      <div>
-        <div className='wrapper'>
-          {postItems}
-        </div>
+      <div className='wrapper'>
+        {title}
+        {postItems}
       </div>
     );
   }

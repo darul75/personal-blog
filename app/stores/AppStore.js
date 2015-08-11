@@ -3,8 +3,59 @@ import AppActions from '../actions/AppActions';
 
 // DEPENDENCY
 import alt from '../alt';
+import htmlparser from 'htmlparser2';
+
 // webpack hot reload
 import makeHot from 'alt/utils/makeHot';
+
+let parserFactory = function(html) {
+  var util = {
+    html: html,
+    newHtml: ''
+  };
+
+  util.process = function() {
+    let newHtml = '',
+        limit = 1,
+        count = 0,
+        skip = false;
+
+    const p = new htmlparser.Parser({
+      onopentag: function(name, attribs){
+        skip = name === 'img';
+        if (count > limit || skip){
+          return;
+        }
+        let attr = ' ';
+        for (var key in attribs) {
+          attr += key + '="' + attribs[key] + '"';
+        }
+        newHtml += '<' + name + attr + '>';
+      },
+      ontext: function(text){
+        if (count > limit || skip){
+          return;
+        }
+        newHtml += text;
+      },
+      onclosetag: function(tagname){
+        if (count > limit || skip){
+          return;
+        }
+        newHtml += '</' + tagname + '>';
+        count++;
+      },
+      onend: function() {
+        util.newHtml = newHtml;
+      }
+    }, {decodeEntities: false});
+
+    p.write(this.html);
+    p.end();
+  };
+
+  return util;
+};
 
 let appStore = makeHot(alt, class AppStore {
   constructor() {
@@ -23,7 +74,7 @@ let appStore = makeHot(alt, class AppStore {
     let markupFilesKeys = markupFilesReq.keys();
 
     const imgRegExp = /(\/.+\w+.(png|jpg))/;
-    const imgTagRegExp = /<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/;
+    //const imgTagRegExp = /<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/;
 
     const extractMeta = function(elt) {
       let meta = {};
@@ -40,14 +91,17 @@ let appStore = makeHot(alt, class AppStore {
     };
 
     markupFilesKeys.forEach((elt) => {
-      let img = '',
-          bodyCleaned = '';
+      let img = '';
+      // bodyCleaned = '';
       let html = markupFilesReq(elt);
+      const parser = parserFactory(html.replace(/[\n\r]/g, ''));
+      parser.process();
+
       // fetch first paragraph
-      let paraMatches = html.match(imgTagRegExp);
+      /*let paraMatches = html.match(imgTagRegExp);
       if (paraMatches) {
         bodyCleaned = html.replace(paraMatches[0], '');
-      }
+      }*/
       // fetch image
       let imageMatches = html.match(imgRegExp);
       if (imageMatches) {
@@ -56,7 +110,7 @@ let appStore = makeHot(alt, class AppStore {
       let metas = extractMeta(elt);
       let post = {
         body: html,
-        bodyNoImg: bodyCleaned,
+        bodyNoImg: parser.newHtml,
         bodyImage: img,
         date: metas.date,
         filename: metas.filename,

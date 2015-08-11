@@ -183,34 +183,47 @@ let postItem = class PostItem extends React.Component {
     const body = this.props.params ? post.body : post.bodyNoImg;
 
     let contentMarkup = <div className={markdownClass} dangerouslySetInnerHTML={{__html: body}} itemProp='articleBody'></div>;
+    let titleMarkup = <h1 itemProp='headline'>
+      <Link to={postPermalink}>{post.title}</Link>
+    </h1>;
+    let articleMarkup = <article className={articleContainerClass} itemScope itemType='http://schema.org/BlogPosting'>
+      <div id='post-menu' ref='postmenu' style={menuPositionStyle} className={showClass} onMouseLeave={this._onMouseLeave.bind(this)}>
+        {markdownMenu}
+      </div>
+      <div className='markdown-body'>
+        {time}
+      </div>
+      {editButtonMarkup}
+      {titleMarkup}
+      {contentMarkup}
+      <div className='buttons'>
+        {moreButton}
+        {backButton}
+      </div>
+      {helmetMarkup}
+      {disqusMarkup}
+      <meta itemProp='datePublished' content={new Date(post.date).toISOString()}/>
+      <meta itemProp='image' content={post.bodyImage}/>
+    </article>;
 
     if (!this.props.params) {
       contentMarkup = <div className={markdownClass}><summery dangerouslySetInnerHTML={{__html: body}} itemProp='articleBody'></summery></div>;
+      titleMarkup = <h2 className='table'>
+        <Link to={postPermalink}>{post.title}</Link>
+      </h2>;
+      articleMarkup = <div className={articleContainerClass}>
+      {titleMarkup}
+      {contentMarkup}
+      <div className='buttons'>
+        {moreButton}
+      </div>
+      {helmetMarkup}
+    </div>;
     }
 
     return (
       <section>
-        <article className={articleContainerClass} itemScope itemType='http://schema.org/BlogPosting'>
-          <div id='post-menu' ref='postmenu' style={menuPositionStyle} className={showClass} onMouseLeave={this._onMouseLeave.bind(this)}>
-            {markdownMenu}
-          </div>
-          <div className='markdown-body'>
-            {time}
-          </div>
-          {editButtonMarkup}
-          <h1 itemProp='headline'>
-            <Link to={postPermalink}>{post.title}</Link>
-          </h1>
-          {contentMarkup}
-          <div className='buttons'>
-            {moreButton}
-            {backButton}
-          </div>
-          {helmetMarkup}
-          {disqusMarkup}
-          <meta itemProp='datePublished' content={new Date(post.date).toISOString()}/>
-          <meta itemProp='image' content={post.bodyImage}/>
-        </article>
+        {articleMarkup}
       </section>
     );
   }
