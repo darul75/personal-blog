@@ -14,3 +14,5 @@ http://www.fontsquirrel.com/fonts/raleway
 
 Image
 http://www.maxabellaloves.com.au/2015/05/nice-places-to-find-free-images-for-your-blog.html
+
+https://zestedesavoir.com/tutoriels/496/apprenez-la-programmation-fonctionnelle-avec-haskell/709/les-bases/3293/haskell-cest-quoi/
