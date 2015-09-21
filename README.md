@@ -23,3 +23,11 @@ https://zestedesavoir.com/tutoriels/496/apprenez-la-programmation-fonctionnelle-
 http://learnyouahaskell.com/higher-order-functions
 https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/sum-types
 http://www.leonardmeyer.com/blog/2014/06/functors-applicatives-et-monads-en-images/
+
+# Maths
+
+http://www.mathsisfun.com/algebra/logarithms.html
+http://www.mathisfun.com/
+http://www.amazon.com/dp/0817636773/?tag=stackoverfl08-20
+http://www.thestudentroom.co.uk/wiki/Maths_A_Level_C1
+http://www.thestudentroom.co.uk/wiki/Maths_A_Level_C2
