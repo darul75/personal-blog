@@ -29,10 +29,34 @@ As a way to help with understanding the differences between pure code and I/O, h
 
 Table 7.1. Pure vs. Impure
 
-Pure	Impure
+# First class function
+
+variable declaration
+assignment|
+
+Functions are data, first class objects
+
+# Pure	Impure
 Always produces the same result when given the same parameters	May produce different results for the same parameters
 Never has side effects	May have side effects
 Never alters state	May alter the global state of the program, system, or world
+
+# High order function
+
+- return function
+- takes function as argument
+
+example forEach(array, fn)
+
+verbose less, focus on mechanic, increments, , mistakes... focus on result
+
+looping, filtering
+
+mapping items : transformation, focus on mapping mechanic, not on looping process
+
+one liner : effective sometimes enough
+
+
 
 # Polymorphism
 
