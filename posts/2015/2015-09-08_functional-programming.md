@@ -46,6 +46,13 @@ Never alters state	May alter the global state of the program, system, or world
 - return function
 - takes function as argument
 
+
+function makeAdder(first) {
+  return function(second) {
+    return first + second;
+  }
+}
+
 example forEach(array, fn)
 
 verbose less, focus on mechanic, increments, , mistakes... focus on result
@@ -56,6 +63,118 @@ mapping items : transformation, focus on mapping mechanic, not on looping proces
 
 one liner : effective sometimes enough
 
+Extract a property 
+
+function prop(name) {
+  return function(object) {
+    return object[name];
+  }
+}
+
+var getAttribute = prop("attribute");
+
+tweets.map(getAttribute)
+
+get your code expressive, compact code, small abstraction
+
+reduce
+
+# Async flow control
+
+function(scripts) {
+ var content = '';
+ for (var i = 0; i < scripts.length; i++) {
+  ajaxCall(scripts[i]);
+ }
+}
+
+function getScript(name, cb) {
+    var time = Math.random() * 1000;
+    
+    setTimeout(function() {cb('source for library '+name);}, time);
+}
+
+function loadScript() {
+    var libraries = ["jquery", "backbone", "lodash"];
+    var content = '';
+    var loaded = 0;
+    
+    for (var i=0;i<libraries.length;i++) {
+        getScript(libraries[i], function(library) {
+            console.log(library);
+            content += library;
+            if (loaded === libraries.length-1) {
+                console.log(content);
+            }
+            loaded++;
+        });
+    }
+}
+
+function getScriptWithIndex(name, idx, cb) {
+    var time = Math.random() * 1000;
+    
+    setTimeout(function() {cb(name, idx);}, time);
+}
+
+function loadScriptWithIndex() {
+    var libraries = ["jquery", "backbone", "lodash"];
+    var loaded = 0;
+    var content = [];
+    
+    for (var i=0;i<libraries.length;i++) {
+        getScriptWithIndex(libraries[i], i, function(library, i) {
+            console.log(i + ' ' + library);
+            content[i] = library;
+            if (loaded === libraries.length-1) {
+                console.log(content);
+            }
+            loaded++;
+        });
+    }
+}
+
+
+loadScript();
+loadScriptWithIndex();
+
+
+
+
+browser is single threaded
+
+fetch 3 scripts and combine them
+
+# Partial function application
+
+func("toString")
+
+Will take a function, some params and return a new function wrapper
+
+=> DSL 
+
+Do not need to create functions every time you need it
+
+# Composability
+
+Which operations are we doing, write it first
+
+map()
+map()
+map()
+
+
+refactor it with names functions for each operation and then compose it
+
+var fn1 = ..
+var fn2 = ..
+var fn3 = ..
+
+composition from right to left
+
+compose([fn1, fn2, fn3]);
+
+fn1(fn2(fn3)))
 
 
 # Polymorphism
