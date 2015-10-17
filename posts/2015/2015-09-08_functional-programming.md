@@ -115,6 +115,7 @@ function prop(name) {
 - Never has side effects.
 - Never alters state of the global state of the program, system, or world
 
+```javascript
 // impure
 var pattern = /hello/; // check wether contains 'hello'
 
@@ -127,22 +128,56 @@ var containsHello = function(name) {
   var pattern = /hello/; // check wether contains 'hello'
   return name.search(pattern) >= 0;
 };
+```
 
 Why is it useful to write pure function :
 
+- avoid side effects
 - they are by definition cacheable : see memoization
 - testable as we do not need to worry about external system world state
 - parallelizable
 
+# Partial function application
+
+Also called currying, we have seen it before, you call a function with fewer arguments expected and it returns you a function that take the remaining arguments.
+
+Do not need to create functions every time you need it, get your code expressive, compact code, small abstraction.
+
+```javascript
+
+// reduce example
+var someNums = [1,2,3,4];
+someNums.reduce(function(previousValue, currentValue, index, array) {
+  return previousValue + currentValue;
+});
+
+// let make sum of our pow of 2 elements
+
+// create a simple curry function
+function add(base) {
+  return function(num) {
+    return base + num;
+  }
+}
+
+var add2 = add(2);
+// check
+console.log(add2(8)); // 10 ok we are right
+
+// use our old pow curry function seen before
+var powOf2 = pow(2);
+
+var result;
+
+// use builtin reduce function
+result = someNums.reduce(function(previousValue, currentValue) {
+  return pow2(previousValue) + currentValue;
+}); // 148
+
+result = someNums.reduce(add(pow2(previousValue), currentValue)); // 148
 
 
-var getAttribute = prop("attribute");
-
-tweets.map(getAttribute)
-
-get your code expressive, compact code, small abstraction
-
-reduce
+```
 
 # Async flow control
 
@@ -210,15 +245,6 @@ browser is single threaded
 
 fetch 3 scripts and combine them
 
-# Partial function application
-
-func("toString")
-
-Will take a function, some params and return a new function wrapper
-
-=> DSL 
-
-Do not need to create functions every time you need it
 
 # Composability
 
