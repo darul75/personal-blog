@@ -4,56 +4,93 @@ Here we will cover some basics you might apply in order to make a more readable 
 
 Solution is to apply some functional programming recipes.
 
-# functional
+I write this article after having read some good explanation about why functional programming is extremely effective.
+
+You work in a team, you work with 1,2,3 developpers in your team, but what if we are 50, 100 more, code starts to be very dense, not clear, a lot of line of codes...we need to clarify it -> think functional.
+
+# Intro
 
 Javascript can be imperative but you can think of it with a functional approach.
 
 Functions are like other objects, and can be passed by arguments, returned or partially applied (curry..). With this approach, we try to not express code as a suite of instructions but as transformations to apply to input data. We can create complex transformations by compositions.
 
-Function have to be "pure", meaning they can not change their external environment et must always return the same result when we apply same arguments. Variables are immutable, you may not change it in a loop by instance. Function playing with external world are specific and can not be used to replace a pure function.
+Function have to be "pure", meaning they can not change their external environment and must always return the same result when we apply same arguments. Variables are immutable, you may not change it in a loop by instance. Function playing with external world are specific and can not be used to replace a pure function.
 
-A side effect introduces a dependency between the global state of the system and the behaviour of a function. For example, let's step away from Haskell for a moment and think about an imperative programming language. Consider a function that reads and returns the value of a global variable. If some other code can modify that global variable, then the result of a particular application of our function depends on the current value of the global variable. The function has a side effect, even though it never modifies the variable itself. 17 comments
+A side effect introduces a dependency between the global state of the system and the behaviour of a function. Consider a function that reads and returns the value of a global variable. If some other code can modify that global variable, then the result of a particular application of our function depends on the current value of the global variable. The function has a side effect, even though it never modifies the variable itself.
 
-Side effects are essentially invisible inputs to, or outputs from, functions. In Haskell, the default is for functions to not have side effects: the result of a function depends only on the inputs that we explicitly provide. We call these functions pure; functions with side effects are impure.
-
-Purity makes the job of understanding code easier. The behaviour of a pure function does not depend on the value of a global variable, or the contents of a database, or the state of a network connection. Pure code is inherently modular: every function is self-contained, and has a well-defined interface. 1 comment
-
-A non-obvious consequence of purity being the default is that working with impure code becomes easier. Haskell encourages a style of programming in which we separate code that must have side effects from code that doesn't need them. In this style, impure code tends to be simple, with the “heavy lifting” performed in pure code. 2 comments
-
-Much of the risk in software lies in talking to the outside world, be it coping with bad or missing data, or handling malicious attacks. Because Haskell's type system tells us exactly which parts of our code have side effects, we can be appropriately on our guard. Because our favoured coding style keeps impure code isolated and simple, our “attack surface” is small.
-
-Les fonctions sont toutes pures : elles ne peuvent pas modifier l'environnement extérieur à la fonction, et doivent toujours renvoyer le même résultat si on leur donne les mêmes arguments. Les variables ne sont pas modifiables, ce qui fait qu'on ne peut pas programmer de manière impérative, avec des boucles dans lesquelles on modifie des variables. Cela n'empêche pas de faire des programmes utiles, mais force juste à les exprimer différemment. Les fonctions qui interagissent avec le monde extérieur ont un type spécial, ce qui fait qu'on ne peut pas les utiliser à la place d'une fonction pure.
-
-Pure vs. I/O
-As a way to help with understanding the differences between pure code and I/O, here's a comparison table. When we speak of pure code, we are talking about Haskell functions that always return the same result when given the same input and have no side effects. In Haskell, only the execution of I/O actions avoid these rules. 10 comments
-
-Table 7.1. Pure vs. Impure
+Purity makes the job of understanding code easier. The behaviour of a pure function does not depend on the value of a global variable, or the contents of a database, or the state of a network connection.
 
 # First class function
 
-variable declaration
-assignment|
+In javascript function are called first class function, they can be assign to variable, they are data, first class objects.
 
-Functions are data, first class objects
+```javascript
+function hello(name) {
+  console.log('hello' + name);
+}
+```
 
-# Pure	Impure
-Always produces the same result when given the same parameters	May produce different results for the same parameters
-Never has side effects	May have side effects
-Never alters state	May alter the global state of the program, system, or world
+```javascript
+var hello = function(name) {
+  console.log('hello' + name);
+}
+
+var helloJulien = hello('julien');
+var helloDarul = hello('darul');
+
+helloJulien(); // hello julien
+helloDarul(); // hello darul
+```
 
 # High order function
+
+You can resume it in 2 lines if a function match one of this 2 requirements:
 
 - return function
 - takes function as argument
 
-
-function makeAdder(first) {
-  return function(second) {
-    return first + second;
+```javascript
+function pow(exponent) {
+  return function(base) {
+    return Math.pow(base, exponent);
   }
 }
 
-example forEach(array, fn)
+var powOf2 = pow(2);
+var powOf3 = pow(3);
+
+console.log(powOf2(2)); // 4
+console.log(powOf2(4)); // 16
+console.log(powOf3(2)); // 8
+console.log(powOf3(4)); // 64
+```
+
+```javascript
+var someNums = [1,2,3,4];
+// builtin map javascript function is a good example of high order function
+var someNums = [1,2,3,4];
+console.log(someNums.map(powOf2)); // [ 1, 4, 9, 16 ]
+// builtin forEach 
+console.log(
+    someNums.forEach(
+        function(elt) {
+            console.log(powOf2(elt));
+        }
+    )
+);
+// 1
+// 4
+// 9
+// 16
+```
+
+As you can see, we loop on an array but we do not really care about how to loop.
+
+```javascript
+for (var i=0; ....)
+```
+
+We focus on result and transformation we want to do.
 
 verbose less, focus on mechanic, increments, , mistakes... focus on result
 
@@ -70,6 +107,34 @@ function prop(name) {
     return object[name];
   }
 }
+
+
+# Pure Impure
+
+- Always produces the same result when given the same parameters
+- Never has side effects.
+- Never alters state of the global state of the program, system, or world
+
+// impure
+var pattern = /hello/; // check wether contains 'hello'
+
+var containsHello = function(name) {
+  return name.search(pattern) >= 0;
+};
+
+// pure
+var containsHello = function(name) {
+  var pattern = /hello/; // check wether contains 'hello'
+  return name.search(pattern) >= 0;
+};
+
+Why is it useful to write pure function :
+
+- they are by definition cacheable : see memoization
+- testable as we do not need to worry about external system world state
+- parallelizable
+
+
 
 var getAttribute = prop("attribute");
 
