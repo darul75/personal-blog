@@ -185,42 +185,39 @@ Imagine we want to extract all diameters and wrap it into some html paragraph el
 // imperative
 var radiuses = [];
 for (var i = 0; i < planets.length; i++) {
-  var radius = planets[i].diameter;
+  var radius = planets[i].radius;
   var p = document.createElement('p');
   p.innerHTML = radius;
   radiuses[i] = p;
 }
+console.log(radiuses);
 
 // functional
 var radiuses = [];
+
+// what about a function to extract any props from an object
 var prop = function(name) {
   return function(object) {
     return object[name];
   }
 }
 
-var prop = function(name) {
-  return function(object) {
-    return object[name];
-  }
+// and a small dsl factory
+var htmlFactory = function(tagName) {
+  var elt = document.createElement(tagName);
+  return {
+    setProp : function(prop) {
+      return function(value) {
+        elt[prop] = value;
+        return elt;
+      }
+    }
+  };
 }
-
-var htmlFactory = function(elt) {
-  return document.createElement(elt);
-}
-
-var setHtmlProp = function(elt, prop) {
-  return function(value) {
-    elt[prop] = value;
-  }
-}
-
-// prepare factory
-var p = htmlFactory('p');
-var pInnerHTML = setHtmlProp(p, 'innerHtml');
 
 var getRadius = prop("radius");
-var radiuses = planets.map(getRadius).map(pInnerHTML);
+var radiuses = planets.map(getRadius).map(htmlFactory('p').setProp('innerHtml'));
+console.log(radiuses);
 ```
 
 # Partial function application
