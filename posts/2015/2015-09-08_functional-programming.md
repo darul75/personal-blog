@@ -204,26 +204,28 @@ var prop = function(name) {
 
 // and a small dsl factory
 var htmlFactory = function() {
-  var elt = {};
+  this.elt = {};
   return {
     create : function(tagName) {
       console.log('ok');
-      elt = document.createElement(tagName);
+      this.elt = document.createElement(tagName);
       return this;
     },
     setProp : function(prop) {
+      var self = this;
       return function(value) {
-        console.log(value);
-        elt[prop] = value;
-        console.log(elt[prop]);
-        return elt;
+        self.elt[prop] = value;
+        return self.elt;
       }
     }
   };
 }
 
 var getRadius = prop("radius");
-var radiuses = planets.map(getRadius).map(new htmlFactory().create('p').setProp('innerHTML'));
+var newParagraph = function(elt) {
+  return new htmlFactory().create('p').setProp('innerHTML')(elt);
+};
+var radiuses = planets.map(getRadius).map(newParagraph);
 console.log(radiuses);
 ```
 
