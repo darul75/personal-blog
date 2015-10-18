@@ -71,13 +71,10 @@ var someNums = [1,2,3,4];
 var someNums = [1,2,3,4];
 console.log(someNums.map(powOf2)); // [ 1, 4, 9, 16 ]
 // builtin forEach 
-console.log(
-    someNums.forEach(
-        function(elt) {
-            console.log(powOf2(elt));
-        }
-    )
-);
+var iteratee = function(elt) {
+    console.log(powOf2(elt));
+}
+someNums.forEach(iteratee);
 // 1
 // 4
 // 9
@@ -108,7 +105,6 @@ function prop(name) {
   }
 }
 
-
 # Pure Impure
 
 - Always produces the same result when given the same parameters
@@ -137,6 +133,96 @@ Why is it useful to write pure function :
 - testable as we do not need to worry about external system world state
 - parallelizable
 
+# Imperative vs functional
+
+## Example
+
+This scenario consist of computing sum of power of 2 of elements.
+
+```javascript
+// imperative
+var someNums = [1,2,3,4];
+var result;
+for (var i = 0; i < someNums.length; i++) {
+  var currentValue = someNums[i];
+  result += currentValue * currentValue;
+}
+```
+
+Ok but then even if it look nice, why not refactor it in more functional way.
+
+```javascript
+var add = function(first, second) {
+    return first + second;
+}
+
+var reduceFunction = function(prev, current) {
+  return add(prev, powOf2(current);
+};
+
+// builtin reduce function
+var result = someNums.reduce(reduceFunction);
+
+console.log(result); // 30
+```
+
+Another example with some data.
+
+```javascript
+var planets = [{name: 'mercure', radius: 2440},
+{name: 'venus', radius: 6052},
+{name: 'earth', radius: 6378},
+{name: 'mars', radius: 3397},
+{name: 'jupiter', radius: 71492},
+{name: 'saturn', radius: 58232},
+{name: 'uranus', radius: 25362},
+{name: 'neptune', radius: 24622 }]
+```
+
+Imagine we want to extract all diameters and wrap it into some html paragraph elements.
+
+```javascript
+// imperative
+var radiuses = [];
+for (var i = 0; i < planets.length; i++) {
+  var radius = planets[i].diameter;
+  var p = document.createElement('p');
+  p.innerHTML = radius;
+  radiuses[i] = p;
+}
+
+// functional
+var radiuses = [];
+var prop = function(name) {
+  return function(object) {
+    return object[name];
+  }
+}
+
+var prop = function(name) {
+  return function(object) {
+    return object[name];
+  }
+}
+
+var htmlFactory = function(elt) {
+  return document.createElement(elt);
+}
+
+var setHtmlProp = function(elt, prop) {
+  return function(value) {
+    elt[prop] = value;
+  }
+}
+
+// prepare factory
+var p = htmlFactory('p');
+var pInnerHTML = setHtmlProp(p, 'innerHtml');
+
+var getRadius = prop("radius");
+var radiuses = planets.map(getRadius).map(pInnerHTML);
+```
+
 # Partial function application
 
 Also called currying, we have seen it before, you call a function with fewer arguments expected and it returns you a function that take the remaining arguments.
@@ -144,15 +230,6 @@ Also called currying, we have seen it before, you call a function with fewer arg
 Do not need to create functions every time you need it, get your code expressive, compact code, small abstraction.
 
 ```javascript
-
-// reduce example
-var someNums = [1,2,3,4];
-someNums.reduce(function(previousValue, currentValue, index, array) {
-  return previousValue + currentValue;
-});
-
-// let make sum of our pow of 2 elements
-
 // create a simple curry function
 function add(base) {
   return function(num) {
@@ -163,21 +240,9 @@ function add(base) {
 var add2 = add(2);
 // check
 console.log(add2(8)); // 10 ok we are right
-
-// use our old pow curry function seen before
-var powOf2 = pow(2);
-
-var result;
-
-// use builtin reduce function
-result = someNums.reduce(function(previousValue, currentValue) {
-  return pow2(previousValue) + currentValue;
-}); // 148
-
-result = someNums.reduce(add(pow2(previousValue), currentValue)); // 148
-
-
 ```
+
+
 
 # Async flow control
 
