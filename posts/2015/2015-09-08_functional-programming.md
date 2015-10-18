@@ -203,12 +203,19 @@ var prop = function(name) {
 }
 
 // and a small dsl factory
-var htmlFactory = function(tagName) {
-  var elt = document.createElement(tagName);
+var htmlFactory = function() {
+  var elt = {};
   return {
+    create : function(tagName) {
+      console.log('ok');
+      elt = document.createElement(tagName);
+      return this;
+    },
     setProp : function(prop) {
       return function(value) {
+        console.log(value);
         elt[prop] = value;
+        console.log(elt[prop]);
         return elt;
       }
     }
@@ -216,7 +223,25 @@ var htmlFactory = function(tagName) {
 }
 
 var getRadius = prop("radius");
-var radiuses = planets.map(getRadius).map(htmlFactory('p').setProp('innerHtml'));
+var radiuses = planets.map(getRadius).map(new htmlFactory().create('p').setProp('innerHTML'));
+console.log(radiuses);
+```
+
+Ok there we made 2 loops but why ? it is fine for few elements but not the best idea we got.
+
+Mathematics : composition
+
+# Composition
+
+```javascript
+var compose = function(f,g) {
+  return function(x) {
+    return f(g(x));
+  }
+}
+
+var wrapIntoParagraph = compose(htmlFactory('p').setProp('innerHtml'), getRadius);
+var radiuses = planets.map(wrapIntoParagraph);
 console.log(radiuses);
 ```
 
