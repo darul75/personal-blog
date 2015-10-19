@@ -315,9 +315,10 @@ var divElt = new HtmlFactory().create('div');
 
 var buildParagraph = compose(buildParagraphElt, buildText);
 // map over items and build paragraphs html elts
-var createParagraphsElts = planets.map(buildParagraph);
+var paragraphsElts = planets.map(buildParagraph);
+
 // finally append it to div
-createParagraphsElts.forEach(divElt.addChild, divElt);
+paragraphsElts.forEach(divElt.addChild, divElt);
 
 console.log(divElt.getElement()); // job is done
 ```
@@ -347,7 +348,201 @@ https://lodash.com/docs#curry
 
 ## Async flow control
 
-TODO
+Another examples of functional programming can me made with our asynchronous javascript world.
+
+This example is inspired by Christian Johansen presentation there https://vimeo.com/53013378
+
+### Example
+
+Goal is to fetch some scripts and combine them together.
+
+*Steps*
+
+- fetch scripts (asynchronous call)
+- concatenate their content
+
+*Note*
+
+We will mock asynchronous fetching of our files by this code:
+
+```javascript
+// take a filename, and a callback
+function getScript(name, cb) {
+    var time = Math.random() * 5000;
+
+    setTimeout(function() {cb(null, 'source for library '+name);}, time);
+}
+```
+
+#### Reminders
+
+**First attempt**
+
+```javascript
+function loadScript(scripts, callback) {
+
+    var data = [];
+    var l = scripts.length;
+
+    for (var i=0;i<scripts.length;i++) {
+        getScript(scripts[i], function(source) {
+            data[i] = source; // i will always be the same..
+            // below condition never verified
+            if (data.length === l) {
+              callback(data.join(''));
+            }
+        });
+    }
+}
+
+var libs = ['jquery', 'backbone', 'lodash'];
+loadScript(libs, function(data) {
+  console.log('end callback : ' + data);
+});
+
+```
+
+
+What happened there, really nothing... quite nothing:
+
+- 3 asynchronous call have been started in a loop.
+- each asynchronous callback append a content to same index in result array..
+- check condition is never verified as 'data' result array is always filled at same index, all values from callback erasing the previous one.
+
+Why ?
+
+Loop is synchronous and when callbacks from retrieving content are coming, variable i will always be set to its last possible value (from the loop).
+
+**Another attempt with closure**
+
+```javascript
+function loadScript(scripts, callback) {
+
+    var data = [];
+    var l = scripts.length;
+
+    for (var i=0;i<l;i++) {
+        (function(i) {
+          getScript(scripts[i], function(source) {
+            data[i] = source;
+            // below condition is verified one time now
+            if (data.length === l) {
+              callback(data.join(''));
+            }
+          });
+        })(i);
+    }
+}
+
+var libs = ['jquery', 'backbone', 'lodash'];
+loadScript(libs, function(data) {
+  console.log('end callback : ' + data);
+});
+
+```
+
+Ok that is fine but let's try with what we have seen before.
+
+**Scoping with forEach**
+
+```javascript
+function loadScript(scripts, callback) {
+
+    var data = [];
+    var l = scripts.length;
+
+    scripts.forEach(function(script, i) {
+      getScript(scripts[i], function(source) {
+        data[i] = source;
+
+        if (data.length === l) {
+          callback(data.join(''));
+        }
+      });
+    });
+}
+
+var libs = ['jquery', 'backbone', 'lodash'];
+loadScript(libs, function(data) {
+  console.log('end callback : ' + data);
+});
+```
+
+Ok, cool, but that does not work either.
+
+Scoping is fine but structure has fulled us.
+
+Takes this example
+
+```javascript
+var t = [];
+t[2] = 1;
+t[1] = 1;
+t.length; // 3
+```
+
+So as you can see, we can often enter our last end callback condition even if array is not really of good size...
+
+**Scoping with forEach alternative**
+
+We could naively add a counter.
+
+```javascript
+function loadScript(scripts, callback) {
+
+    var data = [];
+    var l = scripts.length;
+    var count=0;
+
+    scripts.forEach(function(script, i) {
+      getScript(scripts[i], function(source) {
+        data[i] = source;
+        count++;
+
+        if (count === l) {
+          callback(data.join(''));
+        }
+      });
+    });
+}
+
+var libs = ['jquery', 'backbone', 'lodash'];
+loadScript(libs, function(data) {
+  console.log('end callback : ' + data);
+});
+```
+
+### CPS
+
+For Continous Passing Style.
+
+I did not even heard about it before even if using it always.
+
+Prototype of this "pattern" is
+
+```javascript
+function myFunction(param, callback) {
+  doSomethingAsync {
+    //when done triggers by calling callback
+    callback();
+  }
+}
+```
+
+So why not refactor again our previous with a functional way.
+
+```javascript
+function loadScript(scripts, callback) {
+  async.map(scripts, getScript, function (err, contents) {
+    callback(contents.join(''));
+  });
+}
+
+var libs = ['jquery', 'backbone', 'lodash'];
+loadScript(libs, function(data) {
+  console.log('end callback : ' + data);
+});
+```
 
 ## Conclusion
 
