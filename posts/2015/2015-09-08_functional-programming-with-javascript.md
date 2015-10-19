@@ -6,7 +6,7 @@ I write this article after having read some good explanation about why functiona
 
 You work in a team, you work with 1,2,3 developpers in your team, but what if we are 50, 100 more, code starts to be very dense, not clear, a lot of line of codes...we need to clarify it -> think functional.
 
-# Intro
+## Intro
 
 "Functions are like other objects, and can be passed by arguments, returned or partially applied (curry..). With this approach, we try to not express code as a suite of instructions but as transformations to apply to input data. We can create complex transformations by compositions.
 
@@ -16,7 +16,7 @@ A side effect introduces a dependency between the global state of the system and
 
 Purity makes the job of understanding code easier. The behaviour of a pure function does not depend on the value of a global variable, or the contents of a database, or the state of a network connection."
 
-# First class function
+## First class function
 
 In javascript function are called first class function, they can be assign to variable, they are data, first class objects.
 
@@ -38,7 +38,7 @@ helloJulien(); // hello julien
 
 We all deeply use this notation.
 
-# High order function
+## High order function
 
 You can resume it in 2 lines if a function match one of these 2 requirements:
 
@@ -85,7 +85,7 @@ for (var i=0; ....)
 
 We focus on result and transformation we expect, not on mechanism behind (here looping), make things expressive is the goal.
 
-# One liner example
+## One liner example
 
 In functional programming, we can achieve big things by putting small things together, and in this case one line of code can be enough and less verbose.
 
@@ -99,7 +99,7 @@ console.log(namesUpper); // ["BOB", "JOHN", "KEITH"]
 
 It is also convenient for testing and avoid bugs.
 
-# Pure function
+## Pure function
 
 Our goal is to apply the following rules:
 
@@ -129,13 +129,13 @@ Why is it useful to write pure function :
 - testable as we do not need to worry about external system world state
 - parallelizable
 
-# Imperative vs functional
+## Imperative vs functional
 
-## Example 1
+### Example 1
 
 This scenario consist of computing sum of squared numbers for a given list.
 
-### Imperative
+**Imperative**
 
 ```javascript
 var someNums = [1,2,3,4];
@@ -149,7 +149,7 @@ console.log(result); // 30
 
 Ok but then even if it look nice, why not refactor it in more functional way.
 
-### Functional
+**Functional**
 
 ```javascript
 // one line enough
@@ -165,7 +165,7 @@ var result = someNums.reduce(reduceSumSquareFunction);
 console.log(result); // 30
 ```
 
-## Example 2
+### Example 2
 
 Another example with data.
 
@@ -204,7 +204,7 @@ Imagine we want to extract all couple name/radius, wrap it into some html paragr
   4. build paragraph html element
   5. append it to div html element
 
-### Imperative
+**Imperative**
 
 ```javascript
 var div = document.createElement('div');
@@ -221,7 +221,7 @@ for (var i = 0; i < planets.length; i++) {
 console.log(div);
 ```
 
-### Functional
+**Functional**
 
 Your swiss knife is made of arbitrary custom functions you create or by using some library existing functions, from lodash, ramda or other great functional frameworks.
 
@@ -296,7 +296,7 @@ console.log(divElt.getElement()); // job is done
 
 Ok that is fine but we made 2 loops by calling map/map....it is fine for few elements but not the best idea we got.
 
-# Composition
+## Composition
 
 Add an util function to our swiss knife.
 
@@ -324,7 +324,7 @@ console.log(divElt.getElement()); // job is done
 
 https://lodash.com/docs#flowRight
 
-# Partial function application
+## Partial function application
 
 Also called currying, we have seen it before, you call a function with fewer arguments expected and it returns you a function that take the remaining arguments.
 
@@ -345,10 +345,18 @@ console.log(add2(8)); // 10 ok we are right
 
 https://lodash.com/docs#curry
 
-# Async flow control
+## Async flow control
 
 TODO
 
+## Conclusion
+
+This article is inspired by many resources, mainly :
+
+https://github.com/MostlyAdequate/mostly-adequate-guide
+https://vimeo.com/53013378
+
+I hope it will give you some idea of what functional programming can be with javascript.
 
 
 
