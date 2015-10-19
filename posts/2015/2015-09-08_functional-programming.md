@@ -34,10 +34,8 @@ var hello = function(name) {
 }
 
 var helloJulien = hello('julien');
-var helloDarul = hello('darul');
 
 helloJulien(); // hello julien
-helloDarul(); // hello darul
 ```
 
 # High order function
@@ -45,7 +43,6 @@ helloDarul(); // hello darul
 You can resume it in 2 lines if a function match one of these 2 requirements:
 
 - return function
-- takes function as argument
 
 ```javascript
 function pow(exponent) {
@@ -63,10 +60,11 @@ console.log(powOf3(2)); // 8
 console.log(powOf3(4)); // 64
 ```
 
+- takes function as argument
+
 ```javascript
 var someNums = [1,2,3,4];
 // builtin map javascript function is a good example of high order function
-var someNums = [1,2,3,4];
 console.log(someNums.map(powOf2)); // [ 1, 4, 9, 16 ]
 // builtin forEach 
 var iteratee = function(elt) {
@@ -99,7 +97,7 @@ var namesUpper = names.map(function (name) { return name.toUpperCase(); } );
 console.log(namesUpper); // ["BOB", "JOHN", "KEITH"]
 ```
 
-# Pure
+# Pure function
 
 Our goal is to apply the following rules:
 
