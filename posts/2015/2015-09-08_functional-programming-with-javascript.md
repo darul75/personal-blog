@@ -1,10 +1,8 @@
-Here we will cover some basics you might apply in order to make a more readable and robust Javascript code.
+This article to cover some basics you might apply in order to make a robust, readable Javascript code.
 
 Solution is to apply some functional programming recipes.
 
-I write this article after having read some good explanation about why functional programming is extremely effective.
-
-You work in a team, you work with 1,2,3 developpers in your team, but what if we are 50, 100 more, code starts to be very dense, not clear, a lot of line of codes...we need to clarify it -> think functional.
+Depending on your project , you can work with 1,2,3 developers on your team , but if we are 50, 100 again, the code begins to be very dense, unclear , many line codes ... we we need to clarify -> functional thinking
 
 ## Intro
 
@@ -20,12 +18,14 @@ Purity makes the job of understanding code easier. The behaviour of a pure funct
 
 In javascript function are called first class function, they can be assign to variable, they are data, first class objects.
 
+**Declarative**
 ```javascript
 function hello(name) {
   console.log('hello' + name);
 }
 ```
 
+**Assignment**
 ```javascript
 var hello = function(name) {
   console.log('hello' + name);
@@ -83,11 +83,13 @@ As you can see, we loop on an array but we do not really care about how to loop.
 for (var i=0; ....)
 ```
 
-We focus on result and transformation we expect, not on mechanism behind (here looping), make things expressive is the goal.
+We focus on the result and processing requirements , not on the mechanism behind (here loop).
+
+Write expressive code is the aim of this approach.
 
 ## One liner example
 
-In functional programming, we can achieve big things by putting small things together, and in this case one line of code can be enough and less verbose.
+In functional programming, we can achieve big things by putting small things together, and in some cases, one line of code can be enough and less verbose.
 
 ```javascript
 var names = ['bob', 'john', 'keith'];
@@ -179,10 +181,10 @@ var planets = [
   {name: 'saturn', radius: 58232},
   {name: 'uranus', radius: 25362},
   {name: 'neptune', radius: 24622 }
-]
+];
 ```
 
-Imagine we want to extract all couple name/radius, wrap it into some html paragraph elements also wrapped in a div html element.
+Imagine we want to extract all couple name/radius, wrap it into some html paragraph elements.
 
 ```javascript
 <div>
@@ -210,25 +212,30 @@ Imagine we want to extract all couple name/radius, wrap it into some html paragr
 var div = document.createElement('div');
 for (var i = 0; i < planets.length; i++) {
   // extract props
-  var name = planets[i].name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+  var name = planets[i].name.replace(/(?:^|\s)\S/g, function(a) {
+    return a.toUpperCase();
+  });
   var radius = planets[i].radius;
 
-  // create html
+  // create html paragraph
   var p = document.createElement('p');
   p.innerHTML = name + ' radius is: ' + radius;
+  // append it to div element
   div.appendChild(p);
 }
 console.log(div);
 ```
 
+Fiddle: http://jsfiddle.net/darul75/8aa4yc8q/
+
 **Functional**
 
-Your swiss knife is made of arbitrary custom functions you create or by using some library existing functions, from lodash, ramda or other great functional frameworks.
+Your swiss knife is made of arbitrary custom functions you create or by using some existing library, as lodash, ramda or other great functional frameworks.
 
 Let's create some utilities function.
 
 ```javascript
-// 1) Function to extract any props from an object
+// 1) Function to extract a property
 var prop = function(name) {
   return function(object) {
     return object[name];
@@ -265,7 +272,7 @@ var HtmlFactory = function() {
 
 It can looks as a lot of code compared to imperative version, but later you will not write it again and again, but just call it when necessary.
 
-Let's see how your main code could look.
+Let's see what your main code might look like.
 
 ```javascript
 // 1) prepare functions to extract name and radius
@@ -293,6 +300,8 @@ createParagraphsElts.forEach(divElt.addChild, divElt);
 
 console.log(divElt.getElement()); // job is done
 ```
+
+Fiddle: http://jsfiddle.net/darul75/hyd8xdof/
 
 Ok that is fine but we made 2 loops by calling map/map....it is fine for few elements but not the best idea we got.
 
@@ -322,6 +331,8 @@ paragraphsElts.forEach(divElt.addChild, divElt);
 
 console.log(divElt.getElement()); // job is done
 ```
+
+Fiddle: http://jsfiddle.net/darul75/3qk4br3y/
 
 https://lodash.com/docs#flowRight
 
@@ -385,7 +396,7 @@ function loadScript(scripts, callback) {
     var l = scripts.length;
 
     for (var i=0;i<scripts.length;i++) {
-        getScript(scripts[i], function(source) {
+        getScript(scripts[i], function(err, source) {
             data[i] = source; // i will always be the same..
             // below condition never verified
             if (data.length === l) {
@@ -402,6 +413,7 @@ loadScript(libs, function(data) {
 
 ```
 
+Fiddle: http://jsfiddle.net/darul75/n7ebs8kq/
 
 What happened there, really nothing... quite nothing:
 
@@ -423,7 +435,7 @@ function loadScript(scripts, callback) {
 
     for (var i=0;i<l;i++) {
         (function(i) {
-          getScript(scripts[i], function(source) {
+          getScript(scripts[i], function(err, source) {
             data[i] = source;
             // below condition is verified one time now
             if (data.length === l) {
@@ -441,6 +453,8 @@ loadScript(libs, function(data) {
 
 ```
 
+Fiddle: http://jsfiddle.net/darul75/6z6Lx4hy/
+
 Ok that is fine but let's try with what we have seen before.
 
 **Scoping with forEach**
@@ -452,7 +466,7 @@ function loadScript(scripts, callback) {
     var l = scripts.length;
 
     scripts.forEach(function(script, i) {
-      getScript(scripts[i], function(source) {
+      getScript(scripts[i], function(err, source) {
         data[i] = source;
 
         if (data.length === l) {
@@ -468,9 +482,11 @@ loadScript(libs, function(data) {
 });
 ```
 
+Fiddle: http://jsfiddle.net/darul75/j23bey9b/
+
 Ok, cool, but that does not work either.
 
-Scoping is fine but structure has fulled us.
+Scoping is fine but structure has cheated us.
 
 Takes this example
 
@@ -495,7 +511,7 @@ function loadScript(scripts, callback) {
     var count=0;
 
     scripts.forEach(function(script, i) {
-      getScript(scripts[i], function(source) {
+      getScript(scripts[i], function(err, source) {
         data[i] = source;
         count++;
 
@@ -512,6 +528,10 @@ loadScript(libs, function(data) {
 });
 ```
 
+Fiddle: http://jsfiddle.net/darul75/j0fuhgdj/
+
+This one works fine but we had to reinvent the wheel a little :)
+
 ### CPS
 
 For Continous Passing Style.
@@ -524,12 +544,12 @@ Prototype of this "pattern" is
 function myFunction(param, callback) {
   doSomethingAsync {
     //when done triggers by calling callback
-    callback();
+    callback(err, data);
   }
 }
 ```
 
-So why not refactor again our previous with a functional way.
+So why not refactor again our previous with a functional way with help of async library.
 
 ```javascript
 function loadScript(scripts, callback) {
@@ -543,12 +563,16 @@ loadScript(libs, function(data) {
   console.log('end callback : ' + data);
 });
 ```
+Fiddle: http://jsfiddle.net/darul75/6z1tj03y/
+
+This last solution is purely functional.
 
 ## Conclusion
 
-This article is inspired by many resources, mainly :
+This article is inspired by many resources, but mainly :
 
 https://github.com/MostlyAdequate/mostly-adequate-guide
+
 https://vimeo.com/53013378
 
 I hope it will give you some idea of what functional programming can be with javascript.
