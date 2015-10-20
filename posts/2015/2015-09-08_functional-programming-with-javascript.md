@@ -437,7 +437,7 @@ function loadScript(scripts, callback) {
         (function(i) {
           getScript(scripts[i], function(err, source) {
             data[i] = source;
-            // below condition is verified one time now
+            // below condition is verified too much time now
             if (data.length === l) {
               callback(data.join(''));
             }
@@ -468,7 +468,7 @@ function loadScript(scripts, callback) {
     scripts.forEach(function(script, i) {
       getScript(scripts[i], function(err, source) {
         data[i] = source;
-
+        // below condition is verified too many times again
         if (data.length === l) {
           callback(data.join(''));
         }
@@ -549,7 +549,7 @@ function myFunction(param, callback) {
 }
 ```
 
-So why not refactor again our previous with a functional way with help of async library.
+So why not refactor again our previous on functional manner with help of [async](https://github.com/caolan/async) library.
 
 ```javascript
 function loadScript(scripts, callback) {
@@ -569,13 +569,13 @@ This last solution is purely functional.
 
 ## Conclusion
 
-This article is inspired by many resources, but mainly :
+I hope it will give you a better idea of what functional programming can be with javascript.
 
-https://github.com/MostlyAdequate/mostly-adequate-guide
+A bible to read [Mostly Adequate Guide](https://github.com/MostlyAdequate/mostly-adequate-guide)
 
-https://vimeo.com/53013378
+Nice video presentation that helps me to build the examples [Functional with javascript](https://vimeo.com/53013378)
 
-I hope it will give you some idea of what functional programming can be with javascript.
+
 
 
 
