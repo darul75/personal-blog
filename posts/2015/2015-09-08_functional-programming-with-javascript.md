@@ -2,7 +2,7 @@ This article to cover some basics you might apply in order to make a robust, rea
 
 Solution is to apply some functional programming recipes.
 
-Depending on your project , you can work with 1,2,3 developers on your team , but if we are 50, 100 again, the code begins to be very dense, unclear , many line codes ... we we need to clarify -> functional thinking
+Depending on your project , you can work with 1,2,3 developers in your team , but if we are 50, 100 again, source code will become very dense, unclear , many line codes ... we we need to clarify -> functional thinking
 
 ## Intro
 
@@ -270,9 +270,9 @@ var HtmlFactory = function() {
 }
 ```
 
-It can looks as a lot of code compared to imperative version, but later you will not write it again and again, but just call it when necessary.
+This may sound like a lot of code compared to the imperative version, but later you will not have to rewrite this and use your own methods.
 
-Let's see what your main code might look like.
+Let's see what your main code would look like.
 
 ```javascript
 // 1) prepare functions to extract name and radius
@@ -340,7 +340,7 @@ https://lodash.com/docs#flowRight
 
 Also called currying, we have seen it before, you call a function with fewer arguments expected and it returns you a function that take the remaining arguments.
 
-Do not need to create functions every time you need it, get your code expressive, compact code, small abstraction.
+Do not need to create functions every time you need it, get your code expressive, compact code with use of a small abstraction.
 
 ```javascript
 // create a simple curry function
