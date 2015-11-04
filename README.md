@@ -23,6 +23,7 @@ https://zestedesavoir.com/tutoriels/496/apprenez-la-programmation-fonctionnelle-
 http://learnyouahaskell.com/higher-order-functions
 https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/sum-types
 http://www.leonardmeyer.com/blog/2014/06/functors-applicatives-et-monads-en-images/
+http://learnyouahaskell.com/introduction
 
 # Maths
 
