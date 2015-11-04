@@ -14,6 +14,7 @@ http://www.fontsquirrel.com/fonts/raleway
 
 # Image
 http://www.maxabellaloves.com.au/2015/05/nice-places-to-find-free-images-for-your-blog.html
+http://compressnow.com/fr/ (80% compression)
 
 # Functional
 https://github.com/MostlyAdequate/mostly-adequate-guide
@@ -23,6 +24,7 @@ https://zestedesavoir.com/tutoriels/496/apprenez-la-programmation-fonctionnelle-
 http://learnyouahaskell.com/higher-order-functions
 https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/sum-types
 http://www.leonardmeyer.com/blog/2014/06/functors-applicatives-et-monads-en-images/
+http://learnyouahaskell.com/introduction
 
 # Maths
 
