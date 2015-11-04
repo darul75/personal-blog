@@ -20,7 +20,7 @@ Go provides all the necessary [packages](http://golang.org/pkg/) to build you ow
 
 If you deep look at Go documentation which is not really readable according to me, you should find this sub httputil package and NewSingleHostReverseProxy [function](https://golang.org/pkg/net/http/httputil/#ReverseProxy)
 
-```clike
+```go
 func NewSingleHostReverseProxy(target *url.URL) *ReverseProxy
 ```
 
@@ -28,7 +28,7 @@ You provide a target URL and it returns a ReverseProxy instance which will do th
 
 Then a simple call to
 
-```clike
+```go
 func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request)
 ```
 
@@ -52,7 +52,7 @@ Here are some examples of [struct](https://tour.golang.org/moretypes/4) usage an
 
 ### Simple proxy
 
-```clike
+```go
 
 // our RerverseProxy object
 type Prox struct {
@@ -80,7 +80,7 @@ func (p *Prox) handle(w http.ResponseWriter, r *http.Request) {
 
 Flag Go Flag package is very nice to put some command line options.
 
-```clike
+```go
 func main() {
   // come constants and usage helper
   const (
@@ -111,7 +111,7 @@ func main() {
 
 Go tools can compile your code to get a binary executable program.
 
-```clike
+```go
 go run build yourfile.go
 ```
 
@@ -128,7 +128,7 @@ Let's register one regular expression which applied to all requests path allows 
 
 ### Advanced proxy
 
-```clike
+```go
 type Prox struct {
   target        *url.URL
   proxy         *httputil.ReverseProxy
@@ -164,7 +164,7 @@ func (p *Prox) parseWhiteList(r *http.Request) bool {
 
 ### Full main
 
-```clike
+```go
 func main() {
   const (
     defaultPort             = ":80"
@@ -204,7 +204,7 @@ func main() {
 
 By looking into [go server](http://golang.org/src/net/http/server.go) code, you can see that a go [routine](https://golang.org/doc/effective_go.html#goroutines) "A goroutine is a lightweight thread of execution." is started on every request.
 
-```clike
+```go
 func (h *timeoutHandler) ServeHTTP(w ResponseWriter, r *Request) {
   done := make(chan bool, 1)
   tw := &timeoutWriter{w: w}

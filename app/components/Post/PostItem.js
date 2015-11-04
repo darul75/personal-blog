@@ -12,7 +12,7 @@ import connectToStores from 'alt/utils/connectToStores';
 // DEPENDENCY
 import PostItemSectionMenu from './PostItemSectionMenu';
 
-let prism = require('prismjs');
+let prism = require('../../../assets/js/prism/prism');
 
 let { PropTypes } = React;
 

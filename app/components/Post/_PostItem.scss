@@ -9,6 +9,9 @@ h2.table {
 
 .post {
 
+  padding-right: 20px;
+  padding-left: 20px;
+
   img {
     margin: 0;
     display: none;
@@ -78,7 +81,6 @@ h2.table {
 }
 
 article h1, article h2, article h3, article h4, article h5, article h6, article ol, article ul, article table, article blockquote, article .markdown-body, .buttons {
-  padding-right: 20px;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;

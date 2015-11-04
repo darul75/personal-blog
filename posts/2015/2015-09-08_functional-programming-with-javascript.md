@@ -575,12 +575,4 @@ A bible to read [Mostly Adequate Guide](https://github.com/MostlyAdequate/mostly
 
 Nice video presentation that helps me to build the examples [Functional with javascript](https://vimeo.com/53013378)
 
-
-
-
-
-
-
-
-
-
+![Just for fun](/images/posts/cable-rope-loops.jpg)
