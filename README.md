@@ -14,7 +14,7 @@ http://www.fontsquirrel.com/fonts/raleway
 
 # Image
 http://www.maxabellaloves.com.au/2015/05/nice-places-to-find-free-images-for-your-blog.html
-http://compressnow.com/fr/
+http://compressnow.com/fr/ (80% compression)
 
 # Functional
 https://github.com/MostlyAdequate/mostly-adequate-guide
