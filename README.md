@@ -26,6 +26,8 @@ https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/sum-ty
 http://www.leonardmeyer.com/blog/2014/06/functors-applicatives-et-monads-en-images/
 http://learnyouahaskell.com/introduction
 
+https://gist.github.com/darul75/0b3acbb365723dc41442
+
 # Maths
 
 http://www.mathsisfun.com/algebra/logarithms.html
