@@ -76,7 +76,7 @@ Play with 2 and try to compute -2.
    1111 1110
 ```
 
-Verify 2 + (-2)
+Verify (-2) + 2
 
 ```javascript
    1111 1110
@@ -116,3 +116,6 @@ var notA = ~3 // 1111 1100
 https://en.wikipedia.org/wiki/Two%27s_complement
 https://en.wikipedia.org/wiki/Signed_number_representations
 http://web.math.princeton.edu/math_alive/1/Lab1/BinAddEx3.html
+https://www.eskimo.com/~scs/cclass/int/sx4ab.html
+http://jibbering.com/faq/notes/type-conversion/#tcBool
+http://stackoverflow.com/questions/141525/what-are-bitwise-shift-bit-shift-operators-and-how-do-they-work
