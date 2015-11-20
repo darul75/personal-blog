@@ -8,12 +8,12 @@ https://en.wikipedia.org/wiki/Signed_number_representations
 
 ## Some recaps.
 
-To illustrate, imagine integer stored as only one byte, 8 bits.
+To illustrate, imagine integer are stored with one byte, 8 bits.
 
 Regarding these two decimals numbers 2 and -1.
 
 ```bash
-integer value 2 binary representation is 0000 0010
+integer value 1 binary representation is 0000 0001
 ```
 
 ```bash
@@ -30,6 +30,8 @@ So decimal 1 number becomes -1 this way
 ~00000001 → 11111110
 ```
 
+
+
 Ok so let's add 2 + (-1)
 
 ```javascript
@@ -45,7 +47,7 @@ Result is
   0000 0000
 ```
 
-And not one as expected
+And not 1 as expected
 
 ```javascript
   0000 0001
@@ -55,35 +57,51 @@ And not one as expected
 
 Negating a number (whether negative or positive) is done by inverting all the bits and then adding one to that result.
 
-Play with 2 and try to compute -2.
+Play with 1 and try to compute -1.
 
 ```javascript
-   0000 0010
+   0000 0001
 ```
 
 - Invert all the bits through the number
 
 ```javascript
-   1111 1101
+   1111 1110
 ```
 
 - Add one
 
 ```javascript
-   1111 1101
+   1111 1110
   +0000 0001
    ---------
-   1111 1110
+   1111 1111
 ```
 
-Verify (-2) + 2
+Verify (-1) + 1 == 0
 
 ```javascript
-   1111 1110
-   0000 0010
+   1111 1111
+   0000 0001
    ---------
  1 000000000
 ```
+
+Verify (-1) + 2 == 1
+
+```javascript
+   1111 1111
+   0000 0010
+   ---------
+ 1 000000001
+```
+
+Good.
+
+Another approach consist in :
+
+- Starting from the right, find the first '1'
+- Invert all of the bits to the left of that one
 
 ## >> (Sign-propagating right shift)
 
@@ -110,6 +128,8 @@ var a = 3;    // 0000 0011
 var notA = ~3 // 1111 1100
 ```
 
+Some ECMAScript operators deal only with integers in the range −231 through 231−1, inclusive, or in the range 0 through 232−1, inclusive. These operators accept any value of the Number type but first convert each such value to one of 232 integer values. See the descriptions of the ToInt32 and ToUint32 operators in 9.5 and 9.6, respectively.
+
 
 ## References
 
@@ -119,3 +139,10 @@ http://web.math.princeton.edu/math_alive/1/Lab1/BinAddEx3.html
 https://www.eskimo.com/~scs/cclass/int/sx4ab.html
 http://jibbering.com/faq/notes/type-conversion/#tcBool
 http://stackoverflow.com/questions/141525/what-are-bitwise-shift-bit-shift-operators-and-how-do-they-work
+http://www.2ality.com/2012/07/large-integers.html#[1]
+http://jsfiddle.net/darul75/3ohL03x6/
+https://www.youtube.com/watch?v=ji3SfClm8TU
+https://www.youtube.com/watch?v=kWLv0xnNd60
+https://www.youtube.com/watch?v=QTjMOm73b6Y
+
+Normalisation, we can only store O and 1
