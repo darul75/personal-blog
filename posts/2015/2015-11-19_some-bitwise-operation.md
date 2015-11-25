@@ -154,6 +154,7 @@ Example IEEE 754
 http://www.madirish.net/240
 http://kipirvine.com/asm/workbook/floating_tut.htm
 http://ecariou.perso.univ-pau.fr/cours/archi/td-1-codage.pdf
+http://class.ece.iastate.edu/arun/Cpre305/ieee754/ie4.html
 
 Floating number computer reprensentation reason video
 https://www.youtube.com/watch?v=PZRI1IfStY0
