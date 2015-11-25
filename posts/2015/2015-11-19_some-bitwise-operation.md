@@ -2,10 +2,6 @@ Few reminders on bitwise operations with javascript as a lot of back end develop
 
 I just report some tips found and used and will add more when I got it :)
 
-Coerces oObject to boolean
-
-https://en.wikipedia.org/wiki/Signed_number_representations
-
 ## Some recaps.
 
 To illustrate, imagine integer are stored with one byte, 8 bits.
@@ -130,19 +126,35 @@ var notA = ~3 // 1111 1100
 
 Some ECMAScript operators deal only with integers in the range −231 through 231−1, inclusive, or in the range 0 through 232−1, inclusive. These operators accept any value of the Number type but first convert each such value to one of 232 integer values. See the descriptions of the ToInt32 and ToUint32 operators in 9.5 and 9.6, respectively.
 
+## Floating numbers
+
+Are juste a scientific notation to express decimal numbers. Limitations with precision.
 
 ## References
 
 https://en.wikipedia.org/wiki/Two%27s_complement
 https://en.wikipedia.org/wiki/Signed_number_representations
+
+Binary addition
 http://web.math.princeton.edu/math_alive/1/Lab1/BinAddEx3.html
+
+Some operations
 https://www.eskimo.com/~scs/cclass/int/sx4ab.html
-http://jibbering.com/faq/notes/type-conversion/#tcBool
+
+Shifting operation recap
 http://stackoverflow.com/questions/141525/what-are-bitwise-shift-bit-shift-operators-and-how-do-they-work
+
+Example IEEE 754
+http://www.madirish.net/240
+
+Floating number computer reprensentation reason video
+https://www.youtube.com/watch?v=PZRI1IfStY0
+
+Article
 http://www.2ality.com/2012/07/large-integers.html#[1]
+
 http://jsfiddle.net/darul75/3ohL03x6/
-https://www.youtube.com/watch?v=ji3SfClm8TU
-https://www.youtube.com/watch?v=kWLv0xnNd60
-https://www.youtube.com/watch?v=QTjMOm73b6Y
+
+
 
 Normalisation, we can only store O and 1
