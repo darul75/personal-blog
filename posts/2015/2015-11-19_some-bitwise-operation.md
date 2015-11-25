@@ -130,6 +130,12 @@ Some ECMAScript operators deal only with integers in the range −231 through 23
 
 Are juste a scientific notation to express decimal numbers. Limitations with precision.
 
+Decimal to IEEE Floating point
+
+- convert to binary
+- move decimal point to first number => exponent value
+- get biased exponent value 
+
 ## References
 
 https://en.wikipedia.org/wiki/Two%27s_complement
@@ -146,9 +152,12 @@ http://stackoverflow.com/questions/141525/what-are-bitwise-shift-bit-shift-opera
 
 Example IEEE 754
 http://www.madirish.net/240
+http://kipirvine.com/asm/workbook/floating_tut.htm
+http://ecariou.perso.univ-pau.fr/cours/archi/td-1-codage.pdf
 
 Floating number computer reprensentation reason video
 https://www.youtube.com/watch?v=PZRI1IfStY0
+
 
 Article
 http://www.2ality.com/2012/07/large-integers.html#[1]
