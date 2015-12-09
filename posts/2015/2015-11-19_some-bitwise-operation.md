@@ -26,8 +26,6 @@ So decimal 1 number becomes -1 this way
 ~00000001 → 11111110
 ```
 
-
-
 Ok so let's add 2 + (-1)
 
 ```javascript
@@ -98,6 +96,12 @@ Another approach consist in :
 
 - Starting from the right, find the first '1'
 - Invert all of the bits to the left of that one
+
+```javascript
+1111 1111
+// could be resumed like 
+-2^7 + 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^0 == -128 + 64 + 32 + 16 + 8 + 4 + 2 + 1
+```
 
 ## >> (Sign-propagating right shift)
 
