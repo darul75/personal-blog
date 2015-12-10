@@ -1,24 +1,36 @@
-Few reminders on bitwise operations with javascript as a lot of back end developers tend to choose NodeJS now.
+Like other languages Javascript deals pretty well with bytes and a lot of developers tend to choose NodeJS as their favourite backend framework.
 
-I just report some tips found and used and will add more when I got it :)
+Here I propose to review "binary" concepts and how numbers are stored, integer, decimal, float, double, binary, floating representations... It helps to understand how some operations are performed.
 
-## Some recaps.
+I wanted to make my own representation of famous IEEE 754 representation, so before to do that, I needed to review some basics, yes school is quite far for me too now.
 
-To illustrate, imagine integer are stored with one byte, 8 bits.
+Result is here : http://darul75.github.io/d3-binary-converter/
 
-Regarding these two decimals numbers 2 and -1.
+## Fact
 
-```bash
+Before digging into the ground, always fun to see something like
+
+```javascript
+0.1 + 0.2 // 0.30000000000000004
+```
+
+Ok, but why ? I would resume it by welcome to binary world.
+
+## Some recaps sign vs unsigned.
+
+To illustrate, we could consider integer are stored with only one byte (8 bits) and two decimals numbers 1 and -1.
+
+```javascript
 integer value 1 binary representation is 0000 0001
 ```
 
-```bash
+```javascript
 integer value -1 binary representation is ???? ????
 ```
 
 ### One complement method
 
-The ones' complement form of a negative binary number is the bitwise NOT applied to it.
+"The ones' complement form of a negative binary number is the bitwise NOT applied to it."
 
 So decimal 1 number becomes -1 this way
 
@@ -102,8 +114,9 @@ Another approach consist in :
 // could be resumed like 
 -2^7 + 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^0 == -128 + 64 + 32 + 16 + 8 + 4 + 2 + 1
 ```
+## Shifting
 
-## << (Left shift)
+### << (Left shift)
 
 "This operator shifts the first operand the specified number of bits to the left."
 
@@ -119,7 +132,7 @@ var shift = 1;
 n << shift == n * Math.pow(2, shift);
 ```
 
-## >> (Sign-propagating right shift)
+### >> (Sign-propagating right shift)
 
 "This operator shifts the first operand the specified number of bits to the right".
 
@@ -129,7 +142,7 @@ var n = 5;  // 0000 0101
 n = n >> 1; // 0000 0010
 ```
 
-## >>> (Zero-fill right shift)
+### >>> (Zero-fill right shift)
 
 "This operator shifts the first operand the specified number of bits to the right."
 
@@ -165,7 +178,7 @@ function dec2bin(dec){
 }
 ```
 
-## ~ (Bitwise NOT)
+### ~ (Bitwise NOT)
 
 "Yields the inverted value (a.k.a. one's complement)"
 
@@ -173,8 +186,6 @@ function dec2bin(dec){
 var a = 3;    // 0000 0011
 var notA = ~3 // 1111 1100
 ```
-
-Ok that is fine.
 
 Some of you may have seen this bunch of code somewhere.
 
@@ -196,7 +207,7 @@ if (string.indexOf('test') >= 0) {
 
 Do you remember -1 in binary representation, a nice list of bits 11111111....
 
-Cool so if I use a NOT on -1 I get ?? 00000000.... binary representation => 0 in decimal => meaning false by coercion..
+Cool so if I use a NOT on -1 I get ?? 00000000.... binary representation => 0 in decimal => meaning boolen false by coercion..
 
 Rewrite our example a little.
 
@@ -212,7 +223,7 @@ var containsNothinElseMatters = string.indexOf(s2); // === -1
 containsAm = ~containsAm; // -16
 containsNothinElseMatters = ~containsNothinElseMatters; // 0
 
-// so what happens when we use this way in a condition
+// so what happened when in a condition
 if (containsAm) {
   // ok
   console.log('containsAm');
@@ -254,17 +265,92 @@ if (~s.indexOf('tf')) {
 }
 ```
 
-## Floating numbers
+## Floating numbers IEEE 754
 
-Are juste a scientific notation to express decimal numbers. Limitations with precision.
+Our computer is just a serie of 0 and 1 isn't it ?
 
-Decimal to IEEE Floating point
+And we have seen how some integer numbers (ex: 15) are normalized into a serie of bits.
 
-- convert to binary
-- move decimal point to first number => exponent value
-- get biased exponent value 
+But how does it work for decimal numbers ? (ex: 15.25)
+
+A decimal number is a number that can be expressed with a fraction where denominator is a power of ten.
+
+```javascript
+55.25 === 5525 / 100 === 5525 / (10^2)
+```
+.
+Ok nice but how my computer does not care about power decimal but want a binary representation instead. 
+
+Here comes IEEE 754 Binary Floating Point is representation.
+
+I won't give all details but you can check how it works [here](https://en.wikipedia.org/wiki/IEEE_floating_point) 
+
+Javascript uses **64 bits** representation precision:
+
+- 1 bit is sign
+- 11 bits exponent
+- 52 bits for the fraction.
+
+### Sign
+
+This is the easy part, 1 bit indicates a negative number, and a 0 bit indicates a positive number.
+
+### Mantissa
+
+*Decimal*
+Best way to understand how it works consist in considering decimal floating representation approach.
+
+Replay with 55.25 number, such a number decimal floating representation would be:
+
+	5,525 x 10 ^2
+
+	sign : positive
+	mantissa : 5.525
+	exponent: 2
+
+The fractional portion of the mantissa is the sum of each digit multiplied by a power of 10:
+
+    .525 =  5/10 + 2/100 + 5/1000
+
+*Binary*
+A binary floating-point number is similar. 
+
+For example, in the normalized number +1,1011101 x 2^5
+
+ - the sign is positive, 
+ - the mantissa is 1,1011101, (we won't store first bit..)
+ - and the exponent is 5.
+
+To come back to a binary representation, we shift the decimal point of mantissa by 5:
+
+	1.1011101 => 110111.01
+
+Take integer/decimal parts:
+
+	110111 => 2^0 + 2^1 + 2^2 + 2^4 + 2^5 => 55
+	.01 => 2^-2 => 0.25
+
+Ok I won't give 
+
+### Exponent
+
+IEEE Short Real exponents are stored as 11-bit unsigned integers with a bias of 1023.
+
+In previous example, exponent of 5 "biased" will become:
+
+	5 + 1023 = 1028
+
+And its binary 
+
+	10000000100 
+
+### Full representation (double precision)
+
+	0 10000000100 1011101000000000000000000000000000000000000000000000
 
 ## References
+
+http://darul75.github.io/d3-binary-converter/
 
 https://en.wikipedia.org/wiki/Two%27s_complement
 https://en.wikipedia.org/wiki/Signed_number_representations
@@ -295,5 +381,3 @@ http://jsfiddle.net/darul75/3ohL03x6/
 
 http://stackoverflow.com/questions/1822350/what-is-the-javascript-operator-and-how-do-you-use-it
 http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript
-
-Normalisation, we can only store O and 1
