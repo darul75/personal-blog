@@ -169,16 +169,90 @@ function dec2bin(dec){
 
 "Yields the inverted value (a.k.a. one's complement)"
 
-
-
-0000 0000
-
 ```javascript
 var a = 3;    // 0000 0011
 var notA = ~3 // 1111 1100
 ```
 
-Some ECMAScript operators deal only with integers in the range −231 through 231−1, inclusive, or in the range 0 through 232−1, inclusive. These operators accept any value of the Number type but first convert each such value to one of 232 integer values. See the descriptions of the ToInt32 and ToUint32 operators in 9.5 and 9.6, respectively.
+Ok that is fine.
+
+Some of you may have seen this bunch of code somewhere.
+
+```javascript
+var string = 'hello world, I am testing !';
+
+if (~string.indexOf('test')) {
+  // do something
+}
+
+// ok weird... normaly would be something like
+
+if (string.indexOf('test') >= 0) {
+  // do something
+}
+```
+
+[indexOf()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf) method return -1 in case of non matching result.
+
+Do you remember -1 in binary representation, a nice list of bits 11111111....
+
+Cool so if I use a NOT on -1 I get ?? 00000000.... binary representation => 0 in decimal => meaning false by coercion..
+
+Rewrite our example a little.
+
+```javascript
+var string = 'hello world, I am testing !';
+
+var s1 = 'am';
+var s2 = 'nothing else matters';
+
+var containsAm = string.indexOf(s1); // === 15
+var containsNothinElseMatters = string.indexOf(s2); // === -1
+
+containsAm = ~containsAm; // -16
+containsNothinElseMatters = ~containsNothinElseMatters; // 0
+
+// so what happens when we use this way in a condition
+if (containsAm) {
+  // ok
+  console.log('containsAm');
+}
+
+if (containsNothinElseMatters) {
+  // ok
+  console.log('containsNothinElseMatters');
+}
+
+// will output
+// > containsAm
+```
+
+### Boolean conversion
+
+In previous example, what you need to remember is that in javascript.
+
+- 0 is the same than false
+- anything else is true.
+
+You may check by using **!!** operator.
+
+```javascript
+!!0; // false
+!!1; // true
+!!18;// true
+// but also
+!!-18;// true
+```
+
+So when you see something like this in code.
+
+```javascript
+var s = 'wtf';
+// same as:  s.indexOf('tf') >= 0
+if (~s.indexOf('tf')) {
+	console.log('now you understand what\'s going on');
+}
+```
 
 ## Floating numbers
 
