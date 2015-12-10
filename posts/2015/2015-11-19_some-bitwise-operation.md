@@ -133,13 +133,37 @@ n = n >> 1; // 0000 0010
 
 "This operator shifts the first operand the specified number of bits to the right."
 
-Consider number -1 could be seen as 11111111111111111111111111111110 in binary representation.
+Consider number -1 could be seen as 11111111111111111111111111111111 in binary representation.
 
-fills the left-most bits with 0's
+What happened when you shift this number by 0 ?
 
-(-1 >>> 0).toString(2); //
+```javascript
+var n = -1;  // 1111.....
 
-// why ?
+n = n >>> 0; // 4294967296
+```
+
+Surprising but not so much at the end as it will simply coerces number to unsigned one.
+
+Sometimes it is nice to get binary representation of a number in javascript. By looking at Mozilla API for number, you will see a nice [toString([base])](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Number/toString) method.
+
+Let's try using it:
+
+```javascript
+var n = -10;  // ....1010
+
+n.toString(2); // "-1010"
+
+// will display "-1010" which is not the real representation of your number, let's see another method
+
+(n >>> 0).toString(2);
+
+// 11111111111111111111111111110110 => GOOD
+
+function dec2bin(dec){
+    return (dec >>> 0).toString(2);
+}
+```
 
 ## ~ (Bitwise NOT)
 
@@ -195,6 +219,7 @@ http://www.2ality.com/2012/07/large-integers.html#[1]
 
 http://jsfiddle.net/darul75/3ohL03x6/
 
-
+http://stackoverflow.com/questions/1822350/what-is-the-javascript-operator-and-how-do-you-use-it
+http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript
 
 Normalisation, we can only store O and 1
