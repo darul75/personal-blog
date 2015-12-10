@@ -103,17 +103,43 @@ Another approach consist in :
 -2^7 + 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^0 == -128 + 64 + 32 + 16 + 8 + 4 + 2 + 1
 ```
 
+## << (Left shift)
+
+"This operator shifts the first operand the specified number of bits to the left."
+
+```javascript
+var n = 5;  // 0000 0101
+
+n = n << 1; // 0000 1010
+
+var shift = 1;
+
+// note, left shifting is equivalent to operation : n * 2^shift
+
+n << shift == n * Math.pow(2, shift);
+```
+
 ## >> (Sign-propagating right shift)
 
+"This operator shifts the first operand the specified number of bits to the right".
 
+```javascript
+var n = 5;  // 0000 0101
+
+n = n >> 1; // 0000 0010
+```
 
 ## >>> (Zero-fill right shift)
 
-Consider number -2 with this 111...110 binary form
+"This operator shifts the first operand the specified number of bits to the right."
+
+Consider number -1 could be seen as 11111111111111111111111111111110 in binary representation.
 
 fills the left-most bits with 0's
 
-(-3 >>> 0).toString(2);
+(-1 >>> 0).toString(2); //
+
+// why ?
 
 ## ~ (Bitwise NOT)
 
