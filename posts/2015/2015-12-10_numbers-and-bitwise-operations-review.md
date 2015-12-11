@@ -380,32 +380,14 @@ And its binary
 
 ## References
 
-https://en.wikipedia.org/wiki/Two%27s_complement
-https://en.wikipedia.org/wiki/Signed_number_representations
+Wikipedia [1](https://en.wikipedia.org/wiki/Two%27s_complement) [2](https://en.wikipedia.org/wiki/Signed_number_representations)
 
-Binary addition
-http://web.math.princeton.edu/math_alive/1/Lab1/BinAddEx3.html
+Binary addition [1](http://web.math.princeton.edu/math_alive/1/Lab1/BinAddEx3.html)
 
-Some operations
-https://www.eskimo.com/~scs/cclass/int/sx4ab.html
+Stackoverflow [1](http://stackoverflow.com/questions/141525/what-are-bitwise-shift-bit-shift-operators-and-how-do-they-work) [2](http://stackoverflow.com/questions/1822350/what-is-the-javascript-operator-and-how-do-you-use-it) [3](http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript)
 
-Shifting operation recap
-http://stackoverflow.com/questions/141525/what-are-bitwise-shift-bit-shift-operators-and-how-do-they-work
+Example IEEE 754 [1](http://www.madirish.net/240) [2](http://kipirvine.com/asm/workbook/floating_tut.htm) [3](http://ecariou.perso.univ-pau.fr/cours/archi/td-1-codage.pdf) [4](http://class.ece.iastate.edu/arun/Cpre305/ieee754/ie4.html)
 
-Example IEEE 754
-http://www.madirish.net/240
-http://kipirvine.com/asm/workbook/floating_tut.htm
-http://ecariou.perso.univ-pau.fr/cours/archi/td-1-codage.pdf
-http://class.ece.iastate.edu/arun/Cpre305/ieee754/ie4.html
+Article [1](http://www.2ality.com/2012/07/large-integers.html#[1])
 
-Floating number computer reprensentation reason video
-https://www.youtube.com/watch?v=PZRI1IfStY0
-
-
-Article
-http://www.2ality.com/2012/07/large-integers.html#[1]
-
-http://jsfiddle.net/darul75/3ohL03x6/
-
-http://stackoverflow.com/questions/1822350/what-is-the-javascript-operator-and-how-do-you-use-it
-http://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript
+Tests [1](http://jsfiddle.net/darul75/3ohL03x6/)
