@@ -11,21 +11,21 @@ Result is here : http://darul75.github.io/d3-binary-converter/
 Before digging into the ground, always fun to see something like
 
 ```javascript
-0.1 + 0.2 // 0.30000000000000004
+  0.1 + 0.2 // 0.30000000000000004
 ```
 
 Ok, but why ? I would resume it by welcome to binary world.
 
 ## Some recaps sign vs unsigned.
 
-To illustrate, we could consider integer are stored with only one byte (8 bits) and two decimals numbers 1 and -1.
+For illustrattion, we could consider integer are stored with only one byte (8 bits)
 
 ```javascript
-integer value 1 binary representation is 0000 0001
+  1 binary => 0000 0001
 ```
 
 ```javascript
-integer value -1 binary representation is ???? ????
+  -1 binary => ???? ????
 ```
 
 ### One complement method
@@ -35,7 +35,7 @@ integer value -1 binary representation is ???? ????
 So decimal 1 number becomes -1 this way
 
 ```javascript
-~00000001 → 11111110
+  ~00000001 → 11111110
 ```
 
 Ok so let's add 2 + (-1)
@@ -112,9 +112,11 @@ Another approach consist in :
 ```javascript
 1111 1111
 // could be resumed like
--2^7 + 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^0 == -128 + 64 + 32 + 16 + 8 + 4 + 2 + 1
+-2^7+2^6+2^5+2^4+2^3+2^2+2^0 == -128+64+32+16+8+4+2+1
 ```
 ## Shifting
+
+Few recaps on shifting operators.
 
 ### << (Left shift)
 
@@ -350,10 +352,10 @@ To come back to a binary representation, we shift the decimal point of mantissa 
 Take integer/decimal parts:
 
 ```javascript
-  110111 => 2^0 + 2^1 + 2^2 + 2^4 + 2^5 => 55
-  .01 => 2^-2 => 0.25
+110111 => 2^0 + 2^1 + 2^2 + 2^4 + 2^5 => 55
+.01 => 2^-2 => 0.25
 
-  // result is expected number : 55.25
+// result is expected number : 55.25
 ```
 
 ### Exponent
@@ -363,7 +365,7 @@ IEEE Double real exponents are stored as 11-bit unsigned integers with a bias of
 In previous example, exponent of 5 "biased" will become:
 
 ```javascript
-	5 + 1023 = 1028
+  5 + 1023 = 1028
 ```
 
 And its binary
@@ -375,7 +377,7 @@ And its binary
 ### Full representation (double precision)
 
 ```javascript
-	0 10000000100 1011101000000000000000000000000000000000000000000000
+  0 10000000100 1011101000000000000000000000000000000000000000000000
 ```
 
 ## References
@@ -391,3 +393,5 @@ Example IEEE 754 [1](http://www.madirish.net/240) [2](http://kipirvine.com/asm/w
 Article [1](http://www.2ality.com/2012/07/large-integers.html#[1])
 
 Tests [1](http://jsfiddle.net/darul75/3ohL03x6/)
+
+![Just for fun](/images/posts/calculator-scientific.jpg)
