@@ -16,6 +16,10 @@ http://www.fontsquirrel.com/fonts/raleway
 http://www.maxabellaloves.com.au/2015/05/nice-places-to-find-free-images-for-your-blog.html
 http://compressnow.com/fr/ (80% compression)
 
+# Theme
+~/Library/Application Support/Sublime Text 2/Packages/Color Scheme - Default
+http://www.colourlovers.com/palette/1718713/Monokai
+
 # Functional
 https://github.com/MostlyAdequate/mostly-adequate-guide
 https://vimeo.com/53013378
