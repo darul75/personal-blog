@@ -8,17 +8,17 @@ Result is here : http://darul75.github.io/d3-binary-converter/
 
 ## Fact
 
-Before digging into the ground, always fun to see something like
+Before digging into the ground, always fun to look at this weird result
 
 ```javascript
   0.1 + 0.2 // 0.30000000000000004
 ```
 
-Ok, but why ? I would resume it by welcome to binary world.
+Ok, but why ? I would summarize by welcome to binary world.
 
-## Some recaps sign vs unsigned.
+## Some recaps signed vs unsigned.
 
-For illustrattion, we could consider integer are stored with only one byte (8 bits)
+For illustration, we could consider that integers are stored with only one byte (8 bits)
 
 ```javascript
   1 binary => 0000 0001
@@ -61,7 +61,7 @@ And not 1 as expected
 
 ### Two's complement method
 
-Negating a number (whether negative or positive) is done by inverting all the bits and then adding one to that result.
+"Negating a number (whether negative or positive) is done by inverting all the bits and then adding one to that result."
 
 Play with 1 and try to compute -1.
 
@@ -221,7 +221,11 @@ Do you remember -1 in binary representation, a nice list of bits 11111111....
 Cool so if I use a NOT on -1 I get ??
 
 ```javascript
-00000.... binary => 0 in decimal => meaning boolean false by coercion.
+!11111....
+=> 00000....
+=> 0 in decimal
+=> meaning boolean false by coercion
+=> false
 ```
 
 Rewrite our example a little.
@@ -233,10 +237,10 @@ var s1 = 'am';
 var s2 = 'nothing else matters';
 
 var containsAm = string.indexOf(s1); // === 15
-var containsNothinElseMatters = string.indexOf(s2); // === -1
+var containsNothingElseMatters = string.indexOf(s2); // === -1
 
 containsAm = ~containsAm; // -16
-containsNothinElseMatters = ~containsNothinElseMatters; // 0
+containsNothingElseMatters = ~containsNothingElseMatters; // 0
 
 // so what happened when in a condition
 if (containsAm) {
@@ -244,9 +248,9 @@ if (containsAm) {
   console.log('containsAm');
 }
 
-if (containsNothinElseMatters) {
+if (containsNothingElseMatters) {
   // ok
-  console.log('containsNothinElseMatters');
+  console.log('containsNothingElseMatters');
 }
 
 // will output
@@ -255,7 +259,7 @@ if (containsNothinElseMatters) {
 
 ### Boolean conversion
 
-In previous example, what you need to remember is that in javascript.
+In previous example, what you need to remember is that in javascript:
 
 - 0 is the same than false
 - anything else is true.
@@ -294,9 +298,9 @@ A decimal number is a number that can be expressed with a fraction where denomin
   55.25 === 5525 / 100 === 5525 / (10^2)
 ```
 .
-Ok nice but how my computer does not care about power decimal but want a binary representation instead.
+Ok nice but my computer does not care about power decimal and expects a binary representation instead.
 
-Here comes IEEE 754 Binary Floating Point is representation.
+Here comes IEEE 754 Binary Floating Point representation.
 
 I won't give all details but you can check how it works [here](https://en.wikipedia.org/wiki/IEEE_floating_point)
 
