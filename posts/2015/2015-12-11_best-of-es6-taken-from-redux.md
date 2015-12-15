@@ -18,9 +18,20 @@ becomes
 const double = (value) => {
 	return value << 1;
 }
+```
 
-// or because of just a single instruction
-double = (value) => value << 1;
+{ } can be removed
+
+```javascript
+// because of just a single statement
+const double = (value) => value << 1;
+```
+
+() can be removed
+
+```javascript
+// because of just a single parameter
+const double = value => value << 1;
 ```
 
 ## Default parameter value
@@ -212,17 +223,61 @@ myFunc();
 
 ## React component as a function
 
+Functional component or presentation component are new but so powerful, note that they are not instances.
+
+In the following example I abuse and declare an event handler (behaviour).
+
 ```javascript
-const Text = ({name, children}) => <p>{children} {name}</p>;
+const Text = ({name, onClick, children}) => <p onClick={onClick}>{children} {name}</p>;
 
-const Julien = {name: julien, age: 36};
+const someProps = {
+  name: julien,
+  age: 36,
+  onClick: () => {
+    console.log('click');
+  }
+};
 
-ReactDOM.render(document.body, <Text {...Julien}>Hello World</Text>);
+ReactDOM.render(document.body, <Text {...someProps}>Hello World</Text>);
 
 //Hello world julien
 ```
 
 Play with react here [also](https://jsfiddle.net/darul75/7j4ggkqh/)
+
+As you can see, no declarative render() method here, you do not need it explicitly, React will render it for you.
+
+Best practice is to avoid using Component classes and replace it with functional component instead when only presentation is needed.
+
+Advantages:
+
+- component focused on presentation
+
+Disadvantages:
+
+- many props are passed down to the component tree hierachy, even when intermediate components do not use it
+- consequence: it breaks encapsulation, our components are really dependents from each other
+
+## React containers component
+
+Container component are on top of you presentation only containers, your logic and behaviour is expressed there.
+
+You may create them when you feel a presentation component has too much to do, extract it a container component to load your data and express behaviour.
+
+Only this type of component needs to be sticked to your flux store, meaning they will subscribe to your store updates and will be responsible to re render sub components when necessary.
+
+Container component:
+
+- read data from store
+- subscribe to the store
+- dispatch actions on the store
+
+
+## Context
+
+Nice feature this one, I was tired to pass properties to sub component, here is the solution.
+
+
 
 ## Advanced
 
@@ -244,7 +299,6 @@ Also you may decide to split your logic into many reducers instead of only one, 
 
 ```javascript
 (state = {}, action) {
-
   return state;
 }
 ```
@@ -270,10 +324,12 @@ We may have 2 reducers methods and want to combine it into one reducer:
 ```javascript
 const basket = (state = [], action) => {
   console.log('basket reducer');
+  // state.basket.pushPull()...
 };
 
 const current = (state = {}, action) => {
   console.log('current reducer');
+  // state.current.SetUnsetItem()...
 }
 
 // idea is to create a reducer this way now
