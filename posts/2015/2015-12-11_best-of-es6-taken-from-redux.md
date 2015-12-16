@@ -1,10 +1,14 @@
-Mozilla documentation is the best but here I share some of new es6 sugar syntaxes features you may know or not :)
+Mozilla documentation is the best but here I share some of new es6 sugar syntaxes features you may know or not :) To my opinion it really gives a less verbose and intuitive code if we all embrace es6.
 
-To my opinion it really gives a less verbose and intuitive code if we all embrace es6.
+I also share a small cover of very intuitive [Dan Abramov](https://github.com/gaearon) redux [tutorial](https://egghead.io/instructors/dan-abramov). Personaly when [Flux](https://facebook.github.io/flux/) appeared, I choosed [Alt](https://github.com/goatslacker/alt) implementation, many utils were into the box as store listening component, action listeners...it is really a great tool.
 
-I also share some tips from very nice Dan Abramov redux [tutorial](https://egghead.io/instructors/dan-abramov)
+Then redux is born and so many were enthousiasts about it, I had to test it too.
 
-## Arrow function
+## ES6
+
+Here some of the best changes we need to know.
+
+### Arrow function
 
 ```javascript
 function double(value) {
@@ -34,7 +38,7 @@ const double = (value) => value << 1;
 const double = value => value << 1;
 ```
 
-## Default parameter value
+### Default parameter value
 
 ```javascript
 function double(value) {
@@ -54,7 +58,7 @@ console.log(double());  // 2
 console.log(double(3)); // 6
 ```
 
-## Rest parameter
+### Rest parameter
 
 Arguments parameter object is an old story now, welcome to new world, not a real Array, slice conversion etc...forget it.
 
@@ -71,7 +75,7 @@ const play = (...args) => {
 play(1,2,3);
 ```
 
-## Spread operator
+### Spread operator
 
 Apply, call methods must be an old story for you too now, we live in 2015(6) hey !
 
@@ -103,7 +107,8 @@ Another exemple of refactoring with the use of slice and concat methods.
 ```javascript
 var list = [1, 2, 3, 4];
 
-// let remove third index with an immutable approach, we want new array and not modifying existing one.
+// let remove third index with an immutable approach,
+// we want new array and not modifying existing one.
 
 list = list.slice(0, 2).concat(list.slice(3));
 
@@ -127,7 +132,7 @@ also note that with this spread operator, you can insert whatever you want insid
 list = ['before', ...list.slice(0, 2), 'middle', ...list.slice(3), 'after'];
 ```
 
-## Object assign
+### Object assign
 
 Avoiding mutating object is one of the key to avoid side effect in your application. Idea behind is whatever you may change on an object, property, method...please after modifying it, not just return it but return a new object instead.
 
@@ -164,7 +169,7 @@ const upperCaseName = (person) => {
 }
 ```
 
-## Shorthand Properties and Methods
+### Shorthand Properties and Methods
 
 Before
 
@@ -201,7 +206,7 @@ julien.sayMyDetails();
 
 ```
 
-## Destructuring import
+### Destructuring import
 
 ```javascript
 var module = require('module');
@@ -221,7 +226,15 @@ import {myFunc} from 'module';
 myFunc();
 ```
 
-## React component as a function
+## React
+
+### Recap
+
+[ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements) is is a virtual representation of a DOM Element. You can say they are native objects, DOM elements in case of browser.
+
+[ReactComponent](https://facebook.github.io/react/docs/glossary.html#react-components) gives abilitity to create encapsulations with embedded state. They can be written as functions, or classes (React.Component). Today only classes can store local state and handle specific behaviour, click handlers...
+
+### React component as a function
 
 Functional component or presentation component are new but so powerful, note that they are not instances.
 
@@ -243,22 +256,20 @@ ReactDOM.render(document.body, <Text {...someProps}>Hello World</Text>);
 //Hello world julien
 ```
 
-Play with react here [also](https://jsfiddle.net/darul75/7j4ggkqh/)
-
 As you can see, no declarative render() method here, you do not need it explicitly, React will render it for you.
 
 Best practice is to avoid using Component classes and replace it with functional component instead when only presentation is needed.
 
-Advantages:
+*Advantages*
 
 - component focused on presentation
 
-Disadvantages:
+*Disadvantages*
 
 - many props are passed down to the component tree hierachy, even when intermediate components do not use it
 - consequence: it breaks encapsulation, our components are really dependents from each other
 
-## React containers component
+### React containers component
 
 Container component are on top of you presentation only containers, your logic and behaviour is expressed there.
 
@@ -272,14 +283,79 @@ Container component:
 - subscribe to the store
 - dispatch actions on the store
 
+### Passing via Prop vs Passing via Context
 
-## Context
+After a bunch of refactoring, your component code would certainly need to pass down to the tree many properties, and it is quite annoying to see such property repeated. A solution exists to propagate a property with the use of a specific container and childContext method.
 
-Nice feature this one, I was tired to pass properties to sub component, here is the solution.
+In redux tutorial, Dan is giving an example where a lot of your component need a reference to the store.
 
+```javascript
+const {createStore} = Redux;
 
+const reducer = (state = [], action) => {};
 
-## Advanced
+const MyApp = ({store}) => {
+  <div>
+    <Component store={store} />
+    <Component store={store} />
+    <Component store={store} />
+  </div>
+}
+
+ReactDom.render(
+    <MyApp store={createStore(reducer)},
+    document.getElementById('root')
+)
+```
+
+That is quite annoying, why not delegate this to a high order component with use of [context](https://facebook.github.io/react/docs/context.html):
+
+```javascript
+const {createStore} = Redux;
+
+// responsible to put store in context
+class Provider extends Component {
+  getChildContext() {
+    return {
+      store: this.props.store
+    }
+  }
+
+  render() {
+    // just render whatever you pass to it
+    return this.props.children;
+  }
+}
+
+Provider.childContextTypes = {
+  store: React.PropTypes.object
+};
+
+const MyApp = ({store}) => {
+  <Provider store={store}>
+    <Component />
+    <Component />
+    <Component />
+  </div>
+}
+
+ReactDom.render(
+    <Provider store={createStore(reducer)}>
+      <MyApp>
+    </Provider>,
+    document.getElementById('root')
+)
+```
+
+Provider is available in ReactRedux library, do not reinvent the wheel.
+
+```javascript
+const { Provider } = ReactRedux;
+// import { Provider } from 'react-redux';
+....
+```
+
+### Advanced "pattern"
 
 Redux exposes a reducer composition method and here I propose to recap how it works briefly.
 
@@ -303,7 +379,7 @@ Also you may decide to split your logic into many reducers instead of only one, 
 }
 ```
 
-Example:
+*Example*
 
 We want to manage a shopping basket state with 2 main data exposed in 2 fields 'basket' and 'current' :
 
@@ -332,21 +408,35 @@ const current = (state = {}, action) => {
   // state.current.SetUnsetItem()...
 }
 
-// idea is to create a reducer this way now
+// idea is to create a "dual" reducer this way now
 const reducer = {
   basket: basket,
   current: current
 }
 ```
 
+But wtf, we say a reducer is a function waiting for a state and action parameters...and you show me plain object, your are kidding me ?
 problem is this reducer has really not the good signature, is not a function...
 
-here is a solution
+Here is proposal Dan solution, create a function taking an object and generating a reducer function.
+
+When called, it will
+
+- iterate over object properties
+- pass state object to each of reducer function via reduce passing state to each of reducer
+- well done I would say, nice idea
+
+See [reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) API
 
 ```javascript
 const reducerCombinator = (reducers) => {
+  // we return a function
   return (state = {}, action) => {
+    // that iterate over our object and apply reduce on it
     return Object.keys(reducers).reduce(
+      // apply each object property function "basket()"/"current()"/....
+      // that modify state
+      // that will be passed as previousValue for the next reduce
       (nextState, key) => {
         nextState[key] = reducers[key](state[key], action);
         return nextState;
@@ -358,6 +448,6 @@ const reducerCombinator = (reducers) => {
 
 ```
 
-And that is why you may need many reducers instead of only one.
+ES Fiddle [here](http://www.es6fiddle.net/ii60qbhg/)
 
-Fiddle for this article [here](http://www.es6fiddle.net/ii60qbhg/)
+React Fiddle [here](https://jsfiddle.net/darul75/7j4ggkqh/)
