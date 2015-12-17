@@ -6,7 +6,9 @@ Then redux is born and so many were enthousiasts about it, I had to test it too.
 
 ## ES6
 
-Here some of the best changes we need to know.
+Here some of the best changes we need to know. Most of them you may know and me too but read it again is always useful, and a lot are missing there....
+
+Best online javascript ES6 book according to me is [here](https://leanpub.com/understandinges6/read)
 
 ### Arrow function
 
@@ -40,6 +42,8 @@ const double = value => value << 1;
 
 ### Default parameter value
 
+We often see that type of notation in our code.
+
 ```javascript
 function double(value) {
 	value = value || 1;
@@ -47,7 +51,21 @@ function double(value) {
 }
 ```
 
-becomes
+The Logical OR || operator will return its second operand if the first one is falsy.
+
+Falsy values are: 0, null, undefined, the empty string (""), NaN, and of course false.
+
+Indeed, if we coerce this kind of value to boolean with (!!) operator we got.
+
+```javascript
+!!0 === false
+!!null === false
+!!undefined === false
+// ....
+!!0 === !!null === !!undefined == !!'' === !!NaN === !!false
+```
+
+so previous example with es6 becomes
 
 ```javascript
 const double = (value = 1) => {
@@ -230,15 +248,15 @@ myFunc();
 
 ### Recap
 
-[ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements) is is a virtual representation of a DOM Element. You can say they are native objects, DOM elements in case of browser.
+[ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements) ReactElement is not DOM element. It *describes* DOM element but it's not a native object at all. It's a regular JS object that happens to describe a DOM element.
 
-[ReactComponent](https://facebook.github.io/react/docs/glossary.html#react-components) gives abilitity to create encapsulations with embedded state. They can be written as functions, or classes (React.Component). Today only classes can store local state and handle specific behaviour, click handlers...
+[ReactComponent](https://facebook.github.io/react/docs/glossary.html#react-components) gives abilitity to create encapsulations with embedded state. They can be written as functions, or classes (React.Component).
 
 ### React component as a function
 
-Functional component or presentation component are new but so powerful, note that they are not instances.
+[Functional components](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components) is a technical distinction. You can put anything in a functional component, including behavior. It is up to you.
 
-In the following example I abuse and declare an event handler (behaviour).
+Facebook introduced it to facilitate creation of stateless component.
 
 ```javascript
 const Text = ({name, onClick, children}) => <p onClick={onClick}>{children} {name}</p>;
@@ -258,26 +276,24 @@ ReactDOM.render(document.body, <Text {...someProps}>Hello World</Text>);
 
 As you can see, no declarative render() method here, you do not need it explicitly, React will render it for you.
 
-Best practice is to avoid using Component classes and replace it with functional component instead when only presentation is needed.
+Best practice is to avoid using Component classes and replace it with functional component instead when you can :)
 
-*Advantages*
+### Containers and Presentation components
 
-- component focused on presentation
+According to Dan
 
-*Disadvantages*
+"
+'Presentational' components is not a real term. It's just a convention I'm using. There's no such thing in React as a "presentational component"—it's just how I like to call components with no behavior. They *happen* to be convenient to describe using functional components, but these two terms are not equivalent at all.
 
-- many props are passed down to the component tree hierachy, even when intermediate components do not use it
-- consequence: it breaks encapsulation, our components are really dependents from each other
-
-### React containers component
+A presentational component technically can be written as a class, and a container component can be written as a function. So be careful not to equate "presentational" with "functional" even though most components you see in my course are both.'
 
 Container component are on top of you presentation only containers, your logic and behaviour is expressed there.
 
 You may create them when you feel a presentation component has too much to do, extract it a container component to load your data and express behaviour.
 
-Only this type of component needs to be sticked to your flux store, meaning they will subscribe to your store updates and will be responsible to re render sub components when necessary.
+Only a container component might need to be sticked to your flux store, meaning they will subscribe to your store updates and will be responsible to re render sub components when necessary.
 
-Container component:
+Container component roles could be summarized by:
 
 - read data from store
 - subscribe to the store
@@ -308,7 +324,7 @@ ReactDom.render(
 )
 ```
 
-That is quite annoying, why not delegate this to a high order component with use of [context](https://facebook.github.io/react/docs/context.html):
+That is quite annoying, why not delegate this a wrapper component with use of [context](https://facebook.github.io/react/docs/context.html):
 
 ```javascript
 const {createStore} = Redux;
@@ -359,17 +375,7 @@ const { Provider } = ReactRedux;
 
 Redux exposes a reducer composition method and here I propose to recap how it works briefly.
 
-A reducer most of the time manage a state object represented by an array of objects.
-
-```javascript
-(state = [], action) {
-  // - handle action type
-  // - return new state
-  return state;
-}
-```
-
-But in many cases, you will need a more appropriate object for your application state.
+In your application you may deal with reducers managing plain objects most of the time.
 
 Also you may decide to split your logic into many reducers instead of only one, here comes composition.
 
@@ -413,10 +419,13 @@ const reducer = {
   basket: basket,
   current: current
 }
+
+// later a call to reduce createStore
+// createStore(reducer);
 ```
 
-But wtf, we say a reducer is a function waiting for a state and action parameters...and you show me plain object, your are kidding me ?
-problem is this reducer has really not the good signature, is not a function...
+Ok but normaly a reducer is a function waiting for a state and action parameters...and you show me plain object, your are kidding me ?
+problem is this reducer has really not the good signature, is not a function...but just a plain JS object.
 
 Here is proposal Dan solution, create a function taking an object and generating a reducer function.
 
@@ -447,6 +456,8 @@ const reducerCombinator = (reducers) => {
 };
 
 ```
+
+Thank you Dan for helping me on rewriting some parts of this article.
 
 ES Fiddle [here](http://www.es6fiddle.net/ii60qbhg/)
 

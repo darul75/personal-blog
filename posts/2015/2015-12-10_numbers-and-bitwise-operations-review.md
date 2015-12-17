@@ -1,8 +1,8 @@
 Like other languages Javascript deals pretty well with bytes and a lot of developers tend to choose NodeJS as their favourite backend framework.
 
-Here I propose to review "binary" concepts and how numbers are stored, integer, decimal, float, double, binary, floating representations... It helps to understand how some operations are performed.
+Here, I propose to review, recap some "binary" concepts about how primitive type "number" are stored, integer, float, double. It helps to understand how certain operations are performed.
 
-I wanted to make my own representation of famous IEEE 754 representation, so before to do that, I needed to review some basics, yes school is quite far for me too now.
+I wanted to make my own visual representation of famous IEEE 754 format, so before to do that, I needed to review some basics, yes school is quite far for me too now.
 
 Result is here : http://darul75.github.io/d3-binary-converter/
 
