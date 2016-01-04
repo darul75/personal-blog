@@ -1,6 +1,6 @@
 Mozilla documentation is the best but here I share some of new es6 sugar syntaxes features you may know or not :) To my opinion it really gives a less verbose and intuitive code if we all embrace es6.
 
-I also share a small cover of very intuitive [Dan Abramov](https://github.com/gaearon) redux [tutorial](https://egghead.io/instructors/dan-abramov). Personaly when [Flux](https://facebook.github.io/flux/) appeared, I choosed [Alt](https://github.com/goatslacker/alt) implementation, many utils were into the box as store listening component, action listeners...it is really a great tool.
+I also share a small cover of very intuitive [Dan Abramov](https://github.com/gaearon) redux [tutorial](https://egghead.io/instructors/dan-abramov). When [Flux](https://facebook.github.io/flux/) appeared, I choosed [Alt](https://github.com/goatslacker/alt) implementation, many utils were into the box as store listening component, action listeners...it is really a great tool.
 
 Then redux is born and so many were enthousiasts about it, I had to test it too.
 

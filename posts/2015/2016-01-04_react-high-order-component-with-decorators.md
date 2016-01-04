@@ -1,0 +1,142 @@
+Last week I had to refactor one of my small contribution to the React world and while integrating an external library it appeared that they were using Decorators deeply.
+
+After having struggled to survive to Babel6 integration, I won't give details...:) I wanted to understand ES7 Decorators and give an example with a React component under control of an [Higher Order Components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750).
+
+The following composition example is simple and does not play at all with component lifecycle but focuses only on component presentation.
+
+## Scenario
+
+Imagine 2 dumb components
+
+```javascript
+const style = { backgroundColor: 'white', color: 'black' };
+
+class Component extends React.Component {
+  render() {
+    return <div style={style}>Component</div>
+  }
+}
+
+style = { backgroundColor: 'black', color: 'white' };
+
+class AnotherComponent extends React.Component {
+  render() {
+    return <div style={style}>AnotherComp</div>
+  }
+}
+```
+
+## Problem
+
+It looks like we really repeat ourselves, maybe we could refactor it and delegate style generation to a top component instead, let's try it.
+
+Then what if I do not know anything or do not want to know anything about CSS.
+
+## Solution
+
+Create our higher-order component wrapper to apply style.
+
+```javascript
+// take a style and apply it to composed component
+const styleEnhancer = (ComposedComponent, color, bgColor) => {
+  // creates inline style
+  const style = {
+    backgroundColor: bgColor,
+    color: color
+  };
+
+  // return component wrapper
+  return class extends React.Component {
+    constructor() {
+      super();
+    }
+    render() {
+      return <div style={style}>
+        <ComposedComponent {...this.props}></ComposedComponent>
+      </div>
+    }
+  }
+}
+```
+
+Then wrap our components.
+
+```javascript
+
+class Component extends React.Component {
+  render() {
+    return <div>Component</div>
+  }
+}
+
+class AnotherComponent extends React.Component {
+  render() {
+    return <div>AnotherComp</div>
+  }
+}
+
+const EnhancedComponent = styleEnhancer(Component, 'white', 'black');
+const EnhancedAnotherComponent = styleEnhancer(AnotherComponent, 'white', 'blue');
+```
+
+Ok, that is fine but what if we use decorators instead...
+
+## Solution with decorator
+
+```javascript
+// decorator
+const color = (bgColor, color) => {
+  const style = {
+    backgroundColor: bgColor,
+    color: color
+  };
+
+  return (ComposedComponent) => {
+    return class extends React.Component {
+      constructor() {
+        super();
+      }
+      render() {
+        return <div style={style}>
+          <ComposedComponent {...this.props}></ComposedComponent>
+        </div>
+      }
+    }
+  }
+}
+```
+
+Ok why not but how can we use it then ?
+
+```javascript
+@color('white', 'black')
+class DecoratedComponent extends React.Component {
+  render() {
+    return <div>DecoratedComponent</div>
+  }
+}
+
+@color('white', 'blue')
+class DecoratedAnotherComponent extends React.Component {
+  render() {
+    return <div>DecoratedAnotherComponent</div>
+  }
+}
+```
+
+As you can see, less verbose an intuitive.
+
+## Conclusion
+
+- Enhance a React Component can be done easily by wrapping it into an Higher-Order Component
+- ES7 Decorators provide a nice syntax (and Higher-Order Component are just decorators).
+
+## References
+
+[Decorators spec](https://github.com/wycats/javascript-decorators)
+
+[Exploring decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841#.s54ha0vhp)
+
+[Higher-order components by Seb Markbage](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775)
+
+React Fiddle [here](https://jsfiddle.net/darul75/7j4ggkqh/)
