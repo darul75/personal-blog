@@ -133,6 +133,13 @@ As you can see, less verbose an intuitive.
 
 ## References
 
+If you wanna play, you can use Babel online transpiler here https://babeljs.io/repl/ with Experimental checked and copy this [code](https://raw.githubusercontent.com/darul75/personal-blog/master/examples/2015/2016-01-04_react-high-order-component-with-decorators/index.js) into it.
+
+Then use this fiddle with babel transpiled result code
+
+https://jsfiddle.net/darul75/bkrfh69r/3/
+
+
 [Decorators spec](https://github.com/wycats/javascript-decorators)
 
 [Exploring decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841#.s54ha0vhp)
