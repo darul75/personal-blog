@@ -143,7 +143,7 @@ All logic will be set into our HOC and wrapped component will be reduced to pres
 
 High order component would store a state, trigger state changes by applying custom function on it before.
 
-In facebook example, our component do some stuff and repeat it on 'regular' interval and this custom logic will be passed as argument oo our HOC.
+In facebook example, our component do some stuff and repeat it on 'regular' interval and this custom logic will be passed as argument to our HOC.
 
 ```javascript
 const HOC = (Component, state, intervalFn) => class extends React.Component {
