@@ -6,6 +6,8 @@ Before exploring what higher-order component are, let's recap what are mixins.
 
 Usage of mixins allows to extend a target object with some new properties or behaviours.
 
+A common mixin would be a logger :)
+
 ```javascript
 // mixin
 const Logger = {
@@ -17,15 +19,20 @@ const Logger = {
   }
 };
 
-// mixin
+// and why not another useful one
 const AnotherMixin = {
   do() {
   }
 };
+```
 
+Then developer team writes a scheduler service and need to use our logger.
+
+```javascript
 class Scheduler {
   constructor(startDate) {
     if (startDate == null) {
+      // logger call
       this.onError(new Error('startDate has to be defined'));
       return Object.create(null);
     }
@@ -33,15 +40,20 @@ class Scheduler {
   }
 
   start() {
+    // logger call
     this.debug('start');
   }
 
   onError(err) {
+    // logger call
     this.error(err);
   }
 }
+```
 
+See how we apply mixin with our service.
 
+```javascript
 Object.assign(Scheduler.prototype, Logger);
 Object.assign(Scheduler.prototype, AnotherMixin);
 
@@ -66,9 +78,9 @@ React [mixins](https://facebook.github.io/react/docs/reusable-components.html#mi
 
 Then, this [article](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750#.5nifnaw58) covers all aspects of mixins and why you should *avoid* using it today.
 
-## Composition alternative with higher-order component
-
 You may also notice that warnings exist on Facebook React pages about [mixin support](https://facebook.github.io/react/docs/reusable-components.html#no-mixins)...in future distributions.
+
+## Higher-order component
 
 Ok but what is an HOC ?
 
@@ -94,6 +106,8 @@ const HOC = (Component) => class extends React.Component {
   }
 };
 ```
+
+Note that **returned component extends React.Component** and does not inherits from passed component.
 
 ## React Mixin Refactoring Example
 
@@ -139,13 +153,17 @@ JSFiddle for this mixin is [here](https://jsfiddle.net/darul75/1wzph748/)
 
 ### HOC solution
 
-All logic will be set into our HOC and wrapped component will be reduced to presentation only.
+All logic will be set into an HOC and wrapped component will be reduced to presentation only.
 
 High order component would store a state, trigger state changes by applying custom function on it before.
 
 In facebook example, our component do some stuff and repeat it on 'regular' interval and this custom logic will be passed as argument to our HOC.
 
 ```javascript
+// Component : the one to be wrapped
+// state : initial state of our component
+// intervalFn : arbitrary function modifying state
+
 const HOC = (Component, state, intervalFn) => class extends React.Component {
   constructor(props) {
     super(props);
