@@ -1,12 +1,14 @@
-An attempt to explain what is an Higher-Order component, why it is useful, why it is simple.
+An attempt to explain what is an Higher-Order Component, why it is useful, why it is simple.
+
+You may think first at Higher Order Function and you are right, it comes from Functional Programming concept where I am not expert :) and is a great alternative to the use of Mixins in the world of React.
 
 ## Mixins
 
-Before exploring what higher-order component are, let's recap what are mixins.
+Before exploring what is an higher-order component (HOC), let's recap what are mixins.
 
 Usage of mixins allows to extend a target object with some new properties or behaviours.
 
-A common mixin would be a logger :)
+A popular mixin would be a logger :)
 
 ```javascript
 // mixin
@@ -26,7 +28,7 @@ const AnotherMixin = {
 };
 ```
 
-Then developer team writes a scheduler service and need to use our logger.
+Then developer team writes a scheduler service and need to use our logger mixin service.
 
 ```javascript
 class Scheduler {
@@ -51,7 +53,7 @@ class Scheduler {
 }
 ```
 
-See how we apply mixin with our service.
+See how we apply mixin on our service.
 
 ```javascript
 Object.assign(Scheduler.prototype, Logger);
@@ -76,7 +78,7 @@ Here I just give a trivial example, but you could take a look for more details h
 
 React [mixins](https://facebook.github.io/react/docs/reusable-components.html#mixins) gave us a way to enhance a component by sharing some common functionnalities with a guaranty that all of the component lifecycle methods would be called.
 
-Then, this [article](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750#.5nifnaw58) covers all aspects of mixins and why you should *avoid* using it today.
+But, by reading that kind of [article](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750#.5nifnaw58) that covers all aspects of mixins, you will understand why you should *avoid* using it today.
 
 You may also notice that warnings exist on Facebook React pages about [mixin support](https://facebook.github.io/react/docs/reusable-components.html#no-mixins)...in future distributions.
 
@@ -111,7 +113,7 @@ Note that **returned component extends React.Component** and does not inherits f
 
 ## React Mixin Refactoring Example
 
-Let's try to refactore Facebook [mixin](https://facebook.github.io/react/docs/reusable-components.html#mixins) example here with an High Order Component.
+Let's try to refactor Facebook [mixin](https://facebook.github.io/react/docs/reusable-components.html#mixins) example here with an High Order Component.
 
 ### Original mixin solution
 
@@ -212,9 +214,35 @@ class TickTock extends React.Component {
     );
   }
 }
+
+TickTock.propTypes = {
+  seconds: React.PropTypes.number.isRequired,
+}
 ```
 
-Our main function could look like this
+Now let's see how we can glue all this together.
+
+First if you remember, our HOC factory function expect 3 arguments:
+
+1) component to be wrapped "TickTock"
+
+2) an arbitrary state object
+
+```javascript
+const state = {
+  seconds: 0
+};
+```
+
+3) an arbitraty function modifying this state object
+
+```javascript
+const intervalFn = (state) => {
+  return {seconds: state.seconds + 1};
+};
+```
+
+Final main result function could be
 
 ```javascript
 const intervalFn = (state) => {
@@ -235,8 +263,8 @@ ReactDOM.render(
 );
 ```
 
-JSFiddle for this hoc is [here](https://jsfiddle.net/darul75/hwn8rn1r/)
+JSFiddle for this demo is [here](https://jsfiddle.net/darul75/hwn8rn1r/)
 
 ### Conclusion
 
-TODO
+HOC is an alternative to mixins that only rely on component composition.
