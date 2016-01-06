@@ -265,6 +265,6 @@ ReactDOM.render(
 
 JSFiddle for this demo is [here](https://jsfiddle.net/darul75/hwn8rn1r/)
 
-### Conclusion
+## Conclusion
 
 HOC is an alternative to mixins that only rely on component composition.
