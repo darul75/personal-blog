@@ -1,0 +1,272 @@
+For those wondering what is awesome Babel [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) doing for us I propose to show it with an example (and online transpiler can be found [here](http://babeljs.io/rep)) for more testing.
+
+## Why Babel
+
+Today browsers or javascript engines are not all aware about ES6, thus **Babel translate any new ES6 features to make them compliant with ES5 javascript version**.
+
+Babel will parse you JS code and transform it to 'legacy' ES5 source code.
+
+## Class example
+
+In this article I only show Babel's work on new [Class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) sugar syntax from ES6 and see how Babel deals with that.
+
+### Old school
+
+Before diving into ES6 jungle we were doing.
+
+```javascript
+// Constructor
+function Person(name) {
+  this.type = 'Person';
+  this.name = name;
+}
+
+// Instance method
+Person.prototype.hello = function() {
+  console.log('hello ' + this.name);
+}
+
+// Static method attached to Constructor and not instances
+Person.fn = function() {
+  console.log('static');
+};
+```
+
+usage 
+
+```javascript
+var julien = new Person('julien');
+var darul = new Person('darul');
+julien.hello(); // 'hello julien'
+darul.hello(); // 'hello darul'
+Person.fn(); // 'static'
+
+// and this one on error
+julien.fn(); //Uncaught TypeError: julien.fn is not a function
+```
+
+JSFiddle to play [here](https://jsfiddle.net/darul75/7ezxz2v7/)
+
+### New school
+
+You may have heard about new ES6 [Class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) syntax applied to our previous example:
+
+```javascript
+class Person {
+
+  type = 'person';
+  
+  constructor(name) {
+    this.name = name;
+  }
+  
+  hello() {
+    console.log('hello ' + this.name);
+  }
+  
+  static fn = () => {
+    console.log('static');
+  };
+  
+}
+```
+
+It is a matter of style but according to me it is more efficient, less verbose... :)
+
+## Babel transformation
+
+Then it could be interesting to see how Babel is doing the transformation from ES6 to ES5.
+
+But let's do it step by step.
+
+## Step 1 : definition
+
+```javascript
+class Person {}
+```
+
+is transpiled by Babel into
+
+```javascript
+function _classCallCheck(instance, Constructor) {
+  // check if we create a new Object
+  if (!(instance instanceof Constructor)) {  
+    throw new TypeError("Cannot call a class as a function"); 
+  } 
+}
+
+var Person = function Person() {
+  _classCallCheck(this, Person);
+};
+```
+
+Ok good, but why like that ? why a call to *_classCallCheck* method... I would say enhancement, safety.
+
+Class keyword is really a "syntactical sugar over JavaScript's existing prototype-based inheritance" and Class keyword will be translated as a function (constructor) allowing us to create new object instances.
+
+Then, above code prevent you from calling generated *Person* function directly instead of creating a **new** object instance.
+
+```javascript
+// fine
+const p = new Person(); 
+
+// Uncaught TypeError: Cannot call a class as a function
+Person();
+```
+
+## Step 2 : constructor
+
+We could add a constructor with one parameter (and class property...)
+
+```javascript
+class Person() {
+
+  type = 'person';
+  
+  constructor(name) {  
+    this.name = name;
+  }
+}
+```
+
+Nothing very weird, our new Constructor function handles it pretty well.
+
+```javascript
+var Person = function Person(name) {
+  _classCallCheck(this, Person);
+
+  this.type = 'person';
+  this.name = name;
+};
+```
+
+As you can see Class keyword is fine and Babel deals great with it.
+
+## Step 3 : prototype method
+
+Add a prototype method named *hello()* and it gonna start to be more tricky.
+
+### Full
+
+```javascript
+class Person {
+
+  constructor(name) {
+    this.name = name;
+  }
+
+  hello() {
+    console.log('hello ' + this.name);
+  }
+}
+```
+
+Will be transpiled to
+
+```javascript
+// SAME AS BEFORE HERE CONSTRUCTOR CHECK
+function _classCallCheck.... 
+
+// MAIN FUNCTION
+var _createClass = (function () { 
+  // APPLYING PROPERTIES ON TARGET OBJECT
+  function defineProperties(target, props) { 
+    for (var i = 0; i < props.length; i++) { 
+      var descriptor = props[i]; 
+      descriptor.enumerable = descriptor.enumerable || false; 
+      descriptor.configurable = true; 
+      if ('value' in descriptor) 
+        descriptor.writable = true; 
+      Object.defineProperty(target, descriptor.key, descriptor); 
+    } 
+  } 
+  
+  // ENHANCING OBJECT PROPS  
+  return function (Constructor, protoProps, staticProps) { 
+    if (protoProps) 
+      defineProperties(Constructor.prototype, protoProps); 
+    if (staticProps) 
+      defineProperties(Constructor, staticProps); 
+    return Constructor; 
+  }; 
+})();
+
+var Person = (function () {
+  function Person(name) {
+    _classCallCheck(this, Person);
+
+    this.name = name;
+  }
+
+  _createClass(Person, [{
+    key: 'hello',
+    value: function hello() {
+      console.log('hello ' + this.name);
+    }
+  }]);
+
+  return Person;
+})();
+```
+
+### Light
+
+When extracting relevant parts:
+
+```javascript
+var _createClass = (function () {   
+  function defineProperties(target, props) { 
+    // for each props create descriptor and assign it to target object    
+  }  
+  return defineProperties(Constructor.prototype, protoProps);    
+})();
+
+var Person = (function () {
+  function Person(name) { // same as before... }
+
+  _createClass(Person, [{
+    key: 'hello',
+    value: function hello() {
+      console.log('hello ' + this.name);
+    }
+  }]);
+
+  return Person;
+})();
+```
+
+If you are not familiar with [defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) function, it is not too late :)
+
+Now you can explicitly figure out that 
+
+```javascript
+hello() {
+  console.log('hello ' + this.name);
+}
+```
+
+has been translated to a call to 
+
+```javascript
+_createClass(
+  Person, [{
+  key: 'hello',
+  value: function hello() {
+    console.log('hello ' + this.name);
+  }
+}]);
+```
+
+_createClass signature expect 2 or 3 parameters:
+
+**Param 1** => the target object where to assign new properties.
+
+**Param 2** => a list of prototype properties to add
+
+**Param 3** => a list of static properties to add
+
+And by this way some new properties will be attached to our instance object or its constructor.
+
+## Conclusion
+
+I hope it will give you a better understanding on how Babel transpile your ES6 code. I do not speak about syntax tree, AST etc...but just about result code.
