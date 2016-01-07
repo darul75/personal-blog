@@ -1,4 +1,4 @@
-For those wondering what is awesome Babel [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) doing for us I propose to show it with an example (and online transpiler can be found [here](http://babeljs.io/rep)) for more testing.
+For those wondering what is awesome Babel [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) doing I propose to show it with an example (online transpiler can be found [here](http://babeljs.io/rep) for more testing).
 
 ## Why Babel
 
@@ -45,6 +45,8 @@ Person.fn(); // 'static'
 julien.fn(); //Uncaught TypeError: julien.fn is not a function
 ```
 
+[Code](https://github.com/darul75/personal-blog/blob/master/examples/2015/2016-01-07_what-is-babel-js-doing/es5.js)
+
 JSFiddle to play [here](https://jsfiddle.net/darul75/7ezxz2v7/)
 
 ### New school
@@ -71,11 +73,13 @@ class Person {
 }
 ```
 
+[Code](https://github.com/darul75/personal-blog/blob/master/examples/2015/2016-01-07_what-is-babel-js-doing/es6.js)
+
 It is a matter of style but according to me it is more efficient, less verbose... :)
 
 ## Babel transformation
 
-Then it could be interesting to see how Babel is doing the transformation from ES6 to ES5.
+Then it could be interesting to see how Babel does transformation from ES6 to ES5.
 
 But let's do it step by step.
 
@@ -100,11 +104,11 @@ var Person = function Person() {
 };
 ```
 
-Ok good, but why like that ? why a call to *_classCallCheck* method... I would say enhancement, safety.
+Ok good, but why like that ? why a call to *_classCallCheck* method... I would say (specification) enhancement, safety.
 
 Class keyword is really a "syntactical sugar over JavaScript's existing prototype-based inheritance" and Class keyword will be translated as a function (constructor) allowing us to create new object instances.
 
-Then, above code prevent you from calling generated *Person* function directly instead of creating a **new** object instance.
+Then, above code prevents you from calling generated *Person* function directly instead of creating a **new** object instance.
 
 ```javascript
 // fine
@@ -140,7 +144,7 @@ var Person = function Person(name) {
 };
 ```
 
-As you can see Class keyword is fine and Babel deals great with it.
+As you can see Babel deals great with Class keyword :) easy.
 
 ## Step 3 : prototype method
 
@@ -208,6 +212,8 @@ var Person = (function () {
   return Person;
 })();
 ```
+
+Whoua that is a lot of stuff to digest, calm down.
 
 ### Light
 
