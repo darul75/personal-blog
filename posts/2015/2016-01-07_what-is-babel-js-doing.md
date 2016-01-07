@@ -267,12 +267,14 @@ _createClass signature expect 2 or 3 parameters:
 
 **Param 1** => the target object where to assign new properties.
 
-**Param 2** => a list of prototype properties to add
+**Param 2** => a list of properties to attach to object's prototype
 
-**Param 3** => a list of static properties to add
+**Param 3** => a list of properties to attach to Class
 
-And by this way some new properties will be attached to our instance object or its constructor.
+And by this way some new properties will be attached to our object or its constructor.
 
 ## Conclusion
 
-I hope it will give you a better understanding on how Babel transpile your ES6 code. I do not speak about syntax tree, AST etc...but just about result code.
+I hope it will give you a better understanding on how Babel compile your ES6 code into ES5. 
+
+I did not speak about syntax tree, AST etc...but just about resulting tranformation code.

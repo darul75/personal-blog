@@ -2,6 +2,10 @@
 function Person(name) {
   this.type = 'Person';
   this.name = name;
+  
+  this.do = function() {
+    
+  }
 }
 
 // Instance method
@@ -18,5 +22,5 @@ var julien = new Person('julien');
 var darul = new Person('darul');
 julien.hello(); // hello julien
 darul.hello(); // hello darul
-A.fn();
-a.fn();
+Person.fn();
+julien.fn();
