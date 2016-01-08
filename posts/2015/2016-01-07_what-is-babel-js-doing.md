@@ -2,13 +2,17 @@ For those wondering what is awesome Babel [transpiler](https://en.wikipedia.org/
 
 ## Why Babel
 
-Today browsers or javascript engines are not all aware about ES6, thus **Babel translate any new ES6 features to make them compliant with ES5 javascript version**.
+Browsers or javascript engine as NodeJS not all "capable" of managing the new ES6 javascript version.
 
-Babel will parse you JS code and transform it to 'legacy' ES5 source code.
+**Thus Babel is in charge of compiling each new ES6 features and make it compliant with older version of JavaScript (ES5...).**
+
+Babel parses your JS source code to transform it into a *legacy* javascript source code :)
 
 ## Class example
 
-In this article I only show Babel's work on new [Class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) sugar syntax from ES6 and see how Babel deals with that.
+In this article I describe Babel's work with new [Class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) sugar syntax from ES6.
+
+I wish it will help to figure out the kind of routines that Babel can produce.
 
 ### Old school
 
@@ -263,18 +267,20 @@ _createClass(
 }]);
 ```
 
-_createClass signature expect 2 or 3 parameters:
+*_createClass* function expects 2 or 3 parameters:
 
 **Param 1** => the target object where to assign new properties.
 
 **Param 2** => a list of properties to attach to object's prototype
 
-**Param 3** => a list of properties to attach to Class
+**Param 3** => a list of properties to attach to Class function
 
-And by this way some new properties will be attached to our object or its constructor.
+And by this way some new properties will be attached to our Object or its Class.
 
 ## Conclusion
 
-I hope it will give you a better understanding on how Babel compile your ES6 code into ES5. 
+I hope it will give you a better understanding on how Babel compiles your ES6 source code into ES5. 
 
 I did not speak about syntax tree, AST etc...but just about resulting tranformation code.
+
+![Just for fun](/images/posts/babel.jpg)

@@ -14,6 +14,7 @@ http://www.fontsquirrel.com/fonts/raleway
 
 # Image
 http://www.maxabellaloves.com.au/2015/05/nice-places-to-find-free-images-for-your-blog.html
+http://www.nypl.org/research/collections/digital-collections/public-domain
 http://compressnow.com/fr/ (80% compression)
 
 # Theme

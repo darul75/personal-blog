@@ -268,3 +268,5 @@ JSFiddle for this demo is [here](https://jsfiddle.net/darul75/hwn8rn1r/)
 ## Conclusion
 
 HOC is an alternative to mixins that only rely on component composition.
+
+![Just for fun](/images/posts/higher.jpg)
