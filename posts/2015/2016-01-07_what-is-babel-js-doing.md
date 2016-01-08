@@ -275,7 +275,7 @@ _createClass(
 
 **Param 3** => a list of properties to attach to Class function
 
-And by this way some new properties will be attached to our Object or its Class.
+By this way new properties are attached to object's prototype or its Class.
 
 ## Conclusion
 
