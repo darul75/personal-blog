@@ -1,3 +1,7 @@
+//https://github.com/josefrichter/resize/blob/master/public/preprocess.js
+
+//https://stuk.github.io/jszip/documentation/examples.html
+
 var init = {
 	method: 'GET',
 	mode: 'cors'
