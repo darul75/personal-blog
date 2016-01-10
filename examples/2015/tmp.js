@@ -1,6 +1,7 @@
 //https://github.com/josefrichter/resize/blob/master/public/preprocess.js
 // https://jsfiddle.net/Jan_Miksovsky/yy7Zs/
 //https://stuk.github.io/jszip/documentation/examples.html
+https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications#Example.3A_Using_object_URLs_to_display_images
 
 var init = {
 	method: 'GET',
