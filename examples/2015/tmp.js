@@ -1,5 +1,5 @@
 //https://github.com/josefrichter/resize/blob/master/public/preprocess.js
-
+// https://jsfiddle.net/Jan_Miksovsky/yy7Zs/
 //https://stuk.github.io/jszip/documentation/examples.html
 
 var init = {
