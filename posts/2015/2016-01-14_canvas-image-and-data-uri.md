@@ -4,7 +4,7 @@ First, I let you read carefully :) what is a data URI (Uniform Resource Identifi
 
 **It allow content creators to embed small files inline in documents**. 
 
-My interpreatation is you can "serialize" external data and make it available as an browser resource.
+My interpretation is you can "serialize" external data and make it available as an inline browser resource.
 
 Specification of this inline data is :
 
