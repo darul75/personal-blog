@@ -6,7 +6,7 @@ First, I let you read carefully :) what is a data URI (Uniform Resource Identifi
 
 My interpretation is you can "serialize" external data and make it available as an inline browser resource.
 
-## Specification
+## Data URI format specification
 
 ```bash
 data:[<mediatype>][;base64],<data>
