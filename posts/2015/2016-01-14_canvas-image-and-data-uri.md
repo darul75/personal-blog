@@ -128,7 +128,7 @@ img.onload = function() {
   // job done
 ```
 
-You can now use this data URI and assign it to <img> tag or display it on another <canvas>, store it...
+You can now use this data URI and assign it to img tag or display it on another canvas, store it...
 
 ```javascript  
   var targetImg = document.getElementById("targetImg");
