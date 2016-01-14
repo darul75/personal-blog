@@ -167,7 +167,7 @@ Previous examples were fine if you are on same domain, otherwise read next to se
 
 Instead of calling it from an existing Image object on your DOM, we will use an XMLHttpRequest to get Image content as [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob).
 
-Compatibility check http://caniuse.com/#search=XMLHttpRequest
+Compatibility [check](http://caniuse.com/#search=XMLHttpRequest)
 
 It works **fine with Chrome extension** but in other cases...not easy.
 
