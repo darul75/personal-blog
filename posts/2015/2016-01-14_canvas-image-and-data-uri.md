@@ -198,6 +198,6 @@ Small [gist](https://gist.github.com/darul75/385332713a3c1ce9bf1d)
 
 Data URI is a nice standard but with limitations for image like : size, types, browser compatibility...
 
-You may also try using it for other kind a resource that image.
+You may also try using it for other kind a resource that image (xml, video, audio, zip...)
 
 ![Just for fun](/images/posts/canvas.jpg)
