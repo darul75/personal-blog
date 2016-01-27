@@ -1,21 +1,24 @@
 // LIBRARY
 import Iso from 'iso';
+/*eslint-disable no-unused-vars*/
 import React from 'react';
-import Router from 'react-router';
+/*eslint-enable no-unused-vars*/
+import { render } from 'react-dom';
+import { Router } from 'react-router';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 // DEPENDENCY
 import alt from './alt';
+import routes from './routes';
 
-let routes = require('./routes');
+const history = createBrowserHistory();
 
 if(typeof document !== 'undefined' && window) {
   window.onload = () => {
     /*eslint-disable no-unused-vars*/
     Iso.bootstrap((state, _, container) => {
       alt.bootstrap(state);
-      Router.run(routes, Router.HistoryLocation, (Handler) => {
-        React.render(<Handler/>, container);
-      });
+      render(<Router history={history}>{routes}</Router>, container);
     });
     /*eslint-enable no-unused-vars*/
   };

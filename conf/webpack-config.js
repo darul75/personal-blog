@@ -95,7 +95,7 @@ module.exports = function(options) {
     if (prod) {
       plugins.push(new webpack.optimize.UglifyJsPlugin({warnings: false, minimize: true, sourceMap: false}));
       plugins.push(new webpack.optimize.AggressiveMergingPlugin());
-    }
+    }    
     plugins.push(
       new HtmlWebpackPlugin({
         filename: 'index'+suffix+'.html',

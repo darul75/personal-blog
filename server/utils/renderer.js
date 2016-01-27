@@ -2,11 +2,14 @@
 import fs from 'fs';
 
 // EXTERNALS
-import _ from 'lodash';
 import Helmet from 'react-helmet';
 import Iso from 'iso';
+/*eslint-disable no-unused-vars*/
 import React from 'react';
-import Router from 'react-router';
+/*eslint-enable no-unused-vars*/
+import { renderToString } from 'react-dom/server';
+import { RoutingContext, match } from 'react-router';
+import createLocation from 'history/lib/createLocation';
 
 // CORE
 import routes from '../../app/routes';
@@ -48,25 +51,38 @@ let renderer = {
     alt.bootstrap(JSON.stringify(res.locals.data || oneItemBootstraped));
 
     try {
-      Router.run(routes, req.path, (Handler, state) => {
-				// alt flux flush
-        let content = React.renderToString(React.createElement(Handler));
-        iso.add(content, alt.flush());
+      const location = createLocation(req.url);
 
-        res.contentType = 'text/html; charset=utf8';
-        let notFound = _.find(state.routes, {isNotFound: true});
-
-        if (notFound !== undefined) {
-          res.status(404);
+      match({ routes, location }, (error, redirectLocation, renderProps) => {
+        if (redirectLocation) {
+          res.redirect(301, redirectLocation.pathname + redirectLocation.search);
         }
+        else if (error) {
+          res.send(500, error.message);
+        }
+        else if (renderProps == null) {
+          res.send(404, 'Not found');
+        }
+        else {
+          // alt flux flush
+          const content = renderToString(<RoutingContext {...renderProps}/>);
+          iso.add(content, alt.flush());
 
-		// RENDERING back to client
-        let markupContent = iso.render();
-        // DOM <head> instrumentation
-        let head = Helmet.rewind();
-        markup = html.replace('META', head.meta).replace('TITLE', head.title).replace('LINK', head.link).replace('CONTENT', markupContent);
-        // SEND response
-        res.send(markup);
+          res.contentType = 'text/html; charset=utf8';
+
+          /*let notFound = _.find(state.routes, {isNotFound: true});
+
+          if (notFound !== undefined) {
+            res.status(404);
+          }*/
+          // RENDERING back to client
+          let markupContent = iso.render();
+          // DOM <head> instrumentation
+          const head = Helmet.rewind();
+          markup = html.replace('META', head.meta).replace('TITLE', head.title).replace('LINK', head.link).replace('CONTENT', markupContent);
+          // SEND response
+          res.send(markup);
+        }
       });
     }
     catch (e) {

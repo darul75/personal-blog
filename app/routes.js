@@ -2,7 +2,7 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
 /*eslint-enable no-unused-vars*/
-import {Route, DefaultRoute, NotFoundRoute} from 'react-router';
+import {Route, IndexRoute} from 'react-router';
 
 // COMPONENT
 import Application from './components/App/App';
@@ -11,10 +11,9 @@ import NotFoundSection from './components/NotFoundSection/NotFoundSection';
 import PostItem from './components/Post/PostItem';
 
 export default (
-  <Route name='app' path='/' handler={Application}>
-    <Route name='home' path='/home' handler={HomeSection}/>
-    <Route name='post' path="/post/:postId" handler={PostItem}/>
-    <DefaultRoute handler={HomeSection} />
-    <NotFoundRoute handler={NotFoundSection} />
+  <Route component={Application} path='/'>
+    <IndexRoute component={HomeSection} />
+    <Route component={PostItem} path='/post/:postId' />
+    <Route component={NotFoundSection} path='*' />
   </Route>
 );

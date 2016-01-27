@@ -1,14 +1,18 @@
 // LIBRARY
+/*eslint-disable no-unused-vars*/
 import React from 'react';
-import Router from 'react-router';
+/*eslint-enable no-unused-vars*/
+import {render} from 'react-dom';
+import {Router} from 'react-router';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 // DEPENDENCY
-let routes = require('./routes');
+import routes from './routes';
+
+const history = createBrowserHistory();
 
 if(typeof document !== 'undefined' && window) {
   window.onload = () => {
-    Router.run(routes, Router.HistoryLocation, (Handler) => {
-      React.render(<Handler/>, document.getElementById('app'));
-    });
+    render(<Router history={history} routes={routes}/>, document.getElementById('app'));
   };
 }

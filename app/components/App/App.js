@@ -1,6 +1,5 @@
 // LIBRARY
 import React from 'react';
-import { RouteHandler } from 'react-router';
 
 // COMPONENT
 import Header from '../Header/Header';
@@ -47,7 +46,7 @@ let app = class App extends React.Component {
         <div className={slideForMenu}>
           <HtmlHeaderTags />
           <div className='main-content'>
-            <RouteHandler />
+            {this.props.children}
           </div>
           <Footer />
         </div>

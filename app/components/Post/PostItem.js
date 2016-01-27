@@ -1,5 +1,6 @@
 // LIBRARY
 import React from 'react';
+import {render} from 'react-dom';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
@@ -83,7 +84,7 @@ let postItem = class PostItem extends React.Component {
                   <span>menu</span>
                 </button>
               </span>;
-            React.render(tinyMenuButton, document.getElementById(elt.h2));
+            render(tinyMenuButton, document.getElementById(elt.h2));
             if (elt.h3) {
               elt.h3.forEach((elt1) => {
                 let tinyMenuButton2 = <span>{elt1.h3.replace(/\-/g, ' ')}
@@ -91,7 +92,7 @@ let postItem = class PostItem extends React.Component {
                     <span>menu</span>
                   </button>
                 </span>;
-                React.render(tinyMenuButton2, document.getElementById(elt1.h3));
+                render(tinyMenuButton2, document.getElementById(elt1.h3));
               });
             }
           });

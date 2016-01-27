@@ -1,4 +1,4 @@
-My previous blog [post](http://www.darul.io/post/2016-01-14_canvas-image-and-data-uri) was about manipulating images with Javascript API and here is a recap of my notes after creating a new Chrome extension app available [here](https://chrome.google.com/webstore/detail/dog-it/bcceanhkdnodhlglnggnepecgoemgmmg/related).
+Previous blog [post](http://www.darul.io/post/2016-01-14_canvas-image-and-data-uri) was about manipulating images with Javascript API and here is a recap of my notes after creating a new Chrome extension app available [here](https://chrome.google.com/webstore/detail/dog-it/bcceanhkdnodhlglnggnepecgoemgmmg/related).
 
 ## Goal
 
@@ -6,7 +6,7 @@ Create a chrome extension to fetch and download all images displayed (or not) fr
 
 ## Stack
 
-`100% JS` and you do not have choice in an `ES6` way with `React` library.
+`100% Javascript` with `ES6` sugar syntax and `React` library.
 
 My first try of creating a chrome prototype app few years ago was done with a popular framework you may have known called AngularJS and is still available [there](https://chrome.google.com/webstore/detail/bootstrapy/kjgakbmoeokpdkpjefebfnhmclfiiofg)
 
