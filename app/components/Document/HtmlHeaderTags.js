@@ -1,11 +1,13 @@
 // LIBRARY
-import React from 'react';
+/*eslint-disable no-unused-vars*/
+import React, { Component } from 'react';
+/*eslint-enable no-unused-vars*/
 import Helmet from 'react-helmet';
 
 // TODO: do it in store maybe
 const metas = require('../../../assets/config.json').helmet;
 
-export default class HtmlHeaderTags extends React.Component {
+export default class HtmlHeaderTags extends Component {
   constructor() {
     super();
   }

@@ -242,3 +242,7 @@ It is not perfect and all common nodejs modules or external library should be es
 My react swiss kit it here [web-react](https://github.com/darul75)
 
 ![Just for fun](/images/posts/startup-photos.jpg)
+
+----------
+
+Tags: *Javascript* *NodeJS* *React* *Webpack*

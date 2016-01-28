@@ -1,5 +1,7 @@
 // LIBRARY
-import React from 'react';
+/*eslint-disable no-unused-vars*/
+import React, { Component } from 'react';
+/*eslint-enable no-unused-vars*/
 import { Link } from 'react-router';
 
 // FLUX
@@ -10,7 +12,7 @@ if (process.env.BROWSER) {
   require('./_HeaderMenu.scss');
 }
 
-let headerMenu = class HeaderMenu extends React.Component {
+let headerMenu = class HeaderMenu extends Component {
   constructor() {
     super();
     this.state = {show: false};

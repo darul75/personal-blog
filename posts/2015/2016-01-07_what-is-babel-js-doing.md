@@ -284,3 +284,7 @@ I hope it will give you a better understanding on how Babel compiles your ES6 so
 I did not speak about syntax tree, AST etc...but just about resulting tranformation code.
 
 ![Just for fun](/images/posts/babel.jpg)
+
+----------
+
+Tags: *ES6* *Javascript* *Babel* *React*

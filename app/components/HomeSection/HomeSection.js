@@ -1,5 +1,7 @@
 // LIBRARY
-import React from 'react';
+/*eslint-disable no-unused-vars*/
+import React, { Component } from 'react';
+/*eslint-enable no-unused-vars*/
 
 // FLUX
 import AppStore from '../../stores/AppStore';
@@ -7,19 +9,42 @@ import connectToStores from 'alt/utils/connectToStores';
 
 // COMPONENT
 import PostItem from '../Post/PostItem';
+import Tags from '../Tags/Tags';
 
 if (process.env.BROWSER) {
   require('./_HomeSection.scss');
 }
 
-let homeSection = class HomeSection extends React.Component {
-  constructor() {
-    super();
+let homeSection = class HomeSection extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: AppStore.getState().posts,
+      tags: HomeSection.getPropsFromStores().tags,
+      selectedTag: ''
+    };
+
+    this.handleOnClickTag = this.handleOnClickTag.bind(this);
+  }
+
+  handleOnClickTag(tag) {
+    const originalPosts = HomeSection.getPropsFromStores().posts;
+    if (this.state.selectedTag === tag) {
+      this.setState({posts: originalPosts, selectedTag: ''});
+      return;
+    }
+    const filteredPosts = originalPosts.filter((post) => {
+      return ~post.tags.indexOf(tag);
+    });
+    this.setState({
+      posts: filteredPosts,
+      selectedTag: tag
+    });
   }
 
   render() {
     // retrieve data from store
-    let posts = HomeSection.getPropsFromStores().posts;
+    let posts = this.state.posts;
     let postItems = [];
     for (var key in posts) {
       let keyHr = 'hr' + key;
@@ -30,6 +55,7 @@ let homeSection = class HomeSection extends React.Component {
     let title = !this.props.params ? '' : <h1 className='section'>Blog</h1>;
     return (
       <div className='wrapper'>
+        <Tags handleOnClickTag={this.handleOnClickTag} tags={this.state.tags} selectedTag={this.state.selectedTag} />
         {title}
         {postItems}
       </div>
@@ -42,7 +68,8 @@ let homeSection = class HomeSection extends React.Component {
 
   static getPropsFromStores() {
     return {
-      posts: AppStore.getState().posts
+      posts: AppStore.getState().posts,
+      tags: AppStore.getState().tags
     };
   }
 };

@@ -201,3 +201,7 @@ Data URI is a nice standard but with limitations for image like : size, types, b
 You may also try using it for other kind a resource that image (xml, video, audio, zip...)
 
 ![Just for fun](/images/posts/canvas.jpg)
+
+----------
+
+Tags: *Javascript* *Canvas*

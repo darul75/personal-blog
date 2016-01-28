@@ -1,9 +1,11 @@
 // LIBRARY
-import React from 'react';
+/*eslint-disable no-unused-vars*/
+import React, { Component } from 'react';
+/*eslint-enable no-unused-vars*/
 
 // COMPONENT
-import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 import HtmlHeaderTags from '../Document/HtmlHeaderTags';
 import Schema from './Schema';
 
@@ -16,12 +18,12 @@ if (process.env.BROWSER) {
   require('./_App.scss');
   require('file?name=favicon.ico!../../images/favicon.ico');
   require('../../../assets/js/google/google');
-  require.context('../../images/posts', true, /\.jpg$/);
+  require.context('../../images/posts', true, /\.(jpe?g|png|gif|woff|eot|ttf)$/);
 }
 
-let app = class App extends React.Component {
-  constructor() {
-    super();
+let app = class App extends Component {
+  constructor(props) {
+    super(props);
   }
 
   render() {

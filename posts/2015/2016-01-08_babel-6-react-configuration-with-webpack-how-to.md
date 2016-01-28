@@ -87,3 +87,7 @@ I faced problems with **decorators** current implementation and as you can see i
 Babel 6 is really modular and looks fine :)
 
 ![Just for fun](/images/posts/babel.jpg)
+
+----------
+
+Tags: *Javascript* *Babel* *React* *ES6*

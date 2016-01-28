@@ -1,5 +1,7 @@
 // LIBRARY
-import React from 'react';
+/*eslint-disable no-unused-vars*/
+import React, { Component } from 'react';
+/*eslint-enable no-unused-vars*/
 import { Link } from 'react-router';
 
 // COMPONENT
@@ -11,7 +13,7 @@ if (process.env.BROWSER) {
 
 let logo = require('./images/picture.jpg');
 
-export default class Header extends React.Component {
+export default class Header extends Component {
   constructor() {
     super();
   }
@@ -26,7 +28,7 @@ export default class Header extends React.Component {
       <div className='header'>
         <HeaderMenu />
 				<header id='user'>
-          <Link to='app'>
+          <Link to='/'>
             <figure id='user-logo' style={logoStyle}></figure>
           </Link>
           <h2>JULIEN VALERY</h2>

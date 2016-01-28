@@ -399,3 +399,7 @@ Article [1](http://www.2ality.com/2012/07/large-integers.html#[1])
 Tests [1](http://jsfiddle.net/darul75/3ohL03x6/)
 
 ![Just for fun](/images/posts/calculator-scientific.jpg)
+
+----------
+
+Tags: *Javascript*

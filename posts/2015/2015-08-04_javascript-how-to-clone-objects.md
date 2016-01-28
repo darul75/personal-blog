@@ -307,3 +307,7 @@ Based on that, you can guess how equal() Lodash method works.
 You can also edit this article by pressing edit button.
 
 ![Just for fun](/images/posts/man-person-people-emotions.jpg)
+
+----------
+
+Tags: *Javascript*

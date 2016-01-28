@@ -115,3 +115,7 @@ ASynchronous
 
 ## Conclusion
 
+
+----------
+
+Tags: *Angular* *Chrome* *Javascript* *React*

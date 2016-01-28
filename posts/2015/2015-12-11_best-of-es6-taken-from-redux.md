@@ -462,3 +462,7 @@ Thank you Dan for helping me on rewriting some parts of this article.
 ES Fiddle [here](http://www.es6fiddle.net/ii60qbhg/)
 
 React Fiddle [here](https://jsfiddle.net/darul75/7j4ggkqh/)
+
+----------
+
+Tags: *ES6* *Javascript*

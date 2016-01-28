@@ -390,3 +390,7 @@ If you want to look further, write a small test and debug it.
 You can also edit this article by pressing edit button.
 
 ![Just for fun](/images/posts/landmark-fog-golden-gate-bridge-san-francisco.jpg)
+
+----------
+
+Tags: *Javascript* *NodeJS*

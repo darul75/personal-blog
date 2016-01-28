@@ -1,5 +1,7 @@
 // LIBRARY
-import React from 'react';
+/*eslint-disable no-unused-vars*/
+import React, { Component } from 'react';
+/*eslint-enable no-unused-vars*/
 
 // put in store
 let brandingLogoReq = require.context('../../images/branding/', false, /^\.\/.*\.svg$/);
@@ -14,7 +16,7 @@ if (process.env.BROWSER) {
   require('./_Footer.scss');
 }
 
-export default class Footer extends React.Component {
+export default class Footer extends Component {
   constructor() {
     super();
   }

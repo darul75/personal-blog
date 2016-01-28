@@ -220,3 +220,7 @@ func (h *timeoutHandler) ServeHTTP(w ResponseWriter, r *Request) {
 It was just a POC but you can easily change it [here](https://github.com/darul75/personal-blog/blob/master/examples/2015/2015-07-22_go-lang-simple-reverse-proxy/go-reverse.go) to start.
 
 ![Just for fun](/images/posts/stairs-man-person-walking.jpg)
+
+----------
+
+Tags: *Go*

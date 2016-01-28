@@ -61,6 +61,7 @@ let appStore = makeHot(alt, class AppStore {
   constructor() {
     this.bindActions(AppActions);
     this.posts = [];
+    this.tags = {};
     this.menu = false;
     this.menuHide = false;
     this.packagejson = require('../../package.json');
@@ -75,6 +76,7 @@ let appStore = makeHot(alt, class AppStore {
 
     const imgRegExp = /(\/.+\w+.(png|jpg))/;
     //const imgTagRegExp = /<img\s[^>]*?src\s*=\s*['\"]([^'\"]*?)['\"][^>]*?>/;
+    const tagsRegExp = /Tags:((?: *<em>\w*\d*<\/em>)*) */gm;
 
     const extractMeta = function(elt) {
       let meta = {};
@@ -92,6 +94,7 @@ let appStore = makeHot(alt, class AppStore {
 
     markupFilesKeys.forEach((elt) => {
       let img = '';
+      const tags = [];
       // bodyCleaned = '';
       let html = markupFilesReq(elt);
       const parser = parserFactory(html.replace(/[\n\r]/g, ''));
@@ -107,6 +110,7 @@ let appStore = makeHot(alt, class AppStore {
       if (imageMatches) {
         img = this.packagejson.author.url + imageMatches[0];
       }
+
       let metas = extractMeta(elt);
       let post = {
         body: html,
@@ -115,9 +119,30 @@ let appStore = makeHot(alt, class AppStore {
         date: metas.date,
         filename: metas.filename,
         permalink: metas.permalink,
+        tags: tags,
         title: metas.title
       };
+
       this.posts.push(post);
+
+      let m = null;
+
+      while ((m = tagsRegExp.exec(html)) !== null) {
+        const tmp = m[1].match(/[^<>]*(?=<\/em)/g);
+        for (let i = 0; i < tmp.length; i++) {
+          let val = tmp[i];
+          if (val.length > 0) {
+            val = val.toLowerCase();
+            tags.push(val);
+            if (this.tags.hasOwnProperty(val)) {
+              this.tags[val].push(post.permalink);
+            }
+            else {
+              this.tags[val] = [post.permalink];
+            }
+          }
+        }
+      }
     });
 
     this.posts.reverse();

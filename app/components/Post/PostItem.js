@@ -1,6 +1,8 @@
 // LIBRARY
-import React from 'react';
-import {render} from 'react-dom';
+/*eslint-disable no-unused-vars*/
+import React, { Component, PropTypes } from 'react';
+/*eslint-enable no-unused-vars*/
+import { render } from 'react-dom';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
@@ -15,14 +17,12 @@ import PostItemSectionMenu from './PostItemSectionMenu';
 
 let prism = require('../../../assets/js/prism/prism');
 
-let { PropTypes } = React;
-
 if (process.env.BROWSER) {
   require('./_PostItem.scss');
   require('../../../assets/js/prism/prism.css');
 }
 
-let postItem = class PostItem extends React.Component {
+let postItem = class PostItem extends Component {
   constructor(props) {
     super(props);
     this.propsTypes = {
