@@ -141,6 +141,8 @@ Dealing with chrome API is simple but debugging it ( both *extension/contentscri
 
 I was thinking about to mock chrome API in order to fully concentrate on my code, but it looks like guys have already done it, I will give a try later
 
+Code is available on this [repository](https://github.com/darul75/fetchme)
+
 https://github.com/acvetkov/sinon-chrome
 https://github.com/sethmcl/chrome-mock
 
