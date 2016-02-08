@@ -14,24 +14,28 @@ One way of adding property or method is given by affecting the class itself mean
 
 
 ```javascript
-class C { 
+class Circle { 
   static PI = Math.PI; 			  // attach to constructor C prototype
 
-  static log = function(msg) {    // attach to constructor C prototype
-   console.log(msg);
+  static circumference = function(radius) {    // attach to constructor C prototype   
+   return 2 * Circle.PI * radius;
   }
 
   constructor() {}
 }
 
-const c = new C();
-c.type; // won't work
-c.log; // won't work
+const c = new Circle();
+c.PI; 					// won't work
+c.circumference(2.5); 	// won't work
+
+Circle.PI; 					//
+Circle.circumference(2.5); // 15.707963267948966
+
 ```
 
-And as you could expect, log() method won't get access to instance fields, properties or methods of an instance of this class C.
-
 Remember that static prop/methods are bound to the class constructor function and not the prototype object of the instance.
+
+And as you could expect, circumference() method won't get access to instance fields, properties or methods of an instance of this class Circle.
 
 First way will affect the class itself meaining the constructor rather than the prototype.
 
