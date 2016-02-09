@@ -48,10 +48,10 @@ As you can see, decorator "takes the target, name, and decorator descriptor as a
 
 [and optionally returns a decorator descriptor to install on the target object]
 
-Because you are clever, you may need to add some paremeters to your decorator and in this case it will become a factory:
+Because you are clever, you may need to add some parameters (function, object, primitive type) to your decorator and in this case it will become a factory:
 
 ```javascript
-function decorator(tax) {
+function decorator(tax, ...moreparams) {
 	return function(target, name, descriptor) {
 	   // do something with parameter
 	   target.price = target.price * tax;
@@ -72,11 +72,11 @@ Class with static properties or method in **ES6**.
 ```javascript
 class Circle {
   // attach to Circle constructor function prototype	
-  static PI = Math.PI;
+  static name = 'circle';
 
   // attach to Circle constructor function prototype
   static circumference = function(r) {    // attach to constructor C prototype   
-   return 2 * Circle.PI * r;
+   return 2 * Math.PI * r;
   }
 
   constructor() {
@@ -85,10 +85,10 @@ class Circle {
 }
 
 const circle = new Circle();
-circle.PI; 					// won't work
+circle.name; 				// won't work
 circle.circumference(2.5); 	// won't work
 
-Circle.PI; 				   // 3.141592653589793
+Circle.name; 			   // circle
 Circle.circumference(2.5); // 15.707963267948966
 ```
 
@@ -99,16 +99,13 @@ And as you could expect, circumference() method won't get access to instance fie
 Same version in **ES5** would be
 
 ```javascript
-function Circle() {
-}
+function Circle() {}
 
-Circle.PI = Math.PI;
+Circle.name = 'circle';
 
-Circle.circumference = function(r) {
- return 2 * Circle.PI * r;
+Circle.circumference = function(radius) {
+ return 2 * Math.PI * radius;
 };
-
-var c = new Circle();
 ```
 
 First way will affect the class itself meaining the constructor rather than the prototype.
@@ -135,24 +132,30 @@ and decorator would be
 ```javascript
 function circleUtilities(target, key, descriptor) {
   Object.assign(target, {
-    PI : Math.PI,
+    displayName: 'circle',
 	circumference: function(r) {
-	 return 2 * Circle.PI * r;
+	 return 2 * Math.PI * r;
     },
     area: function(r) {
-	 return Circle.PI * Math.pow(r,2);
+	 return Math.PI * Math.pow(r,2);
     }
   });
 }
 
-console.log(Circle.PI); 			    
-// 3.141592653589793
+// Constructor method/prop
+console.log(Circle.displayName); 			    
+// 'circle'
 console.log(Circle.circumference(2.5)); 
 // 15.707963267948966
 
+// Prototype method/prop
 const c = new Circle(2.5);
-console.log(c.getCircumference());
+console.log(c.radius); 
+//
+console.log(c.getCircumference()); 
 // 15.707963267948966
+console.log(c.area());
+// won't work
 ```
 
 Attached to Constructor (static way) in this case and not instance Prototype.
@@ -164,23 +167,26 @@ If you want to add properties on Prototype instead of Constructor (static), you 
 ```javascript
 function circleUtilities(target, key, descriptor) {
   Object.assign(target.prototype, {
-    PI : Math.PI,
-	circumference: function(r) {
-	 return 2 * Circle.PI * r;
-    },
-    area: function(r) {
-	 return Circle.PI * Math.pow(r,2);
-    }
+	 circumference: function() {
+	  return 2 * Math.PI * this.radius;
+     },
+     area() {
+	  return Math.PI * Math.pow(this.radius,2);
+     }
   });
 }
 
-console.log(Circle.PI); 			 // 3.141592653589793
-console.log(Circle.circumference(2.5)); // 15.707963267948966
+const c = new Circle(2.5);
+console.log(c.circumference());
 ```
 
 # Class property decorator
 
-By constrast to class decorator, it will enhance object instance prototype.
+By constrast to class decorator, it will enhance object instance prototype. 
+
+Previous sample would become:
+
+
 
 
 
