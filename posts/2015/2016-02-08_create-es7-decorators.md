@@ -1,15 +1,9 @@
 
-Mixins are dead or should be and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime.
-
-# Specification
-
-Specification is available [here](https://github.com/wycats/javascript-decorators).
-
-Note that they can be use to **modify and annotate class or properties only**.
+Mixins are dead (or should be) and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime. Usage of decorators allows to modify classes or properties as you would see in current [specification](https://github.com/wycats/javascript-decorators). 
 
 ## Using it
 
-ES7 decorator syntax is quite simple and follow standard convention like this
+ES7 decorators syntax is quite simple.
 
 ```javascript
 @decoratorName(optionalParams)
@@ -21,7 +15,7 @@ class MyClass {
 }
 ```
 
-They won't work on a single function (outside a class definition):
+They won't work on a single function outside a class definition:
 
 
 ```javascript
@@ -34,7 +28,7 @@ function move() {
 
 ## Design
 
-We will cover some examples later in this post but creation of decorator is done by creating a simple function:
+We will cover some examples later in this post but implementing a decorator is done by creating a simple function:
 
 ```javascript
 function decorator(target, name, descriptor) {}
@@ -53,17 +47,20 @@ Because you are clever, you may need to add some parameters (function, object, p
 ```javascript
 function decorator(tax, ...moreparams) {
 	return function(target, name, descriptor) {
-	   // do something with parameter
+	   // target object current decorated one
+	   // name 
 	   target.price = target.price * tax;
     }
 }
 ```
 
-As you can see, decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method because decorators are "just attaching" new properties to Constructor function or Prototype object.
+As you can see, decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method. 
+
+Decorators are indeed "attaching" new properties to Constructor function object or Prototype object that will be shared by your instances.
 
 # Class and static properties in ES6
 
-Before digging with class decorators, let's recap how static keyword works in ES6 class.
+Before digging with Class decorators, let's recap how static keyword works in ES6 class.
 
 One way of adding static property or method in javascript ES6 is given by affecting the class itself meaning on constructor rather than on prototype.
 
@@ -92,7 +89,7 @@ Circle.name; 			   // circle
 Circle.circumference(2.5); // 15.707963267948966
 ```
 
-Indeed, static prop/methods are bound to the class Constructor function and not to the prototype object of the instance.
+Static properties or methods are bound to the class Constructor function and not to the Constructor prototype object.
 
 And as you could expect, circumference() method won't get access to instance fields, properties or methods of an instance of this class Circle.
 
@@ -108,7 +105,7 @@ Circle.circumference = function(radius) {
 };
 ```
 
-First way will affect the class itself meaining the constructor rather than the prototype.
+First way will affect the class itself meaining the constructor rather than the prototype .
 
 # Class static decorator
 
@@ -158,7 +155,7 @@ console.log(c.area());
 // won't work
 ```
 
-Attached to Constructor (static way) in this case and not instance Prototype.
+Attached to Constructor function (static way) in this case and not instance Prototype.
 
 # Class prototype decorator
 
@@ -180,29 +177,143 @@ const c = new Circle(2.5);
 console.log(c.circumference());
 ```
 
+# Accessor property decorator
+
+syntactic getters and/or setters
+
+```javascript
+class Test {
+  
+    @prefix("my name is: ")
+    get name() {
+      return this._name;
+    }
+  
+    set name(newName) {
+      this._name = newName;
+    }
+}
+
+function prefix(string) {
+  return function(target, key, descriptor) {
+    let getter = descriptor.get;
+    
+    descriptor.get = function() {
+      return string + getter.call(this);
+    }
+  }  
+}
+
+const t = new Test();
+t.name = 'julien';
+```
+
+```javascript
+const upper = ''.toUpperCase;
+const list = (s) => {return s.split(' ');};
+
+class Person {
+  
+  constructor(first, last) {
+    this.first = first;
+    this.last = last;
+  }
+    
+  @transform(upper)
+  name() { 
+    return `${this.first} ${this.last}`
+  }
+  
+  @transform(list)
+  names() { 
+    return `${this.first} ${this.last}`
+  }
+}
+
+function transform(fn) {
+  return function(target, key, descriptor) {
+    const oldValue = descriptor.value;
+    
+    descriptor.value = function() {
+      const s = oldValue.call(this);
+      console.log(fn);
+      return fn.call(s);
+    }
+    
+    
+  }  
+}
+
+const t = new Person('julien', 'valery');
+
+console.log(t.name());
+console.log(t.names());
+
+```
+
 # Class property decorator
 
-By constrast to class decorator, it will enhance object instance prototype. 
+```javascript
 
-Previous sample would become:
-
-
-
-
-
-They won't affect object instance prototype but only class object constructor as seen before.
-
-@isTestable(true)
-class MyClass { }
-
-function isTestable(value) {
-   return function decorator(target) {
-      target.isTestable = value;
-   }
+class Container {
+  
+  static store = new Map();
+  
+  static resolve(clazz) {
+    const store = Container.store;
+    const depKeys = clazz.dependencies;
+    
+    const dependencies = depKeys.reduce(function(deps, key) {
+      
+     if (store.has(key)) {
+        deps.push(store.get(key));
+      }
+      else {
+        const dep = {key: key};
+        store.set(key, dep);
+        deps.push(dep);
+      }
+      
+      return deps;
+    }, []);
+    
+    return new clazz(...dependencies);
+  }
 }
+
+
+@inject(['serviceOne', 'serviceTwo'])
+class Component {
+  constructor(serviceOne, serviceTwo) {
+    console.log(serviceOne);
+    console.log(serviceTwo);
+  }
+}
+
+@inject(['serviceOne', 'serviceTwo'])
+class ComponentTwo {
+  constructor(serviceOne) {
+    console.log(serviceOne);
+  }
+}
+
+function inject(dependencies) {
+  return function(target, key, descriptor) {
+    target.dependencies = dependencies;
+  }
+}
+
+Container.resolve(Component);
+Container.resolve(ComponentTwo);
+```
+
 
 # Reference
 
 http://www.2ality.com/2015/02/es6-classes-final.html
 http://blog.developsuperpowers.com/eli5-ecmascript-7-decorators/
 https://github.com/wycats/javascript-decorators
+http://stackoverflow.com/questions/13486457/javascript-class-property-vs-class-prototype-property-to-emulate-static-propert
+http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
+https://github.com/zewa666/angular_es6
+https://github.com/andrewmunsell/needlepoint
