@@ -1,5 +1,5 @@
 
-Mixins are dead (or should be) and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime. Usage of decorators allows to modify classes or properties as you would see in current [specification](https://github.com/wycats/javascript-decorators). 
+Mixins are dead (or should be) and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime. Usage of decorators allows to modify classes or properties as you would see in current [specification](https://github.com/wycats/javascript-decorators).
 
 ## Using it
 
@@ -47,24 +47,26 @@ Because you are clever, you may need to add some parameters (function, object, p
 ```javascript
 function decorator(tax, ...moreparams) {
 	return function(target, name, descriptor) {
-	   // target object current decorated one
-	   // name 
 	   target.price = target.price * tax;
     }
 }
 ```
 
-As you can see, decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method. 
+Decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method. 
 
-Decorators are indeed "attaching" new properties to Constructor function object or Prototype object that will be shared by your instances.
+And decorators can be "attached" to :
+
+- Class Constructor function
+- Class Prototype object (shared by your instances)
+- Class property method or accessor
 
 # Class and static properties in ES6
 
-Before digging with Class decorators, let's recap how static keyword works in ES6 class.
+Before digging with Class Constructor decorators, let's recap how static keyword works in ES6 class.
 
 One way of adding static property or method in javascript ES6 is given by affecting the class itself meaning on constructor rather than on prototype.
 
-Class with static properties or method in **ES6**.
+Class with static properties or method in **ES6** is
 
 ```javascript
 class Circle {
@@ -72,7 +74,7 @@ class Circle {
   static name = 'circle';
 
   // attach to Circle constructor function prototype
-  static circumference = function(r) {    // attach to constructor C prototype   
+  static circumference = function(r) {
    return 2 * Math.PI * r;
   }
 
@@ -107,7 +109,7 @@ Circle.circumference = function(radius) {
 
 First way will affect the class itself meaining the constructor rather than the prototype .
 
-# Class static decorator
+# Decorator on Class Constructor 
 
 As seen in previous paragraph with static properties, we could express the same result with a global decorator on class that will **enhance class constructor** with some properties or methods.
 
@@ -157,9 +159,9 @@ console.log(c.area());
 
 Attached to Constructor function (static way) in this case and not instance Prototype.
 
-# Class prototype decorator
+# Decorator on Class Prototype 
 
-If you want to add properties on Prototype instead of Constructor (static), you only need to modify decorator.
+If you want to add properties on Prototype instead of Constructor (static), you only need to modify decorator to work with prototype instead of constructor function.
 
 ```javascript
 function circleUtilities(target, key, descriptor) {
@@ -177,9 +179,9 @@ const c = new Circle(2.5);
 console.log(c.circumference());
 ```
 
-# Accessor property decorator
+# Decorator on accessor property 
 
-syntactic getters and/or setters
+You may want to attache a decorator to an accessor and free to you to do what you want then
 
 ```javascript
 class Test {
@@ -208,9 +210,11 @@ const t = new Test();
 t.name = 'julien';
 ```
 
+# Decorator on Class property
+
 ```javascript
-const upper = ''.toUpperCase;
-const list = (s) => {return s.split(' ');};
+const prefix = s => 'my fullname would be ' + s;
+const suffix = s => s + ' is my fullname';
 
 class Person {
   
@@ -219,82 +223,135 @@ class Person {
     this.last = last;
   }
     
-  @transform(upper)
   name() { 
-    return `${this.first} ${this.last}`
+    return `${this.first} ${this.last}`;
+  }
+    
+  @transformString(prefix)
+  namePrefixed() { 
+    return this.name();
   }
   
-  @transform(list)
-  names() { 
-    return `${this.first} ${this.last}`
+  @transformString(suffix)
+  nameSuffixed() { 
+    return this.name();
   }
 }
 
-function transform(fn) {
+function transformString(fn) {
   return function(target, key, descriptor) {
     const oldValue = descriptor.value;
     
     descriptor.value = function() {
       const s = oldValue.call(this);
-      console.log(fn);
-      return fn.call(s);
+      return fn(s);
     }
-    
     
   }  
 }
 
 const t = new Person('julien', 'valery');
 
-console.log(t.name());
-console.log(t.names());
-
+console.log(t.namePrefixed());
+console.log(t.nameSuffixed());
 ```
 
-# Class property decorator
+
+# Dependency injection example
 
 ```javascript
-
 class Container {
   
-  static store = new Map();
+  static dependencies = new Map();
+  static singletons = new Map();
+  
+  static registerSingleton(clazz) {
+    if (Container.singletons.has(clazz)) {
+      return Container.singletons.get(clazz);
+    }
+    
+    const instance = Container.resolve(clazz);
+    
+    Container.singletons.set(clazz, instance);
+    
+    return instance;
+  }
   
   static resolve(clazz) {
     const store = Container.store;
+    
     const depKeys = clazz.dependencies;
     
-    const dependencies = depKeys.reduce(function(deps, key) {
+    let dependencies = [];
+    
+    if (depKeys) {    
+       dependencies = depKeys.reduce(function(deps, depClazz) {
+         
+         if (depClazz.singleton) {
+           deps.push(Container.registerSingleton(depClazz));
+         }
+         else {
+           deps.push(new depClazz());
+         }
       
-     if (store.has(key)) {
-        deps.push(store.get(key));
-      }
-      else {
-        const dep = {key: key};
-        store.set(key, dep);
-        deps.push(dep);
-      }
-      
-      return deps;
-    }, []);
+        return deps;
+        
+      }, []);
+    }
     
     return new clazz(...dependencies);
   }
+  
 }
 
+@singleton
+class ServiceOne {
+  fetchSomeData(cb) {
+    cb({data: 'ServiceOne'});
+  }
+}
 
-@inject(['serviceOne', 'serviceTwo'])
+@singleton
+class ServiceTwo {
+  fetchSomeData(cb) {
+    cb({data: 'ServiceTwo'});
+  }
+}
+
+@inject([ServiceOne])
 class Component {
-  constructor(serviceOne, serviceTwo) {
-    console.log(serviceOne);
-    console.log(serviceTwo);
+  constructor(service) {
+    this.service = service;
+  }
+  
+  render() {
+    console.log('rendering component one');
+    this.service.fetchSomeData(function(data) {
+      console.log(data);
+    });
   }
 }
 
-@inject(['serviceOne', 'serviceTwo'])
+@inject([ServiceOne, ServiceTwo])
 class ComponentTwo {
-  constructor(serviceOne) {
-    console.log(serviceOne);
+  constructor(s1, s2) {
+    this.serviceOne = s1;
+    this.serviceTwo = s2;
   }
+  
+  render() {
+    console.log('rendering component two');
+    this.serviceOne.fetchSomeData(function(data) {
+      console.log(data);
+    });
+    this.serviceTwo.fetchSomeData(function(data) {
+      console.log(data);
+    });
+  }
+}
+
+function singleton(target, key, descriptor) {
+  target.singleton = true;
 }
 
 function inject(dependencies) {
@@ -303,17 +360,24 @@ function inject(dependencies) {
   }
 }
 
-Container.resolve(Component);
-Container.resolve(ComponentTwo);
+const c1 = Container.resolve(Component);
+const c2 = Container.resolve(ComponentTwo);
+c1.render();
+c2.render();
 ```
 
 
 # Reference
 
 http://www.2ality.com/2015/02/es6-classes-final.html
-http://blog.developsuperpowers.com/eli5-ecmascript-7-decorators/
-https://github.com/wycats/javascript-decorators
 http://stackoverflow.com/questions/13486457/javascript-class-property-vs-class-prototype-property-to-emulate-static-propert
+
+https://github.com/wycats/javascript-decorators
+https://github.com/jonathandturner/brainstorming/blob/master/README.md#c6-ambient-decorators
+http://blog.developsuperpowers.com/eli5-ecmascript-7-decorators/
 http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
 https://github.com/zewa666/angular_es6
 https://github.com/andrewmunsell/needlepoint
+https://gist.github.com/jeffmo/054df782c05639da2adb
+
+https://blog.hadrien.eu/
