@@ -1,5 +1,5 @@
 
-Mixins are dead (or should be) and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime. Usage of decorators allows to modify classes or properties as you would see in current [specification](https://github.com/wycats/javascript-decorators).
+Mixins are dead (or should be) and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime. Usage of decorators allows us to modify classes or properties and you can read more about it in current [specification](https://github.com/wycats/javascript-decorators).
 
 ## Using it
 
@@ -38,11 +38,21 @@ function decorator(target, name) {}
 function decorator(target) {}
 ```
 
-As you can see, decorator "takes the target, name, and decorator descriptor as arguments" 
+As you can see, decorator takes maximum 3 arguments [and optionally returns a decorator descriptor to install on the target object]
 
-[and optionally returns a decorator descriptor to install on the target object]
+**Parameters**
 
-Because you are clever, you may need to add some parameters (function, object, primitive type) to your decorator and in this case it will become a factory:
+`target` : depending of you use it can be
+	- current object Constructor
+	- current object Prototype
+	- directly current object when decorator is on an object literals
+	
+` name`: current property name or null when decorator is on Class
+
+`descriptor` : current property descriptor or null when decorator is on Class
+
+**Decorator as a factory**
+You may need to pass parameters (function, object, primitive type) to your decorator and in this case it will become a factory:
 
 ```javascript
 function decorator(tax, ...moreparams) {
@@ -52,13 +62,92 @@ function decorator(tax, ...moreparams) {
 }
 ```
 
-Decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method. 
+# But how decorators works ?
 
-And decorators can be "attached" to :
+I will try to explain it :)
+
+Decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method.
+
+A decorator can be "attached" to :
 
 - Class Constructor function
-- Class Prototype object (shared by your instances)
-- Class property method or accessor
+- Class Properties : object, method, accessors
+
+A decorator will precede the syntax that defines a property.
+
+```javascript
+@classDecorator
+class Clazz {
+  
+  @staticPropDecorator
+  static prop = 5;
+
+  @staticMethodDecorator    
+  static fnStatic = function() {}
+  
+  @propDecorator
+  prop = 5;
+
+  @methodDecorator
+  fn() {}
+    
+}
+```
+
+Here is an example how it could work without decorators.
+
+Class definition
+```javascript
+class C {
+  
+  prop: "value"
+  
+  fn(...params) {
+    console.log(params);
+  }
+}
+const c = new C();
+c.fn('a', 'b', 'c'); // ['a','b','c']
+```
+
+Ok now imagine we want to declatively inject something before and after 'fn' method call.
+
+To do that, we will use [defineProperty](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) and [getOwnPropertyDescriptor](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/getOwnPropertyDescriptor) functions.
+
+Idea is to replace 'fn' property method at runtime, keep it but do something else around it.
+
+
+const fnDesc = Object.getOwnPropertyDescriptor(C.prototype, 'fn');
+
+function patchFunction(target, key, descriptor) {
+  const oldFn = descriptor.value;
+
+  descriptor.value = function() {
+    console.log('before');
+    oldFn.apply(this, arguments);
+    console.log('after');
+  }
+
+  Object.defineProperty(target, key, descriptor);
+}
+
+function patchProp(target, key, descriptor) {
+  descriptor.writable = true;
+
+  Object.defineProperty(target, key, descriptor);
+}
+
+patchFunction(C.prototype, 'fn', fnDesc);
+patchProp(C.prototype, 'prop', patchProp);
+
+
+const c = new C();
+c.fn('a', 'b', 'c');
+c.prop = 'dd';
+
+```
+
+That is basically how decorator will work.
 
 # Class and static properties in ES6
 
@@ -355,6 +444,9 @@ function singleton(target, key, descriptor) {
 }
 
 function inject(dependencies) {
+  // on prop
+//  https://github.com/zewa666/angular_es6/blob/master/src/config/decorators.js#L33
+
   return function(target, key, descriptor) {
     target.dependencies = dependencies;
   }
@@ -379,5 +471,9 @@ http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
 https://github.com/zewa666/angular_es6
 https://github.com/andrewmunsell/needlepoint
 https://gist.github.com/jeffmo/054df782c05639da2adb
+http://code.fitness/post/2015/12/babel-es7-decorators-are-back.html
 
 https://blog.hadrien.eu/
+https://blog.hadrien.eu/2015/06/05/decorateurs-es7/
+https://github.com/andreypopp/autobind-decorator/blob/master/src/index.js#L15
+https://github.com/jayphelps/core-decorators.js/blob/master/src/lazy-initialize.js
