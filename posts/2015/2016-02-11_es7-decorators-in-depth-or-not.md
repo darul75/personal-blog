@@ -43,10 +43,10 @@ As you can see, decorator takes maximum 3 arguments [and optionally returns a de
 **Parameters**
 
 `target` : depending of you use it can be
-	- current object Constructor
-	- current object Prototype
-	- directly current object when decorator is on an object literals
-	
+  - current object Constructor
+  - current object Prototype
+  - directly current object when decorator is on an object literals
+  
 ` name`: current property name or null when decorator is on Class
 
 `descriptor` : current property descriptor or null when decorator is on Class
@@ -56,8 +56,8 @@ You may need to pass parameters (function, object, primitive type) to your decor
 
 ```javascript
 function decorator(tax, ...moreparams) {
-	return function(target, name, descriptor) {
-	   target.price = target.price * tax;
+  return function(target, name, descriptor) {
+     target.price = target.price * tax;
     }
 }
 ```
@@ -114,11 +114,18 @@ Ok now imagine we want to declatively inject something before and after 'fn' met
 
 To do that, we will use [defineProperty](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) and [getOwnPropertyDescriptor](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/getOwnPropertyDescriptor) functions.
 
-Idea is to replace 'fn' property method at runtime, keep it but do something else around it.
+Idea is to replace 'fn' property method at runtim by
+- storing reference to this function
+- replacing by a new function doing before/after job
+- not forget call stored function
 
-
+To to that you can use property descriptor object
+```javascript
 const fnDesc = Object.getOwnPropertyDescriptor(C.prototype, 'fn');
+```
 
+Now that we have property descriptor in hand, why not patch its value property:
+```javascript
 function patchFunction(target, key, descriptor) {
   const oldFn = descriptor.value;
 
@@ -130,6 +137,7 @@ function patchFunction(target, key, descriptor) {
 
   Object.defineProperty(target, key, descriptor);
 }
+```
 
 function patchProp(target, key, descriptor) {
   descriptor.writable = true;
@@ -159,7 +167,7 @@ Class with static properties or method in **ES6** is
 
 ```javascript
 class Circle {
-  // attach to Circle constructor function prototype	
+  // attach to Circle constructor function prototype  
   static name = 'circle';
 
   // attach to Circle constructor function prototype
@@ -173,10 +181,10 @@ class Circle {
 }
 
 const circle = new Circle();
-circle.name; 				// won't work
-circle.circumference(2.5); 	// won't work
+circle.name;        // won't work
+circle.circumference(2.5);  // won't work
 
-Circle.name; 			   // circle
+Circle.name;         // circle
 Circle.circumference(2.5); // 15.707963267948966
 ```
 
@@ -221,17 +229,17 @@ and decorator would be
 function circleUtilities(target, key, descriptor) {
   Object.assign(target, {
     displayName: 'circle',
-	circumference: function(r) {
-	 return 2 * Math.PI * r;
+  circumference: function(r) {
+   return 2 * Math.PI * r;
     },
     area: function(r) {
-	 return Math.PI * Math.pow(r,2);
+   return Math.PI * Math.pow(r,2);
     }
   });
 }
 
 // Constructor method/prop
-console.log(Circle.displayName); 			    
+console.log(Circle.displayName);          
 // 'circle'
 console.log(Circle.circumference(2.5)); 
 // 15.707963267948966
@@ -255,11 +263,11 @@ If you want to add properties on Prototype instead of Constructor (static), you 
 ```javascript
 function circleUtilities(target, key, descriptor) {
   Object.assign(target.prototype, {
-	 circumference: function() {
-	  return 2 * Math.PI * this.radius;
+   circumference: function() {
+    return 2 * Math.PI * this.radius;
      },
      area() {
-	  return Math.PI * Math.pow(this.radius,2);
+    return Math.PI * Math.pow(this.radius,2);
      }
   });
 }
