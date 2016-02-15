@@ -1,9 +1,9 @@
 
-Mixins are dead (or should be) and we could say that ES7 decorators will provide a new way of enhancing object behaviours at runtime. Usage of decorators allows us to modify classes or properties and you can read more about it in current [specification](https://github.com/wycats/javascript-decorators).
+Mixins are dead (or should be) and we could say that ES7 decorators (experimental) will provide a new way of changing object behaviours at runtime, as they give a new opportunity to modify classes or properties. Current [specification](https://github.com/wycats/javascript-decorators) is a good start to play with decorators, but I 'll try to share a little bit more with you about it.
 
 ## Using it
 
-ES7 decorators syntax is quite simple.
+ES7 decorators syntax is trivial.
 
 ```javascript
 @decoratorName(optionalParams)
@@ -15,7 +15,7 @@ class MyClass {
 }
 ```
 
-They won't work on a single function outside a class definition:
+Note that decorators do not work on a single function outside a class definition:
 
 
 ```javascript
@@ -31,18 +31,23 @@ function move() {
 We will cover some examples later in this post but implementing a decorator is done by creating a simple function:
 
 ```javascript
-function decorator(target, name, descriptor) {}
+// example on a method with a decorator named 'dec'
+@dec
+method() {}
+
+// decorator definition
+function dec(target, name, descriptor) {}
 // or 
-function decorator(target, name) {}
+function dec(target, name) {}
 // or
-function decorator(target) {}
+function dec(target) {}
 ```
 
-As you can see, decorator takes maximum 3 arguments [and optionally returns a decorator descriptor to install on the target object]
+As you can see, a decorator can take up to 3 arguments [and optionally returns a decorator descriptor to install on the target object]
 
 **Parameters**
 
-`target` : depending of you use it can be
+`target` : depending of your use it can be
   - current object Constructor
   - current object Prototype
   - directly current object when decorator is on an object literals
@@ -52,28 +57,32 @@ As you can see, decorator takes maximum 3 arguments [and optionally returns a de
 `descriptor` : current property descriptor or null when decorator is on Class
 
 **Decorator as a factory**
-You may need to pass parameters (function, object, primitive type) to your decorator and in this case it will become a factory:
+You may need to pass parameters (*function, object, primitive type*) to your decorator and in this case it will become a factory:
 
 ```javascript
-function decorator(tax, ...moreparams) {
+@dec
+method() {}
+
+// and your decorator function
+function dec(tax /*...moreparams*/) {
   return function(target, name, descriptor) {
      target.price = target.price * tax;
     }
 }
 ```
 
-# But how decorators works ?
+## But how decorators works ?
 
 I will try to explain it :)
 
-Decorator function parameters are really similar to the ones in [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method.
+A decorator function is quite similar to native [Object.defineProperty()](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) method.
 
 A decorator can be "attached" to :
 
 - Class Constructor function
 - Class Properties : object, method, accessors
 
-A decorator will precede the syntax that defines a property.
+A decorator will precede the syntax that defines a property (or method).
 
 ```javascript
 @classDecorator
@@ -94,76 +103,86 @@ class Clazz {
 }
 ```
 
-Here is an example how it could work without decorators.
+## Life before ES7 decorator
 
-Class definition
+Here is an example of how we could implement job done by decorators before they occur in ES7.
+
+Let's create a class that contains a single method.
+
 ```javascript
-class C {
-  
-  prop: "value"
-  
-  fn(...params) {
+class C { 
+  method(...params) {
     console.log(params);
   }
 }
 const c = new C();
-c.fn('a', 'b', 'c'); // ['a','b','c']
+c.method('a', 'b', 'c'); 
+// ['a','b','c']
 ```
 
-Ok now imagine we want to declatively inject something before and after 'fn' method call.
+Exercice consist in applying (call a function) something *before* and *after* the call to 'method()' function.
 
 To do that, we will use [defineProperty](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/defineProperty) and [getOwnPropertyDescriptor](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/getOwnPropertyDescriptor) functions.
 
-Idea is to replace 'fn' property method at runtim by
-- storing reference to this function
-- replacing by a new function doing before/after job
-- not forget call stored function
+First step consist it retrieving method property descriptor object and then transform it.
 
-To to that you can use property descriptor object
 ```javascript
-const fnDesc = Object.getOwnPropertyDescriptor(C.prototype, 'fn');
+// get descriptor of method() property
+const methodDesc = Object.getOwnPropertyDescriptor(C.prototype, 'method');
+// {
+//   'writable':true,
+//   'enumerable':true,
+//   'configurable':true,
+// value field is our function
+//   'value': function method() {
+//     console.log(params);
+//   }
 ```
 
-Now that we have property descriptor in hand, why not patch its value property:
-```javascript
-function patchFunction(target, key, descriptor) {
-  const oldFn = descriptor.value;
+Now that we have property descriptor in hand, why not patch its value property ?
 
+To do this , we create a function similar to that of a definition of decorators in ES7.
+
+```javascript
+function patchMethod(target, key, descriptor) {
+  // store old method
+  const oldMethod = descriptor.value;
+
+  // replace by new one
   descriptor.value = function() {
     console.log('before');
-    oldFn.apply(this, arguments);
+    oldMethod.apply(this, arguments);
     console.log('after');
   }
 
+  // reapply on property
   Object.defineProperty(target, key, descriptor);
 }
 ```
 
-function patchProp(target, key, descriptor) {
-  descriptor.writable = true;
+Our main method will look like
 
-  Object.defineProperty(target, key, descriptor);
-}
-
-patchFunction(C.prototype, 'fn', fnDesc);
-patchProp(C.prototype, 'prop', patchProp);
-
+```javascript
+const methodDesc = Object.getOwnPropertyDescriptor(C.prototype, 'method');
+// patch decorator
+patchFunction(C.prototype, 'method', methodDesc );
 
 const c = new C();
-c.fn('a', 'b', 'c');
-c.prop = 'dd';
-
+c.method('a', 'b', 'c');
+// before
+// ["a","b","c"]
+// after
 ```
 
-That is basically how decorator will work.
+That was basically how decorator will work.
 
-# Class and static properties in ES6
+## Class and static properties
 
-Before digging with Class Constructor decorators, let's recap how static keyword works in ES6 class.
+Before digging with Class Constructor decorators, let's recap how static keyword works in ES7 class ([experimental](http://babeljs.io/docs/plugins/transform-class-properties/), see BabelJS).
 
 One way of adding static property or method in javascript ES6 is given by affecting the class itself meaning on constructor rather than on prototype.
 
-Class with static properties or method in **ES6** is
+Class with [static properties](https://github.com/jeffmo/es-class-fields-and-static-properties) example:
 
 ```javascript
 class Circle {
@@ -206,7 +225,7 @@ Circle.circumference = function(radius) {
 
 First way will affect the class itself meaining the constructor rather than the prototype .
 
-# Decorator on Class Constructor 
+## Decorator on Class Constructor 
 
 As seen in previous paragraph with static properties, we could express the same result with a global decorator on class that will **enhance class constructor** with some properties or methods.
 
@@ -229,11 +248,11 @@ and decorator would be
 function circleUtilities(target, key, descriptor) {
   Object.assign(target, {
     displayName: 'circle',
-  circumference: function(r) {
-   return 2 * Math.PI * r;
+    circumference: function(r) {
+      return 2 * Math.PI * r;
     },
     area: function(r) {
-   return Math.PI * Math.pow(r,2);
+      return Math.PI * Math.pow(r,2);
     }
   });
 }
@@ -247,7 +266,7 @@ console.log(Circle.circumference(2.5));
 // Prototype method/prop
 const c = new Circle(2.5);
 console.log(c.radius); 
-//
+// 2.5
 console.log(c.getCircumference()); 
 // 15.707963267948966
 console.log(c.area());
@@ -256,7 +275,7 @@ console.log(c.area());
 
 Attached to Constructor function (static way) in this case and not instance Prototype.
 
-# Decorator on Class Prototype 
+## Decorator on Class Prototype 
 
 If you want to add properties on Prototype instead of Constructor (static), you only need to modify decorator to work with prototype instead of constructor function.
 
@@ -276,14 +295,14 @@ const c = new Circle(2.5);
 console.log(c.circumference());
 ```
 
-# Decorator on accessor property 
+## Decorator on accessor property
 
-You may want to attache a decorator to an accessor and free to you to do what you want then
+You may want to attach a decorator to an accessor and free to you to do what you want then
 
 ```javascript
-class Test {
+class C {
   
-    @prefix("my name is: ")
+    @prefix('my name is: ')
     get name() {
       return this._name;
     }
@@ -303,14 +322,19 @@ function prefix(string) {
   }  
 }
 
-const t = new Test();
-t.name = 'julien';
+const c = new C();
+c.name = 'julien';
+
+console.log(c.name);
+// my name is: julien
 ```
 
-# Decorator on Class property
+## Another decorator on method property
+
+Here another sample with a decorator that take a function as parameter.
 
 ```javascript
-const prefix = s => 'my fullname would be ' + s;
+const prefix = s => 'my fullname is ' + s;
 const suffix = s => s + ' is my fullname';
 
 class Person {
@@ -351,15 +375,51 @@ const t = new Person('julien', 'valery');
 
 console.log(t.namePrefixed());
 console.log(t.nameSuffixed());
+// my fullname is julien valery
+// julien valery is my fullname
 ```
 
+## Dependency injection example
 
-# Dependency injection example
+Decorator is really a good option to create declarative code that solve dependency injection a well known pattern.
+
+In a nutshell, you let a container to manage component instances and just declare component dependencies to be injected in constructor (or method) at runtime.
+
+## Usage
+Goal of this example is to allow that kind of syntax with a **@inject** decorator
+
+```javascript
+@inject([DependencyOne, DependencyTwo...])
+class Component {
+
+  constructor(serviceOne, serviceTwo) {
+  this.serviceOne = serviceOne;
+    this.serviceTwo= serviceTwo;
+  }
+
+  method() {
+    this.serviceOne....
+  }
+```
+
+We could then add a **@singleton** decorator that will be handle by container to resolve your dependency only one time.
+
+```javascript
+@singleton
+class DependencyOne{
+  fetchSomeData(cb) {
+    cb({data: 'ServiceTwo'});
+  }
+}
+```
+
+## Full code
+
+Here is what Container code may look like
 
 ```javascript
 class Container {
   
-  static dependencies = new Map();
   static singletons = new Map();
   
   static registerSingleton(clazz) {
@@ -400,7 +460,11 @@ class Container {
   }
   
 }
+```
 
+Then your main code 
+
+```javascript
 @singleton
 class ServiceOne {
   fetchSomeData(cb) {
@@ -447,13 +511,13 @@ class ComponentTwo {
   }
 }
 
+// @singleton decorator
 function singleton(target, key, descriptor) {
   target.singleton = true;
 }
 
+// @inject decorator
 function inject(dependencies) {
-  // on prop
-//  https://github.com/zewa666/angular_es6/blob/master/src/config/decorators.js#L33
 
   return function(target, key, descriptor) {
     target.dependencies = dependencies;
@@ -464,24 +528,39 @@ const c1 = Container.resolve(Component);
 const c2 = Container.resolve(ComponentTwo);
 c1.render();
 c2.render();
+// rendering component one
+// {"data":"ServiceOne"}
+// rendering component two
+// {"data":"ServiceOne"}
+// {"data":"ServiceTwo"}
 ```
 
+## Conclusion
 
-# Reference
+This post is long but I hope it will give you a new overview and ideas of what can be done with awesome ES7 decorators.
 
-http://www.2ality.com/2015/02/es6-classes-final.html
-http://stackoverflow.com/questions/13486457/javascript-class-property-vs-class-prototype-property-to-emulate-static-propert
+Below a lot of links you may read too.
 
-https://github.com/wycats/javascript-decorators
-https://github.com/jonathandturner/brainstorming/blob/master/README.md#c6-ambient-decorators
-http://blog.developsuperpowers.com/eli5-ecmascript-7-decorators/
-http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/
-https://github.com/zewa666/angular_es6
-https://github.com/andrewmunsell/needlepoint
-https://gist.github.com/jeffmo/054df782c05639da2adb
-http://code.fitness/post/2015/12/babel-es7-decorators-are-back.html
+## References
 
-https://blog.hadrien.eu/
-https://blog.hadrien.eu/2015/06/05/decorateurs-es7/
-https://github.com/andreypopp/autobind-decorator/blob/master/src/index.js#L15
-https://github.com/jayphelps/core-decorators.js/blob/master/src/lazy-initialize.js
+[es6-classes-final](http://www.2ality.com/2015/02/es6-classes-final.html)
+
+[static in js](http://stackoverflow.com/questions/13486457/javascript-class-property-vs-class-prototype-property-to-emulate-static-propert)
+
+[Wycats specification](https://github.com/wycats/javascript-decorators) [more](https://github.com/jonathandturner/brainstorming/blob/master/README.md#c6-ambient-decorators)
+
+[Dependency injection framework with ES7 decorators](https://github.com/andrewmunsell/needlepoint)
+
+[Class extension](http://code.fitness/post/2015/12/babel-es7-decorators-are-back.html)
+
+[Angular with decorators](https://github.com/zewa666/angular_es6) [French](https://blog.hadrien.eu/2015/06/05/decorateurs-es7/)
+
+[Popular React autobind decorator](https://github.com/andreypopp/autobind-decorator/blob/master/src/index.js#L15)
+
+[Common js useful decorators](https://github.com/jayphelps/core-decorators.js)
+
+[Short example](http://blog.developsuperpowers.com/eli5-ecmascript-7-decorators/)
+
+----------
+
+Tags: *ES6* *ES7* *Javascript* *Angular*

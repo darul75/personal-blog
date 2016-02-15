@@ -465,4 +465,4 @@ React Fiddle [here](https://jsfiddle.net/darul75/7j4ggkqh/)
 
 ----------
 
-Tags: *ES6* *Javascript*
+Tags: *ES6* *Javascript* *React*
