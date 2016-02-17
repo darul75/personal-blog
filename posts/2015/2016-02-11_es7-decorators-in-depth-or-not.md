@@ -180,16 +180,16 @@ That was basically how decorator will work.
 
 Before digging with Class Constructor decorators, let's recap how static keyword works in ES7 class ([experimental](http://babeljs.io/docs/plugins/transform-class-properties/), see BabelJS).
 
-One way of adding static property or method in javascript ES6 is given by affecting the class itself meaning on constructor rather than on prototype.
+One way of adding static property or method in javascript ES6 is given by affecting the class itself meaning on constructor property rather than on instance's prototype.
 
 Class with [static properties](https://github.com/jeffmo/es-class-fields-and-static-properties) example:
 
 ```javascript
 class Circle {
-  // attach to Circle constructor function prototype  
+  // attach to Circle prototype constructor function 
   static name = 'circle';
 
-  // attach to Circle constructor function prototype
+  // attach to Circle prototype constructor function
   static circumference = function(r) {
    return 2 * Math.PI * r;
   }
@@ -207,7 +207,7 @@ Circle.name;         // circle
 Circle.circumference(2.5); // 15.707963267948966
 ```
 
-Static properties or methods are bound to the class Constructor function and not to the Constructor prototype object.
+Static properties or methods are bound to the class constructor function and not to the instance's prototype object.
 
 And as you could expect, circumference() method won't get access to instance fields, properties or methods of an instance of this class Circle.
 
