@@ -17,7 +17,7 @@ import alt from '../../app/alt';
 
 let html = '';
 
-let renderer = {
+const renderer = {
   init: (type) => {
     html = type === 'dev' ?
       fs.readFileSync('./assets/index-dev.html', {encoding: 'utf8'})
@@ -91,4 +91,6 @@ let renderer = {
   }
 };
 
-export default renderer;
+module.exports = renderer;
+
+//export default renderer;

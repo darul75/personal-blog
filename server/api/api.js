@@ -23,4 +23,6 @@ let api = {
   }
 };
 
-export default api;
+module.exports = api;
+
+//export default api;

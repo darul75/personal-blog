@@ -38,4 +38,5 @@ let handler = {
   }
 };
 
-export default handler;
+module.exports = handler;
+//export default handler;

@@ -15,7 +15,8 @@ router.use('/sitemap.xml', (req, res, next) => {
   sitemap.handle(req, res, next);
 });
 
-export default router;
+module.exports = router;
+// export default router;
 
 //
 // check if HMR is enabled

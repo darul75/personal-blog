@@ -22,4 +22,5 @@ if(module.hot) {
   });
 }
 
-export default routesRenderer;
+module.exports = routesRenderer;
+// export default routesRenderer;
