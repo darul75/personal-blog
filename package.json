@@ -68,7 +68,7 @@
     "history": "^1.17.0",
     "htmlparser2": "^3.8.3",
     "iso": "^4.1.0",
-    "lodash": "^3.9.3",
+    "lodash": "^4.17.15",
     "marked": "^0.3.3",
     "node-fetch": "^1.2.1",
     "object-assign": "^2.0.0",
