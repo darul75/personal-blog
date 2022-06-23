@@ -45,7 +45,7 @@
     "file-loader": "^0.8.1",
     "html-loader": "^0.3.0",
     "html-webpack-plugin": "^1.2.0",
-    "jsdom": "^7.0.2",
+    "jsdom": "^16.5.0",
     "json-loader": "^0.5.2",
     "jsx-loader": "^0.13.2",
     "markdown-loader": "^0.1.3",
